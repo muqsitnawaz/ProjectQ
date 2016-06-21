@@ -41,9 +41,8 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 end
-group :development do
-  gem 'sqlite3'
-end
+gem 'sqlite3', group: :development
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
