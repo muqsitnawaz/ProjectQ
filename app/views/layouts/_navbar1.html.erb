@@ -13,7 +13,7 @@
     <!-- ask question dropdown -->
     <div class="col-md-1">
       <br/>
-      <input type="button" class="btn btn-ask" id="getquote" value="Ask Question" data-toggle="modal" data-target="#myModal">
+      <input type="button" class="btn btn-ask" id="getquote" value="Ask Question" data-toggle="modal" data-target="#myModal1">
     </div>
     <div class="col-md-3 col-md-offset-1 button-group-nav">
       <br/>
@@ -27,16 +27,6 @@
         <i class="glyphicon glyphicon-pencil"></i>
       <% end %>
     <!-- notifications -->
-      <%= link_to new_user_registration_path, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-bullhorn"></i>
-      <% end %>
-    <!--logout link  -->
-      <%= link_to edit_user_registration_path, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-pencil"></i>
-      <% end %>
-      <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-off"></i>
-      <% end %>
     <!--profile pic show to make  -->
     </div>
   </div>

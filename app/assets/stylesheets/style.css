@@ -105,6 +105,13 @@ input[type="password"] {
   color:#9E9E9E;
   font-size: 12px;
 }
+.login-div1 {
+  background-color:#455A64;
+  width: 300px;
+  height:400px;
+  color:#9E9E9E;
+  font-size: 12px;
+}
 .row .fields {
   margin-left: 3.3em;
 }
@@ -255,7 +262,12 @@ input[type="password"] {
   cursor: pointer;
 }
 /*modal*/
-
+.pull-left{
+  margin-left: 80px;
+}
+.pull-right{
+  margin-right: 80px;
+}
 .modal-dialog{
   width:50%;
 }

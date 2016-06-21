@@ -1,3 +1,7 @@
+<% if user_signed_in? %>
+<%else%>
+<%= render 'layouts/navbar1'%>
+<%end%>
 <div class="container main-wall">
   <!--navbar-->
   <div class="row">
