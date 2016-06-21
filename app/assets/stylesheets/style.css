@@ -15,7 +15,15 @@ a:hover {
   background-color: #fff;
   border: 1px solid #212121;
 }
-
+.btn-ask1{
+  background-color:#212121;
+  color:#fff;
+  margin-left: 13px;
+}
+.btn-ask1:hover{
+  background-color: #fff;
+  border: 1px solid #212121;
+}
 .nav-bar{
   border: 1px solid #383838;
 }
