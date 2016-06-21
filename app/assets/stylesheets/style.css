@@ -75,6 +75,12 @@ input[type="password"] {
   border-bottom: 1px solid #BDBDBD;
 
 }
+input[type="file"] {
+  background-color : #00BCD4;;
+  border-bottom: 1px solid #BDBDBD;
+  border: 1px solid #00BCD4;
+  color:#fff;
+}
 
 
 .main-login {
@@ -280,7 +286,7 @@ input[type="password"] {
   width:50%;
 }
 .modal-body {
-    min-height: 400px;
+    height: 300px;
 }
 #map-results {
   margin-left:5em;
@@ -291,20 +297,28 @@ input[type="password"] {
 #nextcost {
   margin-left:5em;
 }
+#ask-question{
+  width: 360px;
+  border: none;
+  background-color: #fff;
+  color:#212121;
+  border-bottom: 1px solid #BDBDBD;
+}
 .question-ask-field {
   border: none;
   border-bottom: 1px solid #BDBDBD;
+
 }
 .question-ask-field:hover {
   border: none;
   outline:none;
   border-bottom: 1px solid #0099CC;
 }
-.image-field{
+.btn-image-field{
   height: 60px;
   width: 60px;
   color:#00BCD4;
-  position: relative;
+  border-radius: 80%;
 }
 .glyphicon.glyphicon-upload{
   font-size: 40px;

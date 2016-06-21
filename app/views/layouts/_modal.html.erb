@@ -11,20 +11,22 @@
           <% @question = Question.new%>
           <%= form_for @question,:url =>{ :controller =>"questions", :action =>"create"}  do |f| %>
           <div class="form-group">
-            <label class="col-sm-1 col-sm-offset-3 control-label"><span class="glyphicon glyphicon-search"></span></label>
-            <div class="col-sm-5">
-              <%= f.text_field :content, autofocus: true,class: 'question-ask-field form-control',placeholder: 'What do you want to ask?'%>
+            <div class="row" style="padding-top:1em;">
+              <label class="col-md-1 col-md-offset-1 control-label"><span class="glyphicon glyphicon-search"></span></label>
+              <div class="col-md-5">
+                <%= f.text_field :content, autofocus: true,id: 'ask-question',class: 'question-ask-field form-control',placeholder: 'What do you want to ask?'%>
+              </div>
             </div>
           </div>
           <!-- for image upload -->
-          <div class="row" style="border-left: 1px solid #e7e7e7;">
+          <div class="row" style="border-left: 1px solid #e7e7e7;padding-top:3em;">
             <center>
-              <%= f.file_field :image,class: 'image-field glyphicon glyphicon-upload' %>
+              <%= f.file_field :image,class: 'btn btn-image-field' %>
             </center>
           </div>
-          <div class="row">
+          <div class="row" style="padding-top:3em;">
             <center>
-              <%= f.submit%>
+              <%= f.submit "Post Question",class:'btn btn-squared btn-ask1'%>
             </center>
           </div>
           <%end%>
