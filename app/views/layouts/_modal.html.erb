@@ -1,0 +1,35 @@
+<div class="modal bnr-modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <% @user = current_user %>
+          <% @question = Question.new%>
+          <%= form_for @question,:url =>{ :controller =>"questions", :action =>"create"}  do |f| %>
+          <div class="form-group">
+            <label class="col-sm-1 col-sm-offset-3 control-label"><span class="glyphicon glyphicon-search"></span></label>
+            <div class="col-sm-5">
+              <%= f.text_field :content, autofocus: true,class: 'question-ask-field form-control',placeholder: 'What do you want to ask?'%>
+            </div>
+          </div>
+          <!-- for image upload -->
+          <div class="row" style="border-left: 1px solid #e7e7e7;">
+            <center>
+              <%= f.file_field :image,class: 'image-field glyphicon glyphicon-upload' %>
+            </center>
+          </div>
+          <div class="row">
+            <center>
+              <%= f.submit%>
+            </center>
+          </div>
+          <%end%>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

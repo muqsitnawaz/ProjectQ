@@ -1,0 +1,45 @@
+<div class="nav-bar">
+  <div class="row">
+    <div class="col-md-2 project-name">
+      projectQ
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+      <br/>
+      <div class="input-group">
+        <span class="input-group-addon glyphicon glyphicon-search" id="sizing-addon"></span>
+        <input class="form-control" id="search-bar" placeholder="search" style="background-color:#fff;border:none;border-bottom:1px solid #383838;outline:none;">
+      </div>
+    </div>
+    <!-- ask question dropdown -->
+    <div class="col-md-1">
+      <br/>
+      <input type="button" class="btn btn-ask" id="getquote" value="Ask Question" data-toggle="modal" data-target="#myModal">
+    </div>
+    <div class="col-md-3 col-md-offset-1 button-group-nav">
+      <br/>
+    <!-- read wall -->
+      <%= link_to new_user_registration_path, class: "btn btn-nav" do %>
+        <i class="glyphicon glyphicon-list-alt"></i>
+      <% end %>
+
+    <!-- give answers -->
+      <%= link_to new_user_registration_path, class: "btn btn-nav" do %>
+        <i class="glyphicon glyphicon-pencil"></i>
+      <% end %>
+    <!-- notifications -->
+      <%= link_to new_user_registration_path, class: "btn btn-nav" do %>
+        <i class="glyphicon glyphicon-bullhorn"></i>
+      <% end %>
+    <!--logout link  -->
+      <%= link_to new_user_registration_path, class: "btn btn-nav" do %>
+        <i class="glyphicon glyphicon-off"></i>
+      <% end %>
+    <!--profile pic show to make  -->
+    </div>
+  </div>
+</div>
+<% if user_signed_in? %>
+  <%=render 'layouts/modal'%>
+  <%else%>
+  <%= render 'layouts/signup'%>
+<%end%>
