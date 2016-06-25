@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(version: 20160622150222) do
     t.text     "education",              default: "--- []\n"
     t.text     "interests",              default: "--- []\n"
     t.text     "employments",            default: "--- []\n"
+    t.string   "location",               default: ""
+    t.text     "following",              default: "--- []\n"
     t.string   "email",                  default: "",         null: false
     t.string   "encrypted_password",     default: "",         null: false
     t.string   "reset_password_token"

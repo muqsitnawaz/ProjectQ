@@ -1,0 +1,29 @@
+<div>
+  <div class="question-content">
+    <%= question.content %>
+  </div>
+  <br/>
+  <div class="question-image">
+    <%= question.image %>
+  </div>
+  <br/>
+  <div class="question-details">
+    <%= question.detail %>
+  </div>
+
+  <div class="small-details">
+    <span id="views"><b>*</b> 44 views </span><span id="answers"><b>*</b> 4 answers</span>
+  </div>
+
+  <% if question.user_id != current_user.id %>
+    <button>Answer</button>
+    <% if !current_user.following.include? question.id %>
+      <button id="follow<%= question.id %>">Follow</button>
+    <% else %>
+      <button class="following">Following</button>
+    <% end %>
+    <button>Comments</button>
+  <% end %>
+</div>
+
+<hr>

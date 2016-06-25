@@ -1,0 +1,4 @@
+<div class="voting">
+	<i class="glyphicon glyphicon-thumbs-up"></i><span id="upvote"><a>Upvote</a> </span>
+	<i class="glyphicon glyphicon-thumbs-down"></i><span id="downvote"><a>Downvote</a></span>
+</div>

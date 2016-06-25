@@ -1,13 +1,21 @@
 class QuestionsController < ApplicationController
-  def index
-    #all the questions asked by the user will be handled here
+  def show
+    # Fetching questions depending upon query type
+    if params[:type] == 'asked'
+      @questions = Question.where(:user_id => current_user.id)
+    elsif params[:type] == 'answered'
+
+    elsif params[:type] == 'following'
+      @questions = Question.where(:id => current_user.following)
+    else
+      @questions = Question.all.order('updated_at DESC')
+    end
   end
 
   def create
     @question = current_user.questions.build(question_params)
     if @question.save
       redirect_to(controller: 'questions',action: 'template',id: @question.id, content: @question.content)
-      #take him to the page where he can see his question
     else
       redirect_to feeds_index_path
     end
@@ -18,13 +26,27 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    #allow user to edit his question
+  end
+
+  def follow
+    question_id = params[:question_id].to_i
+    @user = User.find_by_email(current_user.email)
+    if !@user.following.include? question_id
+      @user.following << question_id
+    end
+    @user.save
+
+    if request.xhr?
+      render :json => {
+        :status => "success"
+      }
+    end
   end
 
   def template
     @question = Question.find(params[:id])
   end
-  private
+private
 
    def question_params
      params.require(:question).permit(:content, :image , :user_id, :detail)

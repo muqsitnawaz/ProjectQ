@@ -1,6 +1,5 @@
 <p>Edit your profile here</p>
 
-
 <h2>Interests</h2>
 
 <% @user.interests.sort.each do |interest| %>
@@ -17,13 +16,11 @@
   </p>
 <% end %>
 
-
 <h2>Education</h2>
 
 <% @user.education.each do |education| %>
 	<li> <h4> <%= education[:degree] %> from <%= education[:school] %> </h4> </li>
 <% end %>
-
 
 <%= form_tag("/add_education", method: "post") do %>
   <p>
@@ -65,5 +62,18 @@
  
   <p>
     <%= submit_tag("Add Employment") %>
+  </p>
+<% end %>
+
+<h2>Location</h2>
+<i>Where do you live?</i>
+
+<%= form_tag("/update_location", method: "post") do %>
+  <p>
+    <%= text_field_tag :location, @user.location %>
+  </p>
+
+  <p>
+    <%= submit_tag("Update") %>
   </p>
 <% end %>

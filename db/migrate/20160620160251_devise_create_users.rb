@@ -6,6 +6,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :education,            default: []
       t.text :interests,            default: []
       t.text :employments,          default: []
+      t.string :location,           default: ""
+
+      t.text :following,            default: []
 
       ## Database authenticatable
       t.string :email,              null: false, default: ""

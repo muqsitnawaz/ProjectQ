@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   post '/add_interest' => 'feeds#add_interest'
   post '/add_education' => 'feeds#add_education'
   post '/add_employment' => 'feeds#add_employment'
+  post '/update_location' => 'feeds#update_location'
+
+  post '/follow' => 'questions#follow'
 
   get 'staticpages/login'
   get 'staticpages/signup'
