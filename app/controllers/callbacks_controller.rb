@@ -1,4 +1,6 @@
 class CallbacksController < Devise::OmniauthCallbacksController
+  skip_before_filter :verify_authenticity_token
+  
   def facebook
     @user = User.from_omniauth(request.env["omniauth.auth"])
     sign_in_and_redirect @user
@@ -9,9 +11,12 @@ class CallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
+      puts "successfull"
       sign_in_and_redirect @user, :event => :authentication
+      
     else
       session["devise.google_data"] = request.env["omniauth.auth"]
+      puts "not successfull"
       redirect_to new_user_registration_url
     end
   end
