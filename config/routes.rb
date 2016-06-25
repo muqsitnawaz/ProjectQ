@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'questions/new'
   get 'questions/edit'
   get 'feeds/index'
-  devise_for :users
+  devise_for :users,:controllers => { :omniauth_callbacks => "callbacks" }
   get 'staticpages/login'
   get 'staticpages/signup'
   root 'feeds#index'
