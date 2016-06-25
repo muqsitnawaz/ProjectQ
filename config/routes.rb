@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users,:controllers => { :omniauth_callbacks => "callbacks" }
   
+  # Feeds Controller
   root 'feeds#index'
+  get '/profile' => 'feeds#profile', :as => 'profile'
+  post '/add_interest' => 'feeds#add_interest'
+  post '/add_education' => 'feeds#add_education'
 
   get 'staticpages/login'
   get 'staticpages/signup'

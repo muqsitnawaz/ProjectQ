@@ -63,6 +63,7 @@ padding-bottom: 3px;
 input[type="text"] {
   background-color : #455A64;
   border-bottom: 1px solid #BDBDBD;
+  color: #FFF;
 
 }
 input[type="email"] {

@@ -5,7 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
          :omniauthable, :omniauth_providers => [:facebook,:google_oauth2]
   has_many :questions
-  
+
+  # Serializing
+  serialize :education
+  serialize :interests
+  serialize :employment
 
   # For Omniauth
   def self.from_omniauth(auth)
@@ -29,5 +33,10 @@ class User < ActiveRecord::Base
         )
     end
     user
+  end
+
+protected
+  def confirmation_required?
+    false
   end
 end

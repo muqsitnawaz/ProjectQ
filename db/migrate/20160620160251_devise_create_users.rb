@@ -2,7 +2,10 @@ class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
       ## Custom fields
-      t.string :name,      null: false, default: ""
+      t.string :name,               null: false, default: ""
+      t.text :education,            default: []
+      t.text :interests,            default: []
+      t.text :employments,          default: []
 
       ## Database authenticatable
       t.string :email,              null: false, default: ""
