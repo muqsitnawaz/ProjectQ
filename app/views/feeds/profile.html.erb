@@ -45,20 +45,22 @@
 
 <h2>Employment</h2>
 <% @user.employments.each do |employment| %>
-	<h4> <%= employment[:position] %> at <%= employment[:organization] %> in <%= employment[:year] %> </h4>
+	<li> <h4> <%= employment[:position] %> at <%= employment[:organization] %> 
+	from <%= employment[:start] %> to <%= employment[:end] %> </h4> </li>
 <% end %>
 
 <%= form_tag("/add_employment", method: "post") do %>
   <p>
-    <%= select_tag :position, options_for_select(@degrees) %>
+    <%= text_field_tag :position %>
   </p>
 
   <p>
-    <%= select_tag :organization, options_for_select(@subjects) %>
+    <%= text_field_tag :organization %>
   </p>
 
   <p>
-    <% select_year :year, {start_year: 1992, end_year: 2007} %>
+    From <%= select_tag :start, options_for_select(((Date.today.year - 50)..Date.today.year).to_a) %>
+    To <%= select_tag :end, options_for_select(((Date.today.year - 50)..Date.today.year).to_a) %>
   </p>
  
   <p>

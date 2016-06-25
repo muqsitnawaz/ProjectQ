@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   # Serializing
   serialize :education
   serialize :interests
-  serialize :employment
+  serialize :employments
 
   # For Omniauth
   def self.from_omniauth(auth)

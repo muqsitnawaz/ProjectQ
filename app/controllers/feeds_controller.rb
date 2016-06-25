@@ -34,8 +34,9 @@ class FeedsController < ApplicationController
 
   def add_employment
   	puts "adding employment"
-  	puts params
-
+  	@user = User.find_by_email(current_user.email)
+  	@user.employments << {:position => params[:position], :organization => params[:organization], :start => params[:start], :end => params[:end]}
+  	@user.save
   	redirect_to profile_path
   end
 end

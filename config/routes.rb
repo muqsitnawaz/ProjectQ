@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/profile' => 'feeds#profile', :as => 'profile'
   post '/add_interest' => 'feeds#add_interest'
   post '/add_education' => 'feeds#add_education'
+  post '/add_employment' => 'feeds#add_employment'
 
   get 'staticpages/login'
   get 'staticpages/signup'
