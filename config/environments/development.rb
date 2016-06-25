@@ -15,8 +15,22 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-  require 'openssl'
-  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
+  # SMTP configuration
+  config.action_mailer.default_url_options = { :host => 'localhost' }  
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => "gmail.com",
+    :user_name            => 'aheediscartoon@gmail.com',
+    :password             => 'B.D.c00p3r',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
+
+  # require 'openssl'
+  # OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
