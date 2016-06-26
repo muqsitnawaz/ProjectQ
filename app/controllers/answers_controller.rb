@@ -10,6 +10,19 @@ class AnswersController < ApplicationController
     end
   end
 
+  def destroy
+    @answer = Answer.find_by_id(params[:id])
+    question_id =@answer.question.id
+
+    if @answer.user == current_user
+      @answer.destroy
+      redirect_to questions_path(:id => question_id)
+    else
+      flash[:notice] = "not sufficient permission"
+      redirect_to root_path
+    end
+  end
+
   # Upvoting an answer
   def upvote
     @answer = Answer.find_by_id(params[:answer_id].to_i)

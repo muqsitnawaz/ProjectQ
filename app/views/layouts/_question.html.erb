@@ -7,6 +7,10 @@
     <div class="question-content">
       <input type="text" id="question-content<%= question.id %>" value="<%= question.content %>" hidden>
       <%= link_to question.content, questions_path(:id => question.id) %>
+      <% if question.user == current_user %>
+        <button id="edit<%= question.id %>">edit</button>
+        <%= link_to 'delete', questions_path(:id => question.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% end %>
     </div>
     <br/>
     <div class="question-image">
@@ -37,10 +41,10 @@
       <% if !answers.empty? %>
         <% if full == true %>
           <% answers.each do |answer| %>
-            <%= render 'layouts/answer', :answer => answer %>
+            <%= render 'layouts/answer', :answer => answer, :full => full %>
           <% end %>
         <% else %>
-          <%= render 'layouts/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0] %>
+          <%= render 'layouts/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0], :full => full %>
         <% end %>
       <% end %>
     </div>

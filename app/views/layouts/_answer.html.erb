@@ -1,18 +1,26 @@
-<div style="border: 1px solid black; margin: 2px;">
+<div style="border: 1px solid black; margin: 2px; padding: 5px;">
   <p><%= answer.answer %></p>
   <i>- <%= answer.user.name %></i>
   <br>
 
+  <% if answer.user == current_user %>
+    <button id="edit<%= answer.id %>">edit</button>
+    <button> <%= link_to 'delete', answers_path(:id => answer.id), method: :delete, data: { confirm: 'Are you sure?'} %> </button>
+  <% end %>
+
   <button id="upvote<%= answer.id %>">Upvote | <%= answer.upvotes %></button>
   <button id="downvote<%= answer.id %>">Downvote</button>
-  <button id="replyA<%= answer.id %>">Reply</button>
+  <button id="replyA<%= answer.id %>">Reply | <%= answer.replies.length %></button>
+  <button>Share</button>
 
 
-  <div class="row" style="">
-    <div class="col-xs-11 col-xs-offset-1">
-    <% answer.replies.each do |reply| %>
-      <%= render 'layouts/reply', :reply => reply %>
-    <% end %>
+  <% if full == true %>
+    <div class="row" style="">
+      <div class="col-xs-11 col-xs-offset-1">
+      <% answer.replies.each do |reply| %>
+        <%= render 'layouts/reply', :reply => reply %>
+      <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

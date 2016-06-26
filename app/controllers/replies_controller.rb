@@ -9,6 +9,19 @@ class RepliesController < ApplicationController
     end
   end
 
+  def destroy
+    @reply = Reply.find_by_id(params[:id])
+    question_id = @reply.answer.question.id
+
+    if @reply.user == current_user
+      @reply.destroy
+      redirect_to questions_path(:id => question_id)
+    else
+      flash[:notice] = "not sufficient permission"
+      redirect_to root_path
+    end
+  end
+
 private
   def reply_params
     params.require(:reply).permit(:answer_id, :user_id, :reply)

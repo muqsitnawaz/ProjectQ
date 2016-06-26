@@ -28,6 +28,8 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    @question = Question.find_by_id(params[:id])
+
   end
 
   def follow
@@ -43,6 +45,16 @@ class QuestionsController < ApplicationController
         :status => "success"
       }
     end
+  end
+
+  def destroy
+    @question = Question.find_by_id(params[:id])
+
+    if @question.user == current_user
+      @question.destroy
+    end
+
+    redirect_to root_path
   end
 
 private

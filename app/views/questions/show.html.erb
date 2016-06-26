@@ -154,6 +154,11 @@
       complete: function() {},
       success: function(data, textStatus, xhr) {
         alert("upvoted")
+
+        // Updating upvote button UI to show new vote
+        var upvotes = $('#upvote'+answer_id).text()
+        upvotes = parseInt(upvotes.substring(9, upvotes.length))
+        $('#upvote'+answer_id).html('Upvote | '+(upvotes+1))
       },
       error: function() {
         alert("error")
