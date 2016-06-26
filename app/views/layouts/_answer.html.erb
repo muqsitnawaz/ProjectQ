@@ -1,9 +1,18 @@
 <div style="border: 1px solid black; margin: 2px;">
   <p><%= answer.answer %></p>
-  <i>- <%= User.find_by_id(answer.user_id).name %></i>
+  <i>- <%= answer.user.name %></i>
   <br>
 
   <button id="upvote<%= answer.id %>">Upvote | <%= answer.upvotes %></button>
   <button id="downvote<%= answer.id %>">Downvote</button>
-  <button>Replies</button>
+  <button id="replyA<%= answer.id %>">Reply</button>
+
+
+  <div class="row" style="">
+    <div class="col-xs-11 col-xs-offset-1">
+    <% answer.replies.each do |reply| %>
+      <%= render 'layouts/reply', :reply => reply %>
+    <% end %>
+    </div>
+  </div>
 </div>

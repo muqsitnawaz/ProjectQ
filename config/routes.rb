@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   post '/upvote' => 'answers#upvote'
   post '/downvote' => 'answers#downvote'
 
+  # Replies paths
+  resource :replies
+
   get 'staticpages/login'
   get 'staticpages/signup'
 
