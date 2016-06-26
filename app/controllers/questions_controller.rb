@@ -1,28 +1,28 @@
 class QuestionsController < ApplicationController
   def show
     # Fetching questions depending upon query type
-    if params[:type] == 'asked'
-      @questions = Question.where(:user_id => current_user.id)
-    elsif params[:type] == 'answered'
-
-    elsif params[:type] == 'following'
-      @questions = Question.where(:id => current_user.following)
+    if params[:id].nil?
+      if params[:type] == 'asked'
+        @questions = Question.where(:user_id => current_user.id)
+      elsif params[:type] == 'answered'
+        @questions = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id})
+      elsif params[:type] == 'following'
+        @questions = Question.where(:id => current_user.following)
+      else
+        @questions = Question.all.order('updated_at DESC')
+      end
     else
-      @questions = Question.all.order('updated_at DESC')
+      @question = Question.find_by_id(params[:id])
     end
   end
 
   def create
     @question = current_user.questions.build(question_params)
     if @question.save
-      redirect_to(controller: 'questions',action: 'template',id: @question.id, content: @question.content)
+      redirect_to questions_path(:id => @question.id)
     else
-      redirect_to feeds_index_path
+      redirect_to root_path
     end
-  end
-
-  def new
-
   end
 
   def edit
@@ -43,12 +43,8 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def template
-    @question = Question.find(params[:id])
-  end
 private
-
    def question_params
-     params.require(:question).permit(:content, :image , :user_id, :detail)
+     params.require(:question).permit(:user_id, :content, :image, :detail, :topics)
    end
 end

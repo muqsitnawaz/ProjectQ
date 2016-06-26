@@ -10,8 +10,12 @@
 
     <!--question area  -->
     <div class="col-md-5 question-area">
-    <% @questions.each do |question| %>
-        <%= render 'layouts/question', :question => question %>
+    <% if @questions.nil? %>
+      <%= render 'layouts/question', :question => @question, :answers => @question.answers, :full => true %>
+    <% else %>
+      <% @questions.each do |question| %>
+          <%= render 'layouts/question', :question => question, :answers => question.answers, :full => false %>
+      <% end %>
     <% end %>
     </div>
 
@@ -20,7 +24,54 @@
   </div>
 </div>
 
+<!-- Modal for posting answer -->
+<div class="modal bnr-modal fade" id="answerModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4 id="question-header"></h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <% @answer = Answer.new %>
+          <%= form_for @answer, :url => { :controller =>"answers", :action =>"create"}  do |f| %>
+          <div class="form-group">
+            <%= f.text_area :answer, rows: 5, class: 'form-control' %>
+            <%= f.hidden_field :question_id %>
+          </div>
+          <div class="row" style="padding-top:3em;">
+            <center>
+              <%= f.file_field :image,class: 'btn btn-squared btn-ask1' %>
+              <%= f.submit "Post Answer", class:'btn btn-squared btn-ask1'%>
+            </center>
+          </div>
+          <%end%>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
+  $("[id^=answerQ]").click(function() {
+    question_id = this.id.substring(7, this.id.length)
+    console.log('id: '+question_id)
+    console.log(this.parent)
+
+    $("#question-header").html($("#question-content"+question_id).val())
+    $("#answer_question_id").val(question_id)
+    $('#answerModal').modal('show');
+  });
+
+  // Following a question
   $("[id^=follow]").click(function() {
     question_id = this.id.substring(6, this.id.length)
 
@@ -40,6 +91,7 @@
     });
 
     // Changing UI to indicate followed
+    $(this).html('Followed')
     $(this).addClass("following")
   })
 </script>

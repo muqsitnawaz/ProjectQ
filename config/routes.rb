@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users,:controllers => { :omniauth_callbacks => "callbacks" }
-  
+
   # Feeds Controller
   root 'feeds#index'
   get '/profile' => 'feeds#profile', :as => 'profile'
@@ -13,10 +13,10 @@ Rails.application.routes.draw do
 
   get 'staticpages/login'
   get 'staticpages/signup'
-  
+
   resource :questions
-  get 'questions/template/:content' => 'questions#template'
-  
+  resource :answers
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

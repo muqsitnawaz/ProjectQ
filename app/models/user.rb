@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
          :omniauthable, :omniauth_providers => [:facebook,:google_oauth2]
   has_many :questions
+  has_many :answers
 
   # Serializing
   serialize :education

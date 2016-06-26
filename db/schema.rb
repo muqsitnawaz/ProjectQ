@@ -16,14 +16,31 @@ ActiveRecord::Schema.define(version: 20160622150222) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "answers", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "user_id"
+    t.string   "answer"
+    t.string   "image"
+    t.integer  "upvotes"
+    t.integer  "downvotes"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
+  add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+
   create_table "questions", force: :cascade do |t|
+    t.integer  "user_id"
     t.string   "content"
     t.string   "image"
     t.string   "detail"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "topics",     default: "--- []\n"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
+
+  add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                   default: "",         null: false

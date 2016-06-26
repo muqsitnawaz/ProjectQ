@@ -1,0 +1,4 @@
+<div style="border: 1px solid black; margin: 2px;">
+  <p><%= answer.answer %></p>
+  <i>Posted by <%= User.find_by_id(answer.user_id).name %>,</i> Upvotes - <%= answer.upvotes %>, Downvotes - <%= answer.downvotes %>
+</div>

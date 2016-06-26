@@ -7,8 +7,7 @@
       <section>
         <div class="modal-body modal-spa">
           <!-- create a new question using this modal -->
-          <% @user = current_user %>
-          <% @question = Question.new%>
+          <% @question = Question.new %>
           <%= form_for @question,:url =>{ :controller =>"questions", :action =>"create"}  do |f| %>
           <div class="form-group">
             <div class="row" style="padding-top:1em;">
