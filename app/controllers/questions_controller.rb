@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  before_filter :authenticate_user!, except: [ :show ]
+
   def show
     # Fetching questions depending upon query type
     if params[:id].nil?

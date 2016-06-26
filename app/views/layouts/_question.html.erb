@@ -1,5 +1,9 @@
+<!-- Template for rendering a question -->
+
 <div class="row">
   <div class="col-xs-12">
+
+    <!-- Question's content -->
     <div class="question-content">
       <input type="text" id="question-content<%= question.id %>" value="<%= question.content %>" hidden>
       <%= link_to question.content, questions_path(:id => question.id) %>
@@ -17,6 +21,7 @@
       <span id="views"><b>*</b> 44 views </span><span id="answers"><b>*</b> 4 answers</span>
     </div>
 
+    <!-- Showing Answer, Follow and Share buttons -->
     <% if question.user_id != current_user.id %>
       <button id="answerQ<%= question.id %>">Answer</button>
       <% if !current_user.following.include? question.id %>
@@ -27,6 +32,7 @@
       <button>Share</button>
     <% end %>
 
+    <!-- Rendering answers for the question -->
     <div class="col-xs-11 col-xs-offset-1">
       <% if !answers.empty? %>
         <% if full == true %>

@@ -21,10 +21,10 @@ ActiveRecord::Schema.define(version: 20160622150222) do
     t.integer  "user_id"
     t.string   "answer"
     t.string   "image"
-    t.integer  "upvotes"
-    t.integer  "downvotes"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "upvotes",     default: 0
+    t.integer  "downvotes",   default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(version: 20160622150222) do
   end
 
   add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
+
+  create_table "replies", force: :cascade do |t|
+    t.integer  "answer_id"
+    t.integer  "user_id"
+    t.string   "reply"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "replies", ["answer_id"], name: "index_replies_on_answer_id", using: :btree
+  add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                   default: "",         null: false

@@ -9,13 +9,18 @@ Rails.application.routes.draw do
   post '/add_employment' => 'feeds#add_employment'
   post '/update_location' => 'feeds#update_location'
 
+  # Question's paths
+  resource :questions
   post '/follow' => 'questions#follow'
+
+  # Answer's paths
+  resource :answers
+  post '/upvote' => 'answers#upvote'
+  post '/downvote' => 'answers#downvote'
 
   get 'staticpages/login'
   get 'staticpages/signup'
 
-  resource :questions
-  resource :answers
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

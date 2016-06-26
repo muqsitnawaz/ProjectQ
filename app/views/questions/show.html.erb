@@ -83,15 +83,54 @@
       dataType: "json",
       complete: function() {},
       success: function(data, textStatus, xhr) {
-        alert("Followed!")
+        alert("followed")
       },
       error: function() {
-        alert("Error! Please try again later")
+        alert("error")
       }
     });
 
     // Changing UI to indicate followed
     $(this).html('Followed')
     $(this).addClass("following")
+  })
+
+  // Upvoting an answer
+  $("[id^=upvote]").click(function() {
+    answer_id = this.id.substring(6, this.id.length)
+
+    // Sending ajax request to upvote an answer
+    $.ajax({
+      url: "/upvote",
+      type: "POST",
+      data: { answer_id: answer_id },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        alert("upvoted")
+      },
+      error: function() {
+        alert("error")
+      }
+    });
+  })
+
+  $("[id^=downvote]").click(function() {
+    answer_id = this.id.substring(6, this.id.length)
+
+    // Sending ajax request to downvote an answer
+    $.ajax({
+      url: "/downvote",
+      type: "POST",
+      data: { answer_id: answer_id },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        alert("downvoted")
+      },
+      error: function() {
+        alert("error")
+      }
+    });
   })
 </script>
