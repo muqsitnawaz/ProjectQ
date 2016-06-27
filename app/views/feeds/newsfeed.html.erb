@@ -1,0 +1,19 @@
+<% if user_signed_in? %>
+<%else%>
+<%= render 'layouts/navbar1'%>
+<%end%>
+<div class="container main-wall">
+  <!--navbar-->
+  <div class="row">
+    <!-- left bar  -->
+    <%= render 'layouts/leftbar'%>
+    <!--question area  -->
+    <div class="col-md-5 question-area">
+      <% @matches.each do |match| %>
+        <%= render 'layouts/question', :question => match, :answers => match.answers, :full => false %>
+      <% end %>
+    </div>
+    <!-- suggestions -->
+    <%= render 'layouts/suggestions'%>
+  </div>
+</div>

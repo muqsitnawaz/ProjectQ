@@ -5,6 +5,21 @@ class FeedsController < ApplicationController
     @interests = get_all_interests.sort!
   end
 
+  def newsfeed
+    @interests = get_all_interests.sort!
+    @questions = Question.all
+    @matches = []
+
+    @questions.each do |question|
+      current_user.interests.each do |interest|
+        if question.topics.include? interest
+          @matches << question
+        end
+      end
+    end
+  end
+
+  # User profile related methods
   def profile
   	@user = current_user
 

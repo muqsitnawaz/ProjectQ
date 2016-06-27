@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   # Feeds Controller
   root 'feeds#index'
+
+  get '/feeds' => 'feeds#newsfeed', :as => 'newsfeed'
   get '/profile' => 'feeds#profile', :as => 'profile'
   post '/add_interest' => 'feeds#add_interest'
   post '/add_education' => 'feeds#add_education'
