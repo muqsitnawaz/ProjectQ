@@ -3,24 +3,31 @@
 <%end%>
 
 <div class="container main-wall">
-  <!--navbar-->
-  <div class="row">
-    <!-- left bar  -->
-    <%= render 'layouts/leftbar'%>
+  <!--Navbar-->
 
-    <!--question area  -->
-    <div class="col-md-5 question-area">
-    <% if @questions.nil? %>
-      <%= render 'layouts/question', :question => @question, :answers => @question.answers, :full => true %>
-    <% else %>
-      <% @questions.each do |question| %>
-          <%= render 'layouts/question', :question => question, :answers => question.answers, :full => false %>
-      <% end %>
-    <% end %>
+  <div class="row">
+    <!-- Leftbar  -->
+    <div class="col-xs-2">
+      <%= render 'layouts/leftbar'%>
     </div>
 
-    <!-- suggestions -->
-    <%= render 'layouts/suggestions'%>
+    <!-- Questions area -->
+    <div class="col-xs-7">
+      <div class="question-area">
+      <% if @questions.nil? %>
+        <%= render 'layouts/question', :question => @question, :answers => @question.answers, :full => true %>
+      <% else %>
+        <% @questions.each do |question| %>
+            <%= render 'layouts/question', :question => question, :answers => question.answers, :full => false %>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="col-xs-3">
+      <%= render 'layouts/suggestions'%>
+    </div>
   </div>
 </div>
 

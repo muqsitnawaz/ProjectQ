@@ -59,30 +59,6 @@ padding-bottom: 3px;
   background-color: #fff;
   border: 1px solid #212121;
 }
-/*sign up and login page*/
-input[type="text"] {
-  background-color : #455A64;
-  border-bottom: 1px solid #BDBDBD;
-  color: #FFF;
-
-}
-input[type="email"] {
-  background-color : #455A64;
-  border-bottom: 1px solid #BDBDBD;
-
-}
-input[type="password"] {
-  background-color : #455A64;
-  border-bottom: 1px solid #BDBDBD;
-
-}
-input[type="file"] {
-  background-color : #00BCD4;;
-  border-bottom: 1px solid #BDBDBD;
-  border: 1px solid #00BCD4;
-  color:#fff;
-}
-
 
 .main-login {
   background: url("login_page.jpg") no-repeat center center fixed;
@@ -175,13 +151,11 @@ input[type="file"] {
   font-weight: bold;
   font-size: 15px;
 }
-.question-area {
-  border: 1px solid #383838;
-  margin-left: 40px;
-}
+
 .suggestions {
   border: 1px solid #383838;
   margin-left: 40px;
+  padding-left: 0.8em;
 }
 .heading-7{
   font-size: 14px;
@@ -194,6 +168,7 @@ input[type="file"] {
 .main-wall{
   margin-top: 2em;
 }
+
 .icons{
   margin-left: 15px;
   margin-bottom: 10px;
@@ -233,11 +208,12 @@ input[type="file"] {
 }
 
 /*question area*/
-.question-content{
+.question-content {
   font-size: 18px;
   font-weight: bold;
   font-color:#383838;
 }
+
 .question-details{
   font-size: 16px;
   font-style: italic;

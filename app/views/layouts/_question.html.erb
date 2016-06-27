@@ -1,8 +1,7 @@
 <!-- Template for rendering a question -->
-
 <div class="row" style="margin-top: 0.5em;">
   <div class="col-xs-12">
-    <!-- Question's content -->
+    <!-- Question's topics -->
     <p>
       <i>In</i>
       <% question.topics.each do |topic| %>
@@ -10,22 +9,30 @@
       <% end %>
     </p>
 
-    <div class="question-content">
-      <!-- Hiddent field for question content -->
+    <div>
+      <!-- Hidden field for question content -->
       <input type="text" id="question_content<%= question.id %>" value="<%= question.content %>" hidden>
 
+      <!-- Question's header -->
       <div class="row">
-        <!-- Question's heading -->
-        <div class="col-xs-10">
+        <!-- Question's content -->
+        <div class="col-xs-10 question-content" >
           <%= link_to question.content, questions_path(:id => question.id) %>
         </div>
 
-        <!-- Showing edit and delete buttons -->
+        <!-- Question edit and delete buttons -->
         <div class="col-xs-2">
           <% if question.user == current_user %>
             <i id="edit_question<%= question.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
             <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, questions_path(:id => question.id), method: :delete, data: { confirm: 'Are you sure?'} %>
           <% end %>
+        </div>
+      </div>
+
+      <!-- Question's owner name -->
+      <div class="row">
+        <div class="col-xs-12">
+          <p>Posted by <%= question.user.name %>,<i> <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</i></p>
         </div>
       </div>
 
@@ -39,13 +46,9 @@
       <p id="question_detail<%= question.id %>"><%= question.detail %></p>
     </div>
 
-    <div class="small-details">
-      <span id="views"><b>*</b> 44 views </span><span id="answers"><b>*</b> 4 answers</span>
-    </div>
-
     <!-- Showing Answer, Follow and Share buttons -->
     <% if question.user_id != current_user.id %>
-      <button id="answerQ<%= question.id %>" class="btn btn-default">Answer</button>
+      <button id="answerQ<%= question.id %>" class="btn btn-default">Answer | <%= question.answers.length %></button>
       <% if !current_user.following.include? question.id %>
         <button id="follow<%= question.id %>" class="btn btn-default">Follow</button>
       <% else %>
@@ -55,8 +58,10 @@
     <% end %>
 
     <!-- Rendering answers for the question -->
-    <div class="col-xs-11 col-xs-offset-1" style="margin-top: 1em;">
+    <div class="col-xs-12" style="margin-top: 1em;">
       <% if !answers.empty? %>
+        <hr>
+
         <% if full == true %>
           <% answers.each do |answer| %>
             <%= render 'layouts/answer', :answer => answer, :full => full %>
@@ -69,4 +74,4 @@
   </div>
 </div>
 
-<hr>
+<hr class="question-hr">
