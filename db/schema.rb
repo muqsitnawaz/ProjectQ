@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20160622150222) do
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id"
     t.integer  "user_id"
-    t.string   "answer"
+    t.string   "answer",                  null: false
     t.string   "image"
     t.integer  "upvotes",     default: 0
     t.integer  "downvotes",   default: 0
@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 20160622150222) do
 
   create_table "questions", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "content"
-    t.string   "image"
+    t.string   "content",                         null: false
     t.string   "detail"
+    t.string   "image"
     t.text     "topics",     default: "--- []\n"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20160622150222) do
   create_table "replies", force: :cascade do |t|
     t.integer  "answer_id"
     t.integer  "user_id"
-    t.string   "reply"
+    t.string   "reply",      null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

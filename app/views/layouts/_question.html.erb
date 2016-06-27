@@ -4,11 +4,18 @@
   <div class="col-xs-12">
 
     <!-- Question's content -->
+    <p>
+      <i>In</i>
+      <% question.topics.each do |topic| %>
+        <%= topic %>
+      <% end %>
+    </p>
+
     <div class="question-content">
       <input type="text" id="question-content<%= question.id %>" value="<%= question.content %>" hidden>
       <%= link_to question.content, questions_path(:id => question.id) %>
       <% if question.user == current_user %>
-        <button id="edit<%= question.id %>">edit</button>
+        <button id="edit_question<%= question.id %>">edit</button>
         <%= link_to 'delete', questions_path(:id => question.id), method: :delete, data: { confirm: 'Are you sure?'} %>
       <% end %>
     </div>

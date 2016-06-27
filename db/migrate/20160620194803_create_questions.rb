@@ -3,8 +3,8 @@ class CreateQuestions < ActiveRecord::Migration
     create_table :questions do |t|
       t.belongs_to :user, index:true
       t.string :content,             null: false
-      t.string :image
       t.string :detail
+      t.string :image
       t.text :topics,	default: []
 
       t.timestamps null: false

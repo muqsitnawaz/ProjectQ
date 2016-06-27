@@ -95,12 +95,43 @@
   </div>
 </div>
 
+<!-- Modal for editing an answer -->
+<div class="modal bnr-modal fade" id="editAnswerModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Answer</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form id="new_answer_form" enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <textarea id="new_answer_answer" class="form-control"></textarea>
+            <br><br>
+
+            <center>
+              <input id="new_answer_image" class="btn btn-squared btn-ask1" type="file" />
+              <input id="new_answer_submit" type="submit" value="Update Answer" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
 <script type="text/javascript">
   // Answering a question
   $("[id^=answerQ]").click(function() {
     question_id = this.id.substring(7, this.id.length)
     console.log('id: '+question_id)
-    alert('worked1')
 
     $("#question-header").html($("#question-content"+question_id).val())
     $("#answer_question_id").val(question_id)
@@ -111,11 +142,17 @@
   $("[id^=replyA]").click(function() {
     answer_id = this.id.substring(6, this.id.length)
     console.log('id: '+answer_id)
-    alert('worked2')
 
     $("#reply_answer_id").val(answer_id)
     $('#replyModal').modal('show');
   });
+
+  // Editing an answer
+  $("[id^=edit_answerQ]").click(function() {
+    answer_id = this.id.substring(12, this.id.length)
+    $("#new_answer_answer").val($('#answer'+answer_id).text())
+    $('#editAnswerModal').modal('show');
+  })
 
   // Following a question
   $("[id^=follow]").click(function() {

@@ -2,11 +2,12 @@ class FeedsController < ApplicationController
 	before_filter :authenticate_user!, except: [ :index ]
 
   def index
+    @interests = get_all_interests.sort!
   end
 
   def profile
   	@user = current_user
-  	
+
   	@interests = get_all_interests.sort!
 
   	@degrees = get_all_degrees

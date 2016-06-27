@@ -10,6 +10,17 @@ class AnswersController < ApplicationController
     end
   end
 
+  def update
+    puts "something received"
+    puts params
+
+    if request.xhr?
+      render :json => {
+        :status => "success"
+      }
+    end
+  end
+
   def destroy
     @answer = Answer.find_by_id(params[:id])
     question_id =@answer.question.id

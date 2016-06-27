@@ -2,6 +2,8 @@ class QuestionsController < ApplicationController
   before_filter :authenticate_user!, except: [ :show ]
 
   def show
+    @interests = get_all_interests.sort!
+
     # Fetching questions depending upon query type
     if params[:id].nil?
       if params[:type] == 'asked'
@@ -59,6 +61,6 @@ class QuestionsController < ApplicationController
 
 private
    def question_params
-     params.require(:question).permit(:user_id, :content, :image, :detail, :topics)
+     params.require(:question).permit(:user_id, :content, :image, :detail, :topics => [])
    end
 end
