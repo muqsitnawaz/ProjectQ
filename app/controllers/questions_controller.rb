@@ -56,7 +56,7 @@ class QuestionsController < ApplicationController
       @question.destroy
     end
 
-    redirect_to root_path
+    redirect_to request.path
   end
 
 private

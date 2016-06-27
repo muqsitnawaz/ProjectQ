@@ -1,19 +1,35 @@
 <div style="border: 1px solid black; margin: 2px; padding: 5px;">
-  <p id="answer<%= answer.id %>"><%= answer.answer %></p>
-  <i>- <%= answer.user.name %></i>
-  <br>
+  <div class="row">
+    <!-- Showing answer and username -->
+    <div class="col-xs-10">
+      <p id="answer<%= answer.id %>"><%= answer.answer %></p>
+      <i>- <%= answer.user.name %></i>
+    </div>
 
-  <% if answer.user == current_user %>
-    <button id="edit_answerQ<%= answer.id %>">edit</button>
-    <button> <%= link_to 'delete', answers_path(:id => answer.id), method: :delete, data: { confirm: 'Are you sure?'} %> </button>
-  <% end %>
+    <!-- Showing edit and delete options -->
+    <div class="col-xs-2">
+      <% if answer.user == current_user %>
+        <i id="edit_answerQ<%= answer.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, answers_path(:id => answer.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% end %>
+    </div>
+  </div>
 
-  <button id="upvote<%= answer.id %>">Upvote | <%= answer.upvotes %></button>
-  <button id="downvote<%= answer.id %>">Downvote</button>
-  <button id="replyA<%= answer.id %>">Reply | <%= answer.replies.length %></button>
-  <button>Share</button>
+  <!-- Upvote, downvote and reply buttons -->
+  <div class="row">
+    <div class="col-xs-10">
+      <button id="upvote<%= answer.id %>" class="btn btn-default">Upvote | <%= answer.upvotes %></button>
+      <button id="downvote<%= answer.id %>" class="btn btn-default">Downvote</button>
+    </div>
+    <div class="col-xs-2">
+      <div style="margin-top:0.6em;">
+        <i id="replyA<%= answer.id %>" class="glyphicon glyphicon-share-alt" style="color: black;"></i>
+        <i class="glyphicon glyphicon-share" style="color: black;"></i>
+      </div>
+    </div>
+  </div>
 
-
+  <!-- Showing replies -->
   <% if full == true %>
     <div class="row" style="">
       <div class="col-xs-11 col-xs-offset-1">

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   # Answer's paths
   resource :answers
-  put '/update_answer' => 'answers#update'
+  post '/update_answer' => 'answers#update'
   post '/upvote' => 'answers#upvote'
   post '/downvote' => 'answers#downvote'
 

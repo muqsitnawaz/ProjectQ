@@ -113,7 +113,7 @@
         <div class="modal-body modal-spa">
           <form id="new_answer_form" enctype="multipart/form-data" onsubmit="event.preventDefault();">
             <textarea id="new_answer_answer" class="form-control"></textarea>
-            <br><br>
+            <br>
 
             <center>
               <input id="new_answer_submit" type="submit" value="Update Answer" class="btn btn-squared btn-ask1" />
@@ -151,6 +151,32 @@
     answer_id = this.id.substring(12, this.id.length)
     $("#new_answer_answer").val($('#answer'+answer_id).text())
     $('#editAnswerModal').modal('show');
+  })
+
+  // Updating an answer
+  $("#new_answer_submit").click(function() {
+    const answer = $("#new_answer_answer").val()
+    console.log('new answer ' + answer)
+
+    // Sending ajax request to follow the question
+    $.ajax({
+      url: "/update_answer",
+      type: "POST",
+      data: { answer_id: answer_id, answer: answer },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        if (data.status.localeCompare("success") == 0) {
+          alert("updated")
+          location.reload()
+        } else {
+          alert("failed to update")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    });
   })
 
   // Following a question

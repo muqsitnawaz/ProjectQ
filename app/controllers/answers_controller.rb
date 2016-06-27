@@ -12,12 +12,23 @@ class AnswersController < ApplicationController
 
   def update
     puts "something received"
-    puts params
+    @answer = Answer.find_by_id(params[:answer_id])
 
-    if request.xhr?
-      render :json => {
-        :status => "success"
-      }
+    if !@answer.nil?
+      @answer.answer = params[:answer]
+      @answer.save
+
+      if request.xhr?
+        render :json => {
+          :status => "success"
+        }
+      end
+    else
+      if request.xhr?
+        render :json => {
+          :status => "failure"
+        }
+      end
     end
   end
 
