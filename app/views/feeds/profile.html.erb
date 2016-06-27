@@ -1,79 +1,122 @@
-<p>Edit your profile here</p>
+<div class="row main-padding" style="padding-top: 3em;">
 
-<h2>Interests</h2>
+  <!-- Left side of the page -->
+  <div class="col-xs-5">
+    <div class="row">
+      <div class="col-xs-12 main-border" style="margin-bottom: 2em; padding-bottom: 1em;">
+        <h7 class="heading">KNOWS ABOUT</h7>
+        <hr class="black-hr">
+        <p class="sub-heading">What topics do you know about?</p>
 
-<% @user.interests.sort.each do |interest| %>
-	<p> <%= interest.titleize %> </p>
-<% end %>
+        <p>
+        <% @user.interests.sort.each do |interest| %>
+           <%= interest.titleize %> .
+        <% end %>
+        </p>
 
-<%= form_tag("/add_interest", method: "post") do %>
-  <p>
-    <%= select_tag :interest, options_for_select(@interests) %>
-  </p>
- 
-  <p>
-    <%= submit_tag("Add Interest") %>
-  </p>
-<% end %>
+        <%= form_tag("/add_interest", method: "post") do %>
+          <p>
+            <%= select_tag :interest, options_for_select(@interests), class: "form-control" %>
+          </p>
 
-<h2>Education</h2>
+          <center>
+            <%= submit_tag '+', class: "btn-round" %>
+          </center>
+        <% end %>
+          </div>
+      <div class="col-xs-12 main-border" style="padding-bottom: 1em;">
+        <h7 class="heading">EDUCATION</h7>
+        <hr class="black-hr">
+        <p class="sub-heading">Where have you studied?</p>
 
-<% @user.education.each do |education| %>
-	<li> <h4> <%= education[:degree] %> from <%= education[:school] %> </h4> </li>
-<% end %>
+        <% @user.education.each do |education| %>
+          <li> <h4> <%= education[:degree] %> from <%= education[:school] %> </h4> </li>
+        <% end %>
 
-<%= form_tag("/add_education", method: "post") do %>
-  <p>
-    <%= select_tag :degree, options_for_select(@degrees) %>
-  </p>
+        <%= form_tag("/add_education", method: "post") do %>
+          <p>
+            <%= select_tag :degree, options_for_select(@degrees), class: "form-control" %>
+          </p>
 
-  <p>
-    <%= select_tag :subject, options_for_select(@subjects) %>
-  </p>
+          <p>
+            <%= select_tag :subject, options_for_select(@subjects), class: "form-control" %>
+          </p>
 
-  <p>
-    <%= text_field_tag :school %>
-  </p>
- 
-  <p>
-    <%= submit_tag("Add School") %>
-  </p>
-<% end %>
+          <p>
+            <%= text_field_tag :school, nil, class: "form-control" %>
+          </p>
 
-<h2>Employment</h2>
-<% @user.employments.each do |employment| %>
-	<li> <h4> <%= employment[:position] %> at <%= employment[:organization] %> 
-	from <%= employment[:start] %> to <%= employment[:end] %> </h4> </li>
-<% end %>
+          <center>
+            <%= submit_tag '+', class: "btn-round" %>
+          </center>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-<%= form_tag("/add_employment", method: "post") do %>
-  <p>
-    <%= text_field_tag :position %>
-  </p>
+  <!-- Right side of the page -->
+  <div class="col-xs-5 col-xs-offset-1">
+    <div class="row">
+      <div class="col-xs-12 main-border" style="margin-bottom: 2em; padding-bottom: 1em;">
+        <h7 class="heading">EMPLOYMENT</h7>
+        <hr class="black-hr">
+        <p class="sub-heading">Where have you worked?</p>
 
-  <p>
-    <%= text_field_tag :organization %>
-  </p>
+        <% @user.employments.each do |employment| %>
+          <li> <h4> <%= employment[:position] %> at <%= employment[:organization] %>
+          from <%= employment[:start] %> to <%= employment[:end] %> </h4> </li>
+        <% end %>
 
-  <p>
-    From <%= select_tag :start, options_for_select(((Date.today.year - 50)..Date.today.year).to_a) %>
-    To <%= select_tag :end, options_for_select(((Date.today.year - 50)..Date.today.year).to_a) %>
-  </p>
- 
-  <p>
-    <%= submit_tag("Add Employment") %>
-  </p>
-<% end %>
+        <%= form_tag("/add_employment", method: "post") do %>
+          <div class="row" style="margin-bottom: 1em;">
+            <div class="col-xs-6">
+              <label>Position:</label>
+            </div>
+            <div class="col-xs-6">
+              <%= text_field_tag :position, nil, class: "form-control" %>
+            </div>
+          </div>
 
-<h2>Location</h2>
-<i>Where do you live?</i>
+          <div class="row">
+            <div class="col-xs-6">
+              <label>Organization:</label>
+            </div>
+            <div class="col-xs-6">
+              <%= text_field_tag :organization, nil, class: "form-control" %>
+            </div>
+          </div>
 
-<%= form_tag("/update_location", method: "post") do %>
-  <p>
-    <%= text_field_tag :location, @user.location %>
-  </p>
+          <p>
+            From <%= select_tag :start, options_for_select(((Date.today.year - 50)..Date.today.year).to_a), class: "form-control" %>
+            To <%= select_tag :end, options_for_select(((Date.today.year - 50)..Date.today.year).to_a), class: "form-control" %>
+          </p>
 
-  <p>
-    <%= submit_tag("Update") %>
-  </p>
-<% end %>
+          <center>
+            <%= submit_tag '+', class: "btn-round" %>
+          </center>
+        <% end %>
+      </div>
+
+      <div class="col-xs-12 main-border" style="padding-bottom: 1em;">
+        <h7 class="heading">LOCATION</h7>
+        <hr class="black-hr">
+        <p class="sub-heading">Where do you currently live?</p>
+
+        <%= form_tag("/update_location", method: "post") do %>
+          <div class="row" style="margin-bottom: 1em;">
+            <div class="col-xs-6">
+              <label>Address:</label>
+            </div>
+            <div class="col-xs-6">
+              <%= text_field_tag :location, @user.location, class: "form-control" %>
+            </div>
+          </div>
+
+          <center>
+            <%= submit_tag '+', class: "btn-round" %>
+          </center>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

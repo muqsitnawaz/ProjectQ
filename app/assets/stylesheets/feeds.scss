@@ -1,3 +1,39 @@
 // Place all the styles related to the feeds controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.interests {
+  border: 1px solid #383838;
+}
+
+.black-hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #000;
+  margin-top: 0;
+  margin-bottom: 1em;
+  padding: 0;
+}
+
+.btn-round {
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  color: #fff;
+  background-color: #000;
+  font-size: 30px;
+}
+
+.heading {
+  color: #383838;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.sub-heading {
+  color: #383838;
+  margin-top: 0;
+  font-size: 15px;
+}

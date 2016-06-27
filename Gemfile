@@ -51,6 +51,7 @@ end
 #custom used
 gem 'devise'
 gem 'carrierwave'
+gem "font-awesome-rails"
 
 gem 'omniauth'
 gem 'omniauth-facebook'
