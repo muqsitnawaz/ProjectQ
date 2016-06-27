@@ -95,6 +95,37 @@
   </div>
 </div>
 
+<!-- Modal for editing a question -->
+<div class="modal bnr-modal fade" id="editQuestionModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Question</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <input id="new_question_content" type="text" class="form-control">
+            <textarea id="new_question_detail" class="form-control"></textarea>
+            <br>
+
+            <center>
+              <input id="new_question_submit" type="submit" value="Update Question" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
 <!-- Modal for editing an answer -->
 <div class="modal bnr-modal fade" id="editAnswerModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -111,7 +142,7 @@
       </div>
       <section>
         <div class="modal-body modal-spa">
-          <form id="new_answer_form" enctype="multipart/form-data" onsubmit="event.preventDefault();">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
             <textarea id="new_answer_answer" class="form-control"></textarea>
             <br>
 
@@ -125,6 +156,35 @@
   </div>
 </div>
 
+<!-- Modal for updating a reply -->
+<div class="modal bnr-modal fade" id="editReplyModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Reply</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <input id="new_reply_reply" class="form-control" />
+            <br>
+
+            <center>
+              <input id="new_reply_submit" type="submit" value="Update Reply" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript">
   // Answering a question
@@ -132,7 +192,7 @@
     question_id = this.id.substring(7, this.id.length)
     console.log('id: '+question_id)
 
-    $("#question-header").html($("#question-content"+question_id).val())
+    $("#question-header").html($("#question_content"+question_id).val())
     $("#answer_question_id").val(question_id)
     $('#answerModal').modal('show');
   })
@@ -145,6 +205,46 @@
     $("#reply_answer_id").val(answer_id)
     $('#replyModal').modal('show');
   });
+
+  // Editing a question
+  $("[id^=edit_question]").click(function() {
+    question_id = this.id.substring(13, this.id.length)
+    $("#new_question_content").val($('#question_content'+question_id).val())
+    $("#new_question_detail").val($('#question_detail'+question_id).text())
+    $('#editQuestionModal').modal('show');
+  })
+
+  // Updating a question
+  $("#new_question_submit").click(function() {
+    const question_content = $("#new_question_content").val()
+    const question_detail = $("#new_question_detail").val()
+
+    // Sending ajax request to follow the question
+    $.ajax({
+      url: "/update_question",
+      type: "POST",
+      data: {
+        question_id: question_id,
+        question_content: question_content,
+        question_detail: question_detail
+      },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        $('#editQuestionModal').modal('hide')
+
+        if (data.status.localeCompare("success") == 0) {
+          alert("updated")
+          location.reload()
+        } else {
+          alert("failed to update")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    })
+  })
 
   // Editing an answer
   $("[id^=edit_answerQ]").click(function() {
@@ -166,6 +266,8 @@
       dataType: "json",
       complete: function() {},
       success: function(data, textStatus, xhr) {
+        $('#editAnswerModal').modal('hide')
+
         if (data.status.localeCompare("success") == 0) {
           alert("updated")
           location.reload()
@@ -176,8 +278,43 @@
       error: function() {
         alert("error")
       }
-    });
+    })
   })
+
+  // Editing a reply
+  $("[id^=edit_reply]").click(function() {
+    reply_id = this.id.substring(10, this.id.length)
+    $("#new_reply_reply").val($('#reply'+reply_id).text())
+    $('#editReplyModal').modal('show');
+  })
+
+  // Updating a reply
+  $("#new_reply_submit").click(function() {
+    const reply = $("#new_reply_reply").val()
+
+    // Sending ajax request to follow the question
+    $.ajax({
+      url: "/update_reply",
+      type: "POST",
+      data: { reply_id: reply_id, reply: reply },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        $('#editReplyModal').modal('hide')
+
+        if (data.status.localeCompare("success") == 0) {
+          alert("updated")
+          location.reload()
+        } else {
+          alert("failed to update")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    })
+  })
+
 
   // Following a question
   $("[id^=follow]").click(function() {

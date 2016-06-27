@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   # Question's paths
   resource :questions
   post '/follow' => 'questions#follow'
+  post '/update_question' => 'questions#update'
 
   # Answer's paths
   resource :answers
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
 
   # Replies paths
   resource :replies
+  post '/update_reply' => 'replies#update'
 
   get 'staticpages/login'
   get 'staticpages/signup'

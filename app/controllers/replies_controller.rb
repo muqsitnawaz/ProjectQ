@@ -9,6 +9,27 @@ class RepliesController < ApplicationController
     end
   end
 
+  def update
+    @reply = Reply.find_by_id(params[:reply_id])
+
+    if !@reply.nil?
+      @reply.reply = params[:reply]
+      @reply.save
+
+      if request.xhr?
+        render :json => {
+          :status => "success"
+        }
+      end
+    else
+      if request.xhr?
+        render :json => {
+          :status => "failure"
+        }
+      end
+    end
+  end
+
   def destroy
     @reply = Reply.find_by_id(params[:id])
     question_id = @reply.answer.question.id

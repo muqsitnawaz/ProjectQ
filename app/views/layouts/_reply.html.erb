@@ -1,10 +1,17 @@
 <div style="border: 1px solid black; margin: 2px; padding: 5px;">
-  <p><%= reply.reply %></p>
-  <i>- <%= reply.user.name %></i>
-  <br>
+  <div class="row">
+    <!-- Showing answer and username -->
+    <div class="col-xs-9">
+      <p id="reply<%= reply.id %>"><%= reply.reply %></p>
+      <i>- <%= reply.user.name %></i>
+    </div>
 
-  <% if reply.user == current_user %>
-    <button id="edit<%= reply.id %>">edit</button>
-    <button> <%= link_to 'delete', replies_path(:id => reply.id), method: :delete, data: { confirm: 'Are you sure?'} %> </button>
-  <% end %>
+    <!-- Showing edit and delete options -->
+    <div class="col-xs-3">
+      <% if reply.user == current_user %>
+        <i id="edit_reply<%= reply.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, replies_path(:id => reply.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% end %>
+    </div>
+  </div>
 </div>

@@ -12,7 +12,7 @@
 
     <div class="question-content">
       <!-- Hiddent field for question content -->
-      <input type="text" id="question-content<%= question.id %>" value="<%= question.content %>" hidden>
+      <input type="text" id="question_content<%= question.id %>" value="<%= question.content %>" hidden>
 
       <div class="row">
         <!-- Question's heading -->
@@ -36,7 +36,7 @@
     </div><br/>
 
     <div class="question-details">
-      <%= question.detail %>
+      <p id="question_detail<%= question.id %>"><%= question.detail %></p>
     </div>
 
     <div class="small-details">

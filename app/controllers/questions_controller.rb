@@ -29,11 +29,39 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def edit
-    @question = Question.find_by_id(params[:id])
+  def update
+    @question = Question.find_by_id(params[:question_id])
 
+    if !@question.nil?
+      @question.content = params[:question_content]
+      @question.detail = params[:question_detail]
+      @question.save
+
+      if request.xhr?
+        render :json => {
+          :status => "success"
+        }
+      end
+    else
+      if request.xhr?
+        render :json => {
+          :status => "failure"
+        }
+      end
+    end
   end
 
+  def destroy
+    @question = Question.find_by_id(params[:id])
+
+    if @question.user == current_user
+      @question.destroy
+    end
+
+    redirect_to request.path
+  end
+
+  # Custom methods
   def follow
     question_id = params[:question_id].to_i
     @user = User.find_by_email(current_user.email)
@@ -47,16 +75,6 @@ class QuestionsController < ApplicationController
         :status => "success"
       }
     end
-  end
-
-  def destroy
-    @question = Question.find_by_id(params[:id])
-
-    if @question.user == current_user
-      @question.destroy
-    end
-
-    redirect_to request.path
   end
 
 private
