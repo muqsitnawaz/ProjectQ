@@ -32,8 +32,9 @@
     </div>
   </div>
 </div>
+
 <% if user_signed_in? %>
-  <%=render 'layouts/modal'%>
-  <%else%>
+  <%=render 'layouts/posting_modals'%>
+<%else%>
   <%= render 'layouts/signup'%>
 <%end%>

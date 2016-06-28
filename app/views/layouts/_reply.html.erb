@@ -7,7 +7,7 @@
     </div>
 
     <!-- Showing edit and delete options -->
-    <div class="col-xs-2">
+    <div class="col-xs-2" style="margin-left: -5px;">
       <% if reply.user == current_user %>
         <i id="edit_reply<%= reply.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
         <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, replies_path(:id => reply.id), method: :delete, data: { confirm: 'Are you sure?'} %>
