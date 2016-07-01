@@ -28,13 +28,8 @@
       <% end %>
       <%= link_to "Sign In", new_user_session_path, class: "btn btn-ask1"%>
     <!-- notifications -->
+    
     <!--profile pic show to make  -->
     </div>
   </div>
 </div>
-
-<% if user_signed_in? %>
-  <%=render 'layouts/posting_modals'%>
-<%else%>
-  <%= render 'layouts/signup'%>
-<%end%>

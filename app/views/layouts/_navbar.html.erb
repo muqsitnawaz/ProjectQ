@@ -21,7 +21,7 @@
     <div class="col-md-3 col-md-offset-1 button-group-nav">
       <br/>
       <!-- read wall -->
-      <%= link_to newsfeed_path, class: "btn btn-nav" do %>
+      <%= link_to root_path, class: "btn btn-nav" do %>
         <i class="glyphicon glyphicon-list-alt"></i>
       <% end %>
 
@@ -31,7 +31,7 @@
       <% end %>
 
       <!-- notifications -->
-      <%= link_to new_user_registration_path, class: "btn btn-nav" do %>
+      <%= link_to notifications_path, class: "btn btn-nav" do %>
         <i class="glyphicon glyphicon-bullhorn"></i>
       <% end %>
 
@@ -49,8 +49,10 @@
   </div>
 </div>
 
+<!-- Rendering modals for posting and editing -->
 <% if user_signed_in? %>
-  <%=render 'layouts/posting_modals'%>
+  <%= render 'layouts/posting_modals' %>
+  <%= render 'layouts/editing_modals' %>
 <%else%>
-  <%= render 'layouts/signup'%>
+  <%= render 'layouts/signup' %>
 <%end%>

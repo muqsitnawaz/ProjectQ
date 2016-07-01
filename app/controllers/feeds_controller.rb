@@ -3,21 +3,27 @@ class FeedsController < ApplicationController
 
   def index
     @interests = get_all_interests.sort!
-    @questions = Question.order('created_at DESC').limit(10)
-  end
 
-  def newsfeed
-    @interests = get_all_interests.sort!
-    @questions = Question.all
-    @matches = []
+    if user_signed_in?
+      @questions = Question.all
+      matches = []
 
-    @questions.each do |question|
-      current_user.interests.each do |interest|
-        if question.topics.include? interest
-          @matches << question
+      @questions.each do |question|
+        current_user.interests.each do |interest|
+          if question.topics.include? interest
+            matches << question
+          end
         end
       end
+      @questions = matches
+    else
+      @questions = Question.order('created_at DESC').limit(10)
     end
+  end
+
+  def notifications
+    @interests = get_all_interests.sort!
+    @notifications = Notification.where(:user_id => current_user.id).order('created_at DESC')
   end
 
   # User profile related methods

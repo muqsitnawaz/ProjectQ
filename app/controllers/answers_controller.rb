@@ -11,7 +11,6 @@ class AnswersController < ApplicationController
   end
 
   def update
-    puts "something received"
     @answer = Answer.find_by_id(params[:answer_id])
 
     if !@answer.nil?
@@ -72,7 +71,7 @@ class AnswersController < ApplicationController
   end
 
 private
-   def answer_params
-     params.require(:answer).permit(:question_id, :user_id, :answer, :image, :upvotes, :downvotes)
-   end
+  def answer_params
+    params.require(:answer).permit(:question_id, :user_id, :answer, :image, :upvotes, :downvotes)
+  end
 end

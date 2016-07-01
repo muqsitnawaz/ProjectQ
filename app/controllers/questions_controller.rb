@@ -6,13 +6,15 @@ class QuestionsController < ApplicationController
 
     # Fetching questions depending upon query type
     if params[:id].nil?
-      if params[:type] == 'asked'
-        @questions = Question.where(:user_id => current_user.id)
-      elsif params[:type] == 'answered'
-        @questions = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id})
-      elsif params[:type] == 'following'
-        @questions = Question.where(:id => current_user.following)
-      else
+      if !current_user.nil?
+        if params[:type] == 'asked'
+          @questions = Question.where(:user_id => current_user.id)
+        elsif params[:type] == 'answered'
+          @questions = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id})
+        elsif params[:type] == 'following'
+          @questions = Question.where(:id => current_user.following)
+        end
+      else 
         @questions = Question.all.order('updated_at DESC')
       end
     else

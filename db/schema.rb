@@ -30,6 +30,17 @@ ActiveRecord::Schema.define(version: 20160622150222) do
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
 
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "notification_type"
+    t.integer  "question_id"
+    t.integer  "poster_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
+
   create_table "questions", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "content",                         null: false

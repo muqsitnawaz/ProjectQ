@@ -1,0 +1,12 @@
+<div class="container">
+  <h2>Your notifications</h2>
+
+  <!-- Notifications area -->
+  <div class="row">
+    <div class="col-xs-4">
+      <% @notifications.each do |notification| %>
+        <%= render 'notification', :notification => notification %>
+      <% end %>
+    </div>
+  </div>
+</div>
