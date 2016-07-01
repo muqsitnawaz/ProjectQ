@@ -2,8 +2,21 @@
   <div class="row">
     <!-- Showing answer and username -->
     <div class="col-xs-10">
-      <p id="answer<%= answer.id %>"><%= answer.answer %></p>
-      <i>- <%= answer.user.name %></i>
+      <!-- to make read more link -->
+      <% if answer.answer.length > 250 %>
+        <p id="answer<%= answer.id %>" class="truncated-answer" style="display:inline;"><%= truncate(answer.answer, length: 250) %></p>
+        <%= link_to 'Read more', '', id: "read-more-#{answer.id}" %>
+        <script>
+          $('#read-more-<%= answer.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(".truncated-answer").html('<%= escape_javascript answer.answer %>')
+          })
+        </script>
+      <% else %>
+        <p id="answer<%= answer.id %>"><%= answer.answer %></p>
+      <% end %>
+      
+      <p style="margin-top: 0.3em;"><i> - <%= answer.user.name %></i></p>
     </div>
 
     <!-- Showing edit and delete options -->
