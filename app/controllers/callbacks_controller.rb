@@ -17,7 +17,7 @@ class CallbacksController < Devise::OmniauthCallbacksController
   end
 
   def twitter
-    @user = User.from_omniauth(request.env["omniauth.auth"], current_user)
+    @user = User.from_omniauth(request.env["omniauth.auth"])
     sign_in_and_redirect @user
   end
 end

@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20160622150222) do
     t.text     "employments",            default: "--- []\n"
     t.string   "location",               default: ""
     t.text     "following",              default: "--- []\n"
-    t.string   "email",                  default: "",         null: false
+    t.string   "email",                  default: ""
     t.string   "encrypted_password",     default: "",         null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

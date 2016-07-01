@@ -38,7 +38,7 @@ class FeedsController < ApplicationController
   end
 
   def add_interest
-  	@user = User.find_by_email(current_user.email)
+  	@user = User.find_by_id(current_user.id)
   	if !@user.interests.include? params[:interest]
   		@user.interests << params[:interest]
   	end
@@ -49,7 +49,7 @@ class FeedsController < ApplicationController
   def add_education
   	education = {:degree => params[:degree], :subject => params[:subject], :school => params[:school]}
 
-  	@user = User.find_by_email(current_user.email)
+  	@user = User.find_by_id(current_user.id)
   	if !@user.education.include? education
   		@user.education << education
   	end
@@ -60,7 +60,7 @@ class FeedsController < ApplicationController
   def add_employment
   	employment = {:position => params[:position], :organization => params[:organization], :start => params[:start], :end => params[:end]}
 
-  	@user = User.find_by_email(current_user.email)
+  	@user = User.find_by_id(current_user.id)
   	if !@user.employments.include? employment
   		@user.employments << employment
   	end
@@ -69,7 +69,7 @@ class FeedsController < ApplicationController
   end
 
   def update_location
-  	@user = User.find_by_email(current_user.email)
+  	@user = User.find_by_id(current_user.id)
   	@user.location = params[:location]
   	@user.save
   	redirect_to profile_path

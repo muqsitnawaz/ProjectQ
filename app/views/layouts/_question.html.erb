@@ -33,6 +33,7 @@
       <div class="row">
         <div class="col-xs-12">
           <p>Posted by <%= question.user.name %>,<i> <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</i></p>
+          <%= social_share_button_tag(question.content) %>
         </div>
       </div>
 
