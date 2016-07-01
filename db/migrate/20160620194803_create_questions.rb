@@ -5,7 +5,8 @@ class CreateQuestions < ActiveRecord::Migration
       t.string :content,             null: false
       t.string :detail
       t.string :image
-      t.text :topics,	default: []
+      t.text :topics,	        default: []
+      t.text :followers,      default: []
 
       t.timestamps null: false
     end

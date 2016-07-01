@@ -33,8 +33,6 @@
 <% if user_signed_in? %>
   <%= render 'layouts/posting_modals' %>
   <%= render 'layouts/editing_modals' %>
-<% else %>
-  <%= redirect_to new_user_session_path %>
 <% end %>
 
 <script type="text/javascript">

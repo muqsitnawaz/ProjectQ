@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20160622150222) do
     t.string   "detail"
     t.string   "image"
     t.text     "topics",     default: "--- []\n"
+    t.text     "followers",  default: "--- []\n"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
   end

@@ -1,35 +1,26 @@
-<% if user_signed_in? %>
-<%else%>
-<%= render 'layouts/navbar1'%>
+<% if !user_signed_in? %>
+    <%= render 'layouts/navbar1'%>
 <%end%>
+
 <div class="container main-wall">
-  <!--navbar-->
   <div class="row">
-    <!-- left bar  -->
-    <%= render 'layouts/leftbar'%>
-    <!--question area  -->
-    <div class="col-md-5 question-area">
-      <div class="question-content">
-        Which Programming Languages to learn in 2015?
-      </div>
-      <br/>
-      <div class="question-image">
+    <!-- Leftbar  -->
+    <div class="col-xs-2">
+      <%= render 'layouts/leftbar'%>
+    </div>
 
-      </div>
-      <br/>
-      <div class="question-details">
-        I am a fresh graduate and have so far not found
-        any any luck in landing a job being
-      </div>
-      <div class="small-details">
-        <span id="views"><b>*</b> 44 views </span><span id="answers"><b>*</b> 4 answers</span>
-      </div>
-
-      <div class="voting">
-        <i class="glyphicon glyphicon-thumbs-up"></i><span id="upvote"><a>Upvote</a> </span><i class="glyphicon glyphicon-thumbs-down"></i><span id="downvote"><a>Downvote</a></span>
+    <!-- Questions area -->
+    <div class="col-xs-7">
+      <div class="question-area">
+        <% @questions.each do |question| %>
+            <%= render 'layouts/question', :question => question, :answers => question.answers, :full => false %>
+        <% end %>
       </div>
     </div>
-    <!-- suggestions -->
-    <%= render 'layouts/suggestions'%>
+
+    <!-- Suggestions -->
+    <div class="col-xs-3">
+      <%= render 'layouts/suggestions'%>
+    </div>
   </div>
 </div>

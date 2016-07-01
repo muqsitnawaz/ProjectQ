@@ -3,6 +3,7 @@ class FeedsController < ApplicationController
 
   def index
     @interests = get_all_interests.sort!
+    @questions = Question.order('created_at DESC').limit(10)
   end
 
   def newsfeed

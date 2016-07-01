@@ -64,11 +64,23 @@ class QuestionsController < ApplicationController
   # Custom methods
   def follow
     question_id = params[:question_id].to_i
+
+    # Getting models
     @user = User.find_by_email(current_user.email)
+    @question = Question.find_by_id(question_id)
+
+    # Adding follow details
     if !@user.following.include? question_id
       @user.following << question_id
     end
     @user.save
+
+    if !@question.nil? 
+      if !@question.followers.include? @user.id
+        @question.followers << @user.id
+        @question.save
+      end
+    end
 
     if request.xhr?
       render :json => {

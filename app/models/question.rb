@@ -5,4 +5,5 @@ class Question < ActiveRecord::Base
   mount_uploader :image, ImageUploader
   validates :content, :uniqueness => true
   serialize :topics
+  serialize :followers
 end
