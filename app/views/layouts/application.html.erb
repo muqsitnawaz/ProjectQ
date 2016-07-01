@@ -6,8 +6,10 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <% if user_signed_in? %>
+
+  	<!-- Rendering navigation bar -->
     <%= render 'layouts/navbar'%>
-    <%else%>
+    <% else %>
 
   <%end%>
 </head>
