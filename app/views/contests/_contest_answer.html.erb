@@ -1,0 +1,29 @@
+<div style="padding: 5px;">
+  <div class="row">
+    <!-- Showing answer and username -->
+    <div class="col-xs-10">
+      <!-- to make read more link -->
+      <% if contest_answer.answer.length > 250 %>
+        <p id="contest_answer<%= answer.id %>" class="truncated-answer" style="display:inline;"><%= truncate(contest_answer.answer, length: 250) %></p>
+        <%= link_to 'Read more', '', id: "read-more-#{contest_answer.id}" %>
+        <script>
+          $('#read-more-<%= contest_answer.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(".truncated-answer").html('<%= escape_javascript contest_answer.answer %>')
+          })
+        </script>
+      <% else %>
+        <p><%= contest_answer.answer %></p>
+      <% end %>
+      
+      <p style="margin-top: 0.3em;"><i> - <%= contest_answer.user.name %></i></p>
+    </div>
+
+    <!-- Showing edit and delete options -->
+    <div class="col-xs-2">
+      <% if contest_answer.user == current_user %>
+        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, answers_path(:id => answer.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -16,7 +16,11 @@ class ContestsController < ApplicationController
 
     if is_admin?
         @is_admin = true
-        @contests = Contest.where(:user_id => current_user.id)
+        if params[:id].nil?
+          @contests = Contest.where(:user_id => current_user.id)
+        else
+          @contest = Contest.find_by_id(params[:id])
+        end
     else
       @contests = Contest.all
     end

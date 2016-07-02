@@ -1,13 +1,21 @@
 <!-- Template for rendering a contest -->
-<div class="row" style="margin-top: 0.5em;">
+<div class="row" style="margin-top: 0.5em; margin-bottom:1em;">
   <div class="col-xs-12">
     <div>
-      <!-- Hidden field for question content -->
+      <!-- Hidden field for contest's content -->
       <input type="text" id="contest_content<%= contest.id %>" value="<%= contest.content %>" hidden>
 
-      <!-- Question's header -->
       <div class="row">
-        <!-- Question's content -->
+        <!-- Contest's status and deadline -->
+        <div class="col-xs-12">
+          <% if contest.status == 'open' %>
+            <p><strong><span class="status-open"><%= contest.status.upcase! %></span>, ENDS ON <%= contest.end_date %></strong></p>
+          <% else %>
+            <p><strong><span class="status-closed"><%= contest.status.upcase! %></span>, CLOSED ON <%= contest.end_date %></strong></p>
+          <% end %>
+        </div>
+
+        <!-- Contest's content -->
         <div class="col-xs-10 question-content" >
           <% if is_admin %>
             <%= link_to contest.content, contests_path(:id => contest.id) %>
@@ -16,7 +24,7 @@
           <% end %>
         </div>
 
-        <!-- Question edit and delete buttons -->
+        <!-- Contest edit and delete buttons -->
         <div class="col-xs-2">
           <% if is_admin %>
             <i id="edit_contest<%= contest.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
@@ -25,14 +33,13 @@
         </div>
       </div>
 
-      <!-- Question's owner name -->
+      <!-- Contest's OP -->
       <div class="row">
         <div class="col-xs-12">
           <p>Posted by Admin,<i> <%= (Time.now.to_date - contest.created_at.to_date).to_i %> day(s) ago</i></p>
           <%= social_share_button_tag(contest.content) %>
         </div>
       </div>
-
     </div><br/>
 
     <div class="question-image">
@@ -43,15 +50,21 @@
       <p id="contest_detail<%= contest.id %>"><%= contest.detail %></p>
     </div>
 
-    <!-- Showing Answer, Follow and Share buttons -->
+    <!-- Showing Answer and End Now buttons -->
     <% if is_admin %>  
-      <button id="endC<%= contest.id %>" class="btn btn-default">End Contest</button>
+      <button class="btn btn-default">Answers | <%= contest.contest_answers.length %></button>
+      <button id="endC<%= contest.id %>" class="btn btn-default">End Now</button>
     <% else %>
       <button id="answerC<%= contest.id %>" class="btn btn-default">Answer | <%= contest.contest_answers.length %></button>
     <% end %>
 
-    <% if is_admin %>
+    <!-- Showing contest's answers -->
+    <% if is_admin && full == true %>
       <p>Need to show answers to admin</p>
+
+      <% contest.contest_answers.each do |contest_answer| %>
+        <%= render 'contest_answer', :contest_answer => contest_answer %>
+      <% end %>
     <% end %>
   </div>
 </div>

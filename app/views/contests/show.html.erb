@@ -12,6 +12,7 @@
     <!-- Contests area -->
     <div class="col-xs-7">
       <div class="contests-area">
+        <!-- Display a little header -->
         <% if @is_admin %>
           <div class="row">
             <div class="col-xs-8">
@@ -25,8 +26,13 @@
           <h3>Showing all contests</h3>
         <% end %>
 
-        <% @contests.each do |contest| %>
-          <%= render 'contest', :contest => contest, :is_admin => @is_admin %>
+        <!-- Displaying actual contests -->
+        <% if @contests.nil? %>
+          <%= render 'contest', :contest => @contest, :is_admin => @is_admin, :full => true %>
+        <% else %>
+          <% @contests.each do |contest| %>
+            <%= render 'contest', :contest => contest, :is_admin => @is_admin, :full => false %>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -124,12 +130,54 @@
   </div>
 </div>
 
+<!-- Posting ContestAnswer modal -->
+<div class="modal bnr-modal fade" id="contestAnswerModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4 id="contest-header"></h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <% @contest_answer = ContestAnswer.new %>
+          <%= form_for @contest_answer, :url => { :controller =>"contest_answers", :action =>"create"}  do |f| %>
+          <div class="form-group">
+            <%= f.text_area :answer, rows: 5, class: 'form-control' %>
+            <%= f.hidden_field :contest_id %>
+          </div>
+          <div class="row" style="padding-top:3em;">
+            <center>
+              <%= f.file_field :image,class: 'btn btn-squared btn-ask1' %>
+              <%= f.submit "Post Answer", class:'btn btn-squared btn-ask1'%>
+            </center>
+          </div>
+          <%end%>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript">
+  // Answering a contest
+  $("[id^=answerC]").click(function() {
+    contest_id = this.id.substring(7, this.id.length)
+    $("#contest-header").html($("#contest_content"+contest_id).val())
+    $("#contest_answer_contest_id").val(contest_id)
+    $('#contestAnswerModal').modal('show');
+  })
+
   // Editing a contest
   $("[id^=edit_contest").click(function() {
     contest_id = this.id.substring(12, this.id.length)
-    console.log('contest id '+contest_id)
     $("#new_contest_content").val($('#contest_content'+contest_id).val())
     $("#new_contest_detail").val($('#contest_detail'+contest_id).text())
     $('#editContestModal').modal('show');
