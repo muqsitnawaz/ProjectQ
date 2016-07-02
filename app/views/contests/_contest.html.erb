@@ -1,14 +1,6 @@
 <!-- Template for rendering a contest -->
 <div class="row" style="margin-top: 0.5em;">
   <div class="col-xs-12">
-    <!-- Question's topics -->
-    <p>
-      <i>In</i>
-      <% contest.topics.each do |topic| %>
-        <%= topic %>
-      <% end %>
-    </p>
-
     <div>
       <!-- Hidden field for question content -->
       <input type="text" id="contest_content<%= contest.id %>" value="<%= contest.content %>" hidden>
@@ -55,7 +47,7 @@
     <% if is_admin %>  
       <button id="endC<%= contest.id %>" class="btn btn-default">End Contest</button>
     <% else %>
-      <button id="answerC<%= contest.id %>" class="btn btn-default">Answer | <%= contest.answers.length %></button>
+      <button id="answerC<%= contest.id %>" class="btn btn-default">Answer | <%= contest.contest_answers.length %></button>
     <% end %>
 
     <% if is_admin %>

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   # Contests paths
   resource :contests
+  post '/update_contest' => 'contests#update'
 
   # Answers paths
   resource :answers

@@ -38,6 +38,7 @@
   </div>
 </div>
 
+<!-- Posting contest modal -->
 <div class="modal bnr-modal fade" id="contestModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -53,10 +54,7 @@
       </div>
       <section>
         <div class="modal-body modal-spa">
-          <!-- Init a new contest -->
           <% @contest = Contest.new %>
-
-          <!-- Get user input -->
           <%= form_for @contest,:url =>{ :controller =>"contests", :action =>"create"}  do |f| %>
           <div class="form-group">
             <div class="row" style="padding-top:1em;">
@@ -95,9 +93,77 @@
   </div>
 </div>
 
+<!-- Editing contest modal -->
+<div class="modal bnr-modal fade" id="editContestModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Contest</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <input id="new_contest_content" type="text" class="form-control">
+            <textarea id="new_contest_detail" class="form-control"></textarea>
+            <br>
+
+            <center>
+              <input id="new_contest_submit" type="submit" value="Update Contest" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
 
 <script type="text/javascript">
-  $("#start_contest").click(function() {
-
+  // Editing a contest
+  $("[id^=edit_contest").click(function() {
+    contest_id = this.id.substring(12, this.id.length)
+    console.log('contest id '+contest_id)
+    $("#new_contest_content").val($('#contest_content'+contest_id).val())
+    $("#new_contest_detail").val($('#contest_detail'+contest_id).text())
+    $('#editContestModal').modal('show');
   })
+
+  // Updating a contest
+  $("#new_contest_submit").click(function() {
+  const contest_content = $("#new_contest_content").val()
+  const contest_detail = $("#new_contest_detail").val()
+
+  // Sending ajax request to follow the contest
+  $.ajax({
+    url: "/update_contest",
+    type: "POST",
+    data: {
+      contest_id: contest_id,
+      contest_content: contest_content,
+      contest_detail: contest_detail
+    },
+    dataType: "json",
+    complete: function() {},
+    success: function(data, textStatus, xhr) {
+      $('#editContestModal').modal('hide')
+
+      if (data.status.localeCompare("success") == 0) {
+        alert("updated")
+        location.reload()
+      } else {
+        alert("failed to update")
+      }
+    },
+    error: function() {
+      alert("error")
+    }
+  })
+})
 </script>

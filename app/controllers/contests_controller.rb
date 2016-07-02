@@ -22,7 +22,29 @@ class ContestsController < ApplicationController
     end
   end
 
-  def destory
+  def update
+    @contest =Contest.find_by_id(params[:contest_id])
+
+    if !@contest.nil?
+      @contest.content = params[:contest_content]
+      @contest.detail = params[:contest_detail]
+      @contest.save
+
+      if request.xhr?
+        render :json => {
+          :status => "success"
+        }
+      end
+    else
+      if request.xhr?
+        render :json => {
+          :status => "failure"
+        }
+      end
+    end
+  end
+
+  def destroy
     @contest = Contest.find_by_id(params[:id])
 
     if is_admin?
