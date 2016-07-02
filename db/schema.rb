@@ -33,11 +33,11 @@ ActiveRecord::Schema.define(version: 20160622150222) do
   create_table "contest_answers", force: :cascade do |t|
     t.integer  "contest_id"
     t.integer  "user_id"
-    t.string   "answer",     null: false
+    t.string   "answer",                     null: false
     t.string   "image"
-    t.boolean  "winner"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "is_winner",  default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "contest_answers", ["contest_id"], name: "index_contest_answers_on_contest_id", using: :btree
@@ -45,16 +45,17 @@ ActiveRecord::Schema.define(version: 20160622150222) do
 
   create_table "contests", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "prize",                           null: false
-    t.string   "status",     default: "open"
-    t.string   "content",                         null: false
-    t.string   "detail",                          null: false
+    t.integer  "prize",                              null: false
+    t.string   "status",        default: "open"
+    t.string   "content",                            null: false
+    t.string   "detail",                             null: false
     t.string   "image"
-    t.text     "topics",     default: "--- []\n"
+    t.text     "topics",        default: "--- []\n"
     t.date     "end_date"
+    t.boolean  "winner_chosen", default: false
     t.integer  "winner_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   add_index "contests", ["user_id"], name: "index_contests_on_user_id", using: :btree

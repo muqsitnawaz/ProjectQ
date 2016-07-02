@@ -20,6 +20,7 @@ class CreateQuestions < ActiveRecord::Migration
       t.string :image
       t.text :topics,         default: []
       t.date :end_date
+      t.boolean :winner_chosen, default: false
       t.integer :winner_id
 
       t.timestamps null: false
@@ -41,7 +42,7 @@ class CreateQuestions < ActiveRecord::Migration
       t.belongs_to :user, index:true
       t.string :answer,              null: false
       t.string :image
-      t.boolean :winner
+      t.boolean :is_winner,      default: false
 
       t.timestamps null: false
     end

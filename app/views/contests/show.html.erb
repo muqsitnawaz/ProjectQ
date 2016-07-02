@@ -61,7 +61,7 @@
       <section>
         <div class="modal-body modal-spa">
           <% @contest = Contest.new %>
-          <%= form_for @contest,:url =>{ :controller =>"contests", :action =>"create"}  do |f| %>
+          <%= form_for @contest,:url =>{:controller=>"contests",:action=>"create"} do |f| %>
           <div class="form-group">
             <div class="row" style="padding-top:1em;">
               <div class="col-xs-6">

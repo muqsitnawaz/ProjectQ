@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   # ContestAnswers paths
   resource :contest_answers
+  post '/mark_winner' => 'contest_answers#mark_winner'
 
   # Replies paths
   resource :replies

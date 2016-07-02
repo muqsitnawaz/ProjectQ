@@ -15,6 +15,12 @@
           <% end %>
         </div>
 
+        <div class="col-xs-12">
+          <% if contest.winner_chosen %>
+            <p><strong>WON BY <span style="color:green;"><%= User.find_by_id(contest.winner_id).name.upcase! %></span></strong></p>
+          <% end %>
+        </div>
+
         <!-- Contest's content -->
         <div class="col-xs-10 question-content" >
           <% if is_admin %>

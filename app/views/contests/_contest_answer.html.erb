@@ -1,6 +1,6 @@
 <div style="padding: 5px;">
   <div class="row">
-    <!-- Showing answer and username -->
+    <!-- Showing contest answer and username -->
     <div class="col-xs-10">
       <!-- to make read more link -->
       <% if contest_answer.answer.length > 250 %>
@@ -21,9 +21,41 @@
 
     <!-- Showing edit and delete options -->
     <div class="col-xs-2">
-      <% if contest_answer.user == current_user %>
-        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, answers_path(:id => answer.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% if is_admin? && contest_answer.contest.winner_chosen == false %>
+        <button id="mark_winner<%= contest_answer.id %>">Mark Winner</button>
+      <% else %>
+        <% if contest_answer.is_winner %>
+          <button style="color: green;">Winner</button>
+        <% end %>
       <% end %>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $("[id^=mark_winner]").click(function() {
+    const contest_answer_id = this.id.substring(11, this.id.length)
+    
+    // Sending ajax request to follow the contest
+    $.ajax({
+      url: "/mark_winner",
+      type: "POST",
+      data: {
+        contest_answer_id: contest_answer_id,
+      },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        if (data.status.localeCompare("success") == 0) {
+          alert("done")
+          location.reload()
+        } else {
+          alert("failed. please try again")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    })
+  })
+</script>

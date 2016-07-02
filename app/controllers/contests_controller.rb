@@ -17,12 +17,12 @@ class ContestsController < ApplicationController
     if is_admin?
         @is_admin = true
         if params[:id].nil?
-          @contests = Contest.where(:user_id => current_user.id)
+          @contests = Contest.where(:user_id => current_user.id).order('created_at DESC')
         else
           @contest = Contest.find_by_id(params[:id])
         end
     else
-      @contests = Contest.all
+      @contests = Contest.all.order('created_at DESC')
     end
   end
 
