@@ -7,8 +7,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :interests,            default: []
       t.text :employments,          default: []
       t.string :location,           default: ""
-
       t.text :following,            default: []
+      t.boolean :is_admin,          default: false
 
       ## Database authenticatable
       t.string :email             , default: ""

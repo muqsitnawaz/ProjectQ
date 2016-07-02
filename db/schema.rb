@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20160622150222) do
     t.text     "employments",            default: "--- []\n"
     t.string   "location",               default: ""
     t.text     "following",              default: "--- []\n"
+    t.boolean  "is_admin",               default: false
     t.string   "email",                  default: ""
     t.string   "encrypted_password",     default: "",         null: false
     t.string   "reset_password_token"
