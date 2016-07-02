@@ -30,6 +30,35 @@ ActiveRecord::Schema.define(version: 20160622150222) do
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
 
+  create_table "contest_answers", force: :cascade do |t|
+    t.integer  "contest_id"
+    t.integer  "user_id"
+    t.string   "answer",     null: false
+    t.string   "image"
+    t.boolean  "winner"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "contest_answers", ["contest_id"], name: "index_contest_answers_on_contest_id", using: :btree
+  add_index "contest_answers", ["user_id"], name: "index_contest_answers_on_user_id", using: :btree
+
+  create_table "contests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "prize",                           null: false
+    t.string   "status",     default: "open"
+    t.string   "content",                         null: false
+    t.string   "detail",                          null: false
+    t.string   "image"
+    t.text     "topics",     default: "--- []\n"
+    t.date     "end_date"
+    t.integer  "winner_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "contests", ["user_id"], name: "index_contests_on_user_id", using: :btree
+
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "notification_type"
@@ -44,7 +73,7 @@ ActiveRecord::Schema.define(version: 20160622150222) do
   create_table "questions", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "content",                         null: false
-    t.string   "detail"
+    t.string   "detail",                          null: false
     t.string   "image"
     t.text     "topics",     default: "--- []\n"
     t.text     "followers",  default: "--- []\n"
@@ -67,12 +96,13 @@ ActiveRecord::Schema.define(version: 20160622150222) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                   default: "",         null: false
+    t.boolean  "is_admin",               default: false
     t.text     "education",              default: "--- []\n"
     t.text     "interests",              default: "--- []\n"
     t.text     "employments",            default: "--- []\n"
     t.string   "location",               default: ""
     t.text     "following",              default: "--- []\n"
-    t.boolean  "is_admin",               default: false
+    t.text     "contests",               default: "--- []\n"
     t.string   "email",                  default: ""
     t.string   "encrypted_password",     default: "",         null: false
     t.string   "reset_password_token"

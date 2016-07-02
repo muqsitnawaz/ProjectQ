@@ -6,7 +6,9 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:facebook,:google_oauth2,:twitter]
 
   has_many :questions
+  has_many :contests
   has_many :answers
+  has_many :contest_answers
   has_many :replies
   has_many :notifications
 

@@ -6,12 +6,25 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-@user = User.create(
-  :name => 'Nofel Yasin',
-  :interests => ['Computer Science'],
-  :location => 'Karachi',
-  :is_admin => 'false',
-  :email => 'nofel@gmail.com',
-  :password => 'nofelyasin',
-)
-@user.save
+users_params = [
+  {
+    :name => 'Muqsit Nawaz',
+    :interests => ['Computer Science'],
+    :location => 'Lahore',
+    :is_admin => true,
+    :email => 'muqsitnawaz@gmail.com',
+    :password => 'muqsitnawaz',
+  },{
+    :name => 'Nofel Yasin',
+    :interests => ['Computer Science'],
+    :location => 'Karachi',
+    :is_admin => 'false',
+    :email => 'nofel@gmail.com',
+    :password => 'nofelyasin',
+  }
+]
+
+users_params.each do |user_params|
+  user = User.create(user_params)
+  user.save
+end

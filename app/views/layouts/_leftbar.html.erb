@@ -6,6 +6,11 @@
       <% end %>
       <br/>
 
+      <%= link_to contests_path, class: "left-bar-link" do %>
+        <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Contests</span>
+      <% end %>
+      <br/>
+
       <%= link_to questions_path(:type => :answered), class: "left-bar-link" do %>
         <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Answers</span>
       <% end %>

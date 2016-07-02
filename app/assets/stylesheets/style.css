@@ -254,11 +254,8 @@ padding-bottom: 3px;
 .pull-right{
   margin-right: 80px;
 }
-.modal-dialog{
+.modal-dialog {
   width:50%;
-}
-.modal-body {
-    height: 300px;
 }
 #map-results {
   margin-left:5em;

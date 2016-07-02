@@ -10,16 +10,22 @@ Rails.application.routes.draw do
   post '/add_employment' => 'feeds#add_employment'
   post '/update_location' => 'feeds#update_location'
 
-  # Question's paths
+  # Questions paths
   resource :questions
   post '/follow' => 'questions#follow'
   post '/update_question' => 'questions#update'
 
-  # Answer's paths
+  # Contests paths
+  resource :contests
+
+  # Answers paths
   resource :answers
   post '/update_answer' => 'answers#update'
   post '/upvote' => 'answers#upvote'
   post '/downvote' => 'answers#downvote'
+
+  # ContestAnswers paths
+  resource :contest_answers
 
   # Replies paths
   resource :replies

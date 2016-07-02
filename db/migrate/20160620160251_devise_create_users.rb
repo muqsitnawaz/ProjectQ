@@ -1,14 +1,21 @@
 class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
-      ## Custom fields
+      # Main fields
       t.string :name,               null: false, default: ""
+      t.boolean :is_admin,          default: false
+
+      # Personal info
       t.text :education,            default: []
       t.text :interests,            default: []
       t.text :employments,          default: []
       t.string :location,           default: ""
+
+      # List of questions a user is following
       t.text :following,            default: []
-      t.boolean :is_admin,          default: false
+      
+      # List of contests a user has participated in
+      t.text :contests,             default: []
 
       ## Database authenticatable
       t.string :email             , default: ""

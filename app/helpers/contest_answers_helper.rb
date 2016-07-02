@@ -1,0 +1,2 @@
+module ContestAnswersHelper
+end

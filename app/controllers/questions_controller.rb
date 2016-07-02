@@ -92,7 +92,7 @@ class QuestionsController < ApplicationController
   end
 
 private
-   def question_params
-     params.require(:question).permit(:user_id, :content, :image, :detail, :topics => [])
-   end
+  def question_params
+    params.require(:question).permit(:user_id, :content, :image, :detail, :topics => [])
+  end
 end
