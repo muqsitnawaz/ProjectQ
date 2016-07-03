@@ -13,10 +13,10 @@
     <div class="col-xs-7">
       <div class="question-area">
       <% if @questions.nil? %>
-        <%= render 'layouts/question', :question => @question, :answers => @question.answers, :full => true %>
+        <%= render 'question', :question => @question, :answers => @question.answers, :full => true %>
       <% else %>
         <% @questions.each do |question| %>
-            <%= render 'layouts/question', :question => question, :answers => question.answers, :full => false %>
+            <%= render 'question', :question => question, :answers => question.answers, :full => false %>
         <% end %>
       <% end %>
       </div>

@@ -66,10 +66,10 @@
 
         <% if full == true %>
           <% answers.each do |answer| %>
-            <%= render 'layouts/answer', :answer => answer, :full => full %>
+            <%= render 'questions/answer', :answer => answer, :full => full %>
           <% end %>
         <% else %>
-          <%= render 'layouts/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0], :full => full %>
+          <%= render 'questions/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0], :full => full %>
         <% end %>
       <% end %>
     </div>

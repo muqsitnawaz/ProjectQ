@@ -51,8 +51,7 @@
 
 <!-- Rendering modals for posting and editing -->
 <% if user_signed_in? %>
-  <%= render 'layouts/posting_modals' %>
-  <%= render 'layouts/editing_modals' %>
+  <%= render 'layouts/question_modals' %>
 <%else%>
   <%= render 'layouts/signup' %>
 <%end%>

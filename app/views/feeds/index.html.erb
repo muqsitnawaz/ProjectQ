@@ -13,7 +13,7 @@
     <div class="col-xs-7">
       <div class="question-area">
         <% @questions.each do |question| %>
-            <%= render 'layouts/question', :question => question, :answers => question.answers, :full => false %>
+            <%= render 'questions/question', :question => question, :answers => question.answers, :full => false %>
         <% end %>
       </div>
     </div>
