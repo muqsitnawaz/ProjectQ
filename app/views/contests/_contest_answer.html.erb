@@ -15,8 +15,6 @@
       <% else %>
         <p><%= contest_answer.answer %></p>
       <% end %>
-      
-      <p style="margin-top: 0.3em;"><i> - <%= contest_answer.user.name %></i></p>
     </div>
 
     <!-- Showing edit and delete options -->
@@ -30,6 +28,18 @@
       <% end %>
     </div>
   </div>
+
+  <% if contest_answer.image.length != 0 %>
+    <!-- Displaying contest_answer's image -->
+    <div class="row">
+      <div class="col-xs-12">
+        <img src="<%= contest_answer.image %>" class="img img-responsive">
+        <br>
+      </div>
+    </div>
+  <% end %>
+
+  <p style="margin-top: 0.3em;"><i> - <%= contest_answer.user.name %></i></p>
 </div>
 
 <script type="text/javascript">

@@ -28,6 +28,16 @@
     </div>
   </div>
 
+  <% if answer.image.length != 0 %>
+    <!-- Displaying answer's image -->
+    <div class="row">
+      <div class="col-xs-12">
+        <img src="<%= answer.image %>" class="img img-responsive">
+        <br>
+      </div>
+    </div>
+  <% end %>
+
   <!-- Upvote, downvote and reply buttons -->
   <div class="row">
     <div class="col-xs-10">

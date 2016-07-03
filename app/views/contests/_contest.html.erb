@@ -48,9 +48,10 @@
       </div>
     </div><br/>
 
-    <div class="question-image">
-      <%= contest.image %>
-    </div><br/>
+    <% if contest.image.length != 0 %>
+      <img src="<%= contest.image %>" class="img img-responsive">
+      <br/>
+    <% end %>
 
     <div class="question-details">
       <p id="contest_detail<%= contest.id %>"><%= contest.detail %></p>
@@ -68,8 +69,7 @@
 
     <!-- Showing contest's answers -->
     <% if is_admin && full == true %>
-      <p>Need to show answers to admin</p>
-
+      <hr>
       <% contest.contest_answers.each do |contest_answer| %>
         <%= render 'contest_answer', :contest_answer => contest_answer %>
       <% end %>

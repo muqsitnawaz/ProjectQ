@@ -39,9 +39,10 @@
 
     </div><br/>
 
-    <div class="question-image">
-      <%= question.image %>
-    </div><br/>
+    <% if question.image.length != 0 %>
+      <img src="<%= question.image %>" class="img img-responsive">
+      <br/>
+    <% end %>
 
     <div class="question-details">
       <p id="question_detail<%= question.id %>"><%= question.detail %></p>
