@@ -1,25 +1,57 @@
 <div class="left-bar">
   <div class="row">
     <div class="left-bar-comp">
-      <%= link_to questions_path(:type => :asked), class: "left-bar-link" do %>
+      <!-- Questions and its submenu -->
+      <div id="menu-item1" style="font-weight: bold;">
         <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Questions</span>
-      <% end %>
-      <br/>
+      </div>
 
-      <%= link_to contests_path, class: "left-bar-link" do %>
+      <!-- Showing to user only -->
+      <div id="menu-item1-links" style="margin-left: 3em;" class="<%= user_signed_in? ? '' : 'hidden' %>">
+        <p><a href="<%= questions_path(:type => :asked) %>">Asked</a></p>
+        <p><a href="<%= questions_path(:type => :answered) %>">Answered</a></p>
+        <p><a href="<%= questions_path(:type => :following) %>">Following</a></p>
+      </div>
+
+      <!-- Contests and its submenu -->
+      <div id="menu-item2" style="font-weight: bold;">
         <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Contests</span>
-      <% end %>
-      <br/>
+      </div>
 
-      <%= link_to questions_path(:type => :answered), class: "left-bar-link" do %>
-        <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Answers</span>
-      <% end %>
-      <br/>
+      <div id="menu-item2-links" style="margin-left: 3em;" class="<%= user_signed_in? ? '' : 'hidden' %>">
+        <p><a href="<%= contests_path(:type => :open) %>">View Contests</a></p>
+        <!-- Not for admin -->
+        <% if !is_admin? %>
+          <p><a href="<%= contests_path(:type => :participated) %>">Participated</a></p>
+          <p><a href="<%= contests_path(:type => :won) %>">Contests Won</a></p>
+        <% end %>
+        <p><a href="<%= contests_path(:type => :close) %>">Contests Closed</a></p>
+      </div>
 
-      <%= link_to questions_path(:type => :following), class: "left-bar-link" do %>
-        <i class="icons glyphicon glyphicon-heart"></i><span id="icon-text">Following</span>
-      <% end %>
-      <br/>
+      <!-- Causes and its submenu -->
+      <div id="menu-item3" style="font-weight: bold;">
+        <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Causes</span>
+      </div>
+
+      <div id="menu-item3-links" style="margin-left: 3em;" class="<%= user_signed_in? ? '' : 'hidden' %>">
+        <p><a href="">Start a Cause</a></p>
+        <p><a href="">View Causes</a></p>
+        <p><a href="">Following</a></p>
+      </div>
     </div>
   </div>
+
+  <%= flash[:open_menu] %>
 </div>
+
+<script type="text/javascript">
+  $("[id^=menu-item]").click(function() {
+    const id = this.id.substring(9, this.id.length)
+    
+    <% if user_signed_in? %>
+      $("#menu-item"+id+"-links").toggleClass("hidden")
+    <% else %>
+      window.location = "<%= new_user_session_path %>"
+    <% end %>
+  })
+</script>

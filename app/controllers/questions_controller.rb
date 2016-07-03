@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
 
     # Fetching questions depending upon query type
     if params[:id].nil?
-      if !current_user.nil?
+      if user_signed_in?
         if params[:type] == 'asked'
           @questions = Question.where(:user_id => current_user.id)
         elsif params[:type] == 'answered'

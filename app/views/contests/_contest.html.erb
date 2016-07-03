@@ -58,7 +58,7 @@
 
     <!-- Showing Answer and End Now buttons only if contest is open -->
     <% if !contest.winner_chosen %> 
-      <% if is_admin %>  
+      <% if is_admin %>
         <button class="btn btn-default">Answers | <%= contest.contest_answers.length %></button>
         <button id="endC<%= contest.id %>" class="btn btn-default">End Now</button>
       <% else %>
