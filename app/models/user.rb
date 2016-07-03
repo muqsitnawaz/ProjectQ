@@ -7,15 +7,21 @@ class User < ActiveRecord::Base
 
   has_many :questions
   has_many :contests
+  has_many :causes
+
   has_many :answers
   has_many :contest_answers
+  
   has_many :replies
+  
   has_many :notifications
 
-  # Serializing
+  # Profile info
   serialize :education
   serialize :interests
   serialize :employments
+
+  # Questions
   serialize :following
 
   # For Omniauth

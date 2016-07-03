@@ -16,11 +16,18 @@ users_params = [
     :password => 'muqsitnawaz',
   },{
     :name => 'Nofel Yasin',
-    :interests => ['Computer Science'],
+    :interests => ['Books','Computer Science'],
     :location => 'Karachi',
     :is_admin => 'false',
     :email => 'nofel@gmail.com',
     :password => 'nofelyasin',
+  },{
+    :name => 'Shayan Shafi',
+    :interests => ['Books','Computer Science'],
+    :location => 'Karachi',
+    :is_admin => 'false',
+    :email => 'shayan@gmail.com',
+    :password => 'shayanshafi',
   }
 ]
 

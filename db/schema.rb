@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622150222) do
+ActiveRecord::Schema.define(version: 20160704051430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,29 @@ ActiveRecord::Schema.define(version: 20160622150222) do
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+
+  create_table "cause_comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "cause_id"
+    t.string   "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "cause_comments", ["cause_id"], name: "index_cause_comments_on_cause_id", using: :btree
+  add_index "cause_comments", ["user_id"], name: "index_cause_comments_on_user_id", using: :btree
+
+  create_table "causes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "intro"
+    t.string   "detail"
+    t.string   "whymatters"
+    t.string   "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "causes", ["user_id"], name: "index_causes_on_user_id", using: :btree
 
   create_table "contest_answers", force: :cascade do |t|
     t.integer  "contest_id"
@@ -77,7 +100,6 @@ ActiveRecord::Schema.define(version: 20160622150222) do
     t.string   "detail",                          null: false
     t.string   "image"
     t.text     "topics",     default: "--- []\n"
-    t.text     "followers",  default: "--- []\n"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
   end
@@ -103,8 +125,7 @@ ActiveRecord::Schema.define(version: 20160622150222) do
     t.text     "employments",            default: "--- []\n"
     t.string   "location",               default: ""
     t.text     "following",              default: "--- []\n"
-    t.text     "contests",               default: "--- []\n"
-    t.string   "email",                  default: ""
+    t.string   "email",                  default: "",         null: false
     t.string   "encrypted_password",     default: "",         null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

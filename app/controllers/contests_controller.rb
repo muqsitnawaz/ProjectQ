@@ -44,16 +44,7 @@ class ContestsController < ApplicationController
       elsif params[:type] == 'won'
         @contests = Contest.where(:winner_id => current_user.id).order('created_at DESC')
       elsif params[:type] == 'participated'
-        @contests = Contest.all.order('created_at DESC')
-        participated = []
-        
-        @contests.each do |contest|
-          if contest.contest_answers.map { |a| a.user_id }.include? current_user.id
-            participated << contest
-          end
-        end
-
-        @contests = participated
+        @contests = Contest.where(:id => ContestAnswer.where(:user_id => current_user.id).map {|a| a.contest_id}).order('created_at DESC')
       else
         flash[:notice] = 'invalid request'
         redirect_to root_path

@@ -3,7 +3,10 @@ class ContestAnswersController < ApplicationController
 
   def create
     @contest_answer = current_user.contest_answers.build(contest_answer_params)
+    
     if @contest_answer.save
+      current_user.contests << @contest_answer.contest.id
+
       redirect_to contests_path
       flash[:notice] = "answer posted"
     else
@@ -18,7 +21,7 @@ class ContestAnswersController < ApplicationController
       contest = contest_answer.contest
 
       # Closing contest when winner is selected
-      contest.winner_chosen = true
+      contest.winner_chosen = true  
       contest.winner_id = contest_answer.user_id
       contest.status = 'close'
       contest.end_date = Time.now

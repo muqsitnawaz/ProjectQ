@@ -13,9 +13,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       # List of questions a user is following
       t.text :following,            default: []
-      
-      # List of contests a user has participated in
-      t.text :contests,             default: []
 
       ## Database authenticatable
       t.string :email,              null: false, default: ""
