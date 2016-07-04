@@ -36,6 +36,9 @@ Rails.application.routes.draw do
   # Causes paths
   resource :causes
   post '/update_cause' => 'causes#update'
+  post '/agree' => 'causes#agree'
+  post '/disagree' => 'causes#disagree'
+  post '/follow_cause' => 'causes#follow'
 
   get 'staticpages/login'
   get 'staticpages/signup'

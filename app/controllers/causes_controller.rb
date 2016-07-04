@@ -1,7 +1,7 @@
 class CausesController < ApplicationController
   before_filter :authenticate_user!, except: [ :show ]
 
-  # Creating a case
+  # Creating a cause
   def create
     @cause = current_user.causes.build(cause_params)
     
@@ -15,7 +15,21 @@ class CausesController < ApplicationController
 
   # Showing causes
   def show
-    @causes = Cause.all.order('created_at DESC')
+
+    if !params[:type].nil?
+      if params[:type] == 'followed'
+        @causes = Cause.where(:id => current_user.causes_followed)
+      elsif params[:type] == 'agreed'
+        @causes = Cause.where(:id => current_user.causes_agreed)
+      elsif params[:type] == 'disagreed'
+        @causes = Cause.where(:id => current_user.causes_disagreed)
+      else
+        flash[:notice] = 'invalid request'
+        redirect_to root_path
+      end
+    else
+      @causes = Cause.all.order('created_at DESC')
+    end
   end
 
   # Updating a cause
@@ -36,7 +50,7 @@ class CausesController < ApplicationController
     else
       if request.xhr?
         render :json => {
-          :status => "failure"
+          :status => "resource not found"
         }
       end
     end
@@ -52,6 +66,81 @@ class CausesController < ApplicationController
     end
 
     redirect_to request.path
+  end
+
+  # Follow a cause
+  def follow
+    @cause = Cause.find_by_id(params[:cause_id])
+
+    if !@cause.nil?
+      @cause.followers << current_user.id
+      @cause.save
+
+      current_user.causes_followed << @cause.id
+      current_user.save
+
+      if request.xhr?
+        render :json => {
+          :status => "success"
+        }
+      end
+    else
+      if request.xhr?
+        render :json => {
+          :status => "resource not found"
+        }
+      end
+    end
+  end
+
+  # Agree to a cause
+  def agree
+    @cause = Cause.find_by_id(params[:cause_id])
+
+    if !@cause.nil?
+      @cause.num_agree += 1
+      @cause.save
+
+      current_user.causes_agreed << @cause.id
+      current_user.save
+
+      if request.xhr?
+        render :json => {
+          :status => "success"
+        }
+      end
+    else
+      if request.xhr?
+        render :json => {
+          :status => "resource not found"
+        }
+      end
+    end
+  end
+
+  # Disagree to a cause
+  def disagree
+    @cause = Cause.find_by_id(params[:cause_id])
+
+    if !@cause.nil?
+      @cause.num_disagree += 1
+      @cause.save
+
+      current_user.causes_disagreed << @cause.id
+      current_user.save
+
+      if request.xhr?
+        render :json => {
+          :status => "success"
+        }
+      end
+    else
+      if request.xhr?
+        render :json => {
+          :status => "resource not found"
+        }
+      end
+    end
   end
 
 private

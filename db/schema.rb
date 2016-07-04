@@ -48,8 +48,11 @@ ActiveRecord::Schema.define(version: 20160704051430) do
     t.string   "detail"
     t.string   "whymatters"
     t.string   "image"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "followers",    default: "--- []\n"
+    t.integer  "num_agree",    default: 0
+    t.integer  "num_disagree", default: 0
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "causes", ["user_id"], name: "index_causes_on_user_id", using: :btree
@@ -127,6 +130,9 @@ ActiveRecord::Schema.define(version: 20160704051430) do
     t.text     "employments",            default: "--- []\n"
     t.string   "location",               default: ""
     t.text     "following",              default: "--- []\n"
+    t.text     "causes_agreed",          default: "--- []\n"
+    t.text     "causes_disagreed",       default: "--- []\n"
+    t.text     "causes_followed",        default: "--- []\n"
     t.string   "email",                  default: "",         null: false
     t.string   "encrypted_password",     default: "",         null: false
     t.string   "reset_password_token"

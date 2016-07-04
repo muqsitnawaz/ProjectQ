@@ -7,6 +7,9 @@ class CreateCauses < ActiveRecord::Migration
       t.string :detail
       t.string :whymatters
       t.string :image
+      t.text :followers,          default: []
+      t.integer :num_agree,       default: 0
+      t.integer :num_disagree,    default: 0
 
       t.timestamps null: false
     end

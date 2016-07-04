@@ -48,7 +48,7 @@
     const cause_detail = $("#new_cause_detail").val()
     const cause_whymatters = $("#new_cause_whymatters").val()
 
-    // Sending ajax request to follow the cause
+    // Sending ajax request to update the cause
     $.ajax({
       url: "/update_cause",
       type: "POST",
@@ -75,4 +75,91 @@
       }
     })
   })
+
+  // Aggree to Cause
+  $("[id^=agree_]").click(function() {
+    const cause_id = this.id.substring(6,this.id.length)
+    console.log('cause_id '+cause_id)
+
+    // Sending ajax request to agree to a cause
+    $.ajax({
+      url: "/agree",
+      type: "POST",
+      data: {
+        cause_id: cause_id
+      },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        if (data.status.localeCompare("success") == 0) {
+          alert("success")
+          location.reload()
+        } else {  
+          alert("failure")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    })
+  })
+
+  // Disaggree to Cause
+  $("[id^=disagree_]").click(function() {
+    const cause_id = this.id.substring(9,this.id.length)
+    console.log('cause_id '+cause_id)
+    
+
+    // Sending ajax request to disagree to a cause
+    $.ajax({
+      url: "/disagree",
+      type: "POST",
+      data: {
+        cause_id: cause_id
+      },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        if (data.status.localeCompare("success") == 0) {
+          alert("success")
+          location.reload()
+        } else {  
+          alert("failure")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    })
+  })
+
+  // Follow a Cause
+  $("[id^=follow_cause]").click(function() {
+    const cause_id = this.id.substring(12,this.id.length)
+    console.log('cause_id '+cause_id)
+    
+
+    // Sending ajax request to disagree to a cause
+    $.ajax({
+      url: "/follow_cause",
+      type: "POST",
+      data: {
+        cause_id: cause_id
+      },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        if (data.status.localeCompare("success") == 0) {
+          alert("success")
+          location.reload()
+        } else {  
+          alert("failure")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    })
+  })
+  
 </script>

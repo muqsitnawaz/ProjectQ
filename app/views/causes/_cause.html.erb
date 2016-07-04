@@ -53,6 +53,17 @@
       <p id="cause_whymatters<%= cause.id %>"><%= cause.whymatters %></p>
     </div>
 
+    <!-- Rendering cause buttons -->
+    <% if cause.user.id != current_user.id %>
+      <button id="agree_<%= cause.id %>" class="btn btn-defalt">Agree | <%= cause.num_agree %></button>
+      <button id="disagree_<%= cause.id %>" class="btn btn-defalt">Disagree | <%= cause.num_disagree %></button>
+      <% if current_user.causes_followed.include? cause.id %>
+        <button class="btn btn-defalt" style="color:blue;">Following</button>
+      <% else %>
+        <button id="follow_cause<%= cause.id %>" class="btn btn-defalt">Follow</button>
+      <% end %>
+    <% end %>
+
     <!-- Rendering answers for the question -->
     <div class="col-xs-12" style="margin-top: 1em;">
       <% if !cause.cause_comments.empty? %>

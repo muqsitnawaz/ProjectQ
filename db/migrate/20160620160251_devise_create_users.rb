@@ -14,6 +14,11 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # List of questions a user is following
       t.text :following,            default: []
 
+      # Cause related info
+      t.text :causes_agreed,          default: []
+      t.text :causes_disagreed,       default: []
+      t.text :causes_followed,        default: []
+
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""

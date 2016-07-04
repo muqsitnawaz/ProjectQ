@@ -24,6 +24,11 @@ class User < ActiveRecord::Base
   # Questions
   serialize :following
 
+  # Causes
+  serialize :causes_agreed
+  serialize :causes_disagreed
+  serialize :causes_followed
+
   # For Omniauth
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
