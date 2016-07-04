@@ -16,7 +16,7 @@
 
         <%= form_tag("/add_interest", method: "post") do %>
           <p>
-            <%= select_tag :interest, options_for_select(@interests), class: "form-control" %>
+            <%= select_tag :interest, options_for_select(get_all_interests.sort!), class: "form-control" %>
           </p>
 
           <center>

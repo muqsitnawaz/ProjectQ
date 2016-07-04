@@ -34,8 +34,8 @@
       </div>
 
       <div id="menu-item3-links" style="margin-left: 3em;" class="<%= user_signed_in? ? '' : 'hidden' %>">
-        <p><a href="">Start a Cause</a></p>
-        <p><a href="">View Causes</a></p>
+        <p><a href="#" data-toggle="modal" data-target="#causeModal">Start a Cause</a></p>
+        <p><a href="<%= causes_path %>">View Causes</a></p>
         <p><a href="">Following</a></p>
       </div>
     </div>

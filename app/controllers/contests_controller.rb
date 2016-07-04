@@ -19,8 +19,6 @@ class ContestsController < ApplicationController
   end
 
   def show
-    @interests = get_all_interests.sort!
-
     if is_admin?                # Check for admin
       @is_admin = true
 

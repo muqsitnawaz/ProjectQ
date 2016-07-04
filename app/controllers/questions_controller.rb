@@ -1,9 +1,17 @@
 class QuestionsController < ApplicationController
   before_filter :authenticate_user!, except: [ :show ]
 
-  def show
-    @interests = get_all_interests.sort!
+  def create
+    @question = current_user.questions.build(question_params)
+    if @question.save
+      redirect_to questions_path(:id => @question.id)
+      flash[:notice] = 'question created'
+    else
+      redirect_to root_path
+    end
+  end
 
+  def show
     # Fetching questions depending upon query type
     if params[:id].nil?
       if user_signed_in?
@@ -19,15 +27,6 @@ class QuestionsController < ApplicationController
       end
     else
       @question = Question.find_by_id(params[:id])
-    end
-  end
-
-  def create
-    @question = current_user.questions.build(question_params)
-    if @question.save
-      redirect_to questions_path(:id => @question.id)
-    else
-      redirect_to root_path
     end
   end
 

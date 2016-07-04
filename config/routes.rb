@@ -15,23 +15,27 @@ Rails.application.routes.draw do
   post '/follow' => 'questions#follow'
   post '/update_question' => 'questions#update'
 
-  # Contests paths
-  resource :contests
-  post '/update_contest' => 'contests#update'
-
   # Answers paths
   resource :answers
   post '/update_answer' => 'answers#update'
   post '/upvote' => 'answers#upvote'
   post '/downvote' => 'answers#downvote'
 
+  # Replies paths
+  resource :replies
+  post '/update_reply' => 'replies#update'
+
+  # Contests paths
+  resource :contests
+  post '/update_contest' => 'contests#update'
+
   # ContestAnswers paths
   resource :contest_answers
   post '/mark_winner' => 'contest_answers#mark_winner'
 
-  # Replies paths
-  resource :replies
-  post '/update_reply' => 'replies#update'
+  # Causes paths
+  resource :causes
+  post '/update_cause' => 'causes#update'
 
   get 'staticpages/login'
   get 'staticpages/signup'

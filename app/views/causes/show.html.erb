@@ -1,0 +1,78 @@
+<% if !user_signed_in? %>
+  <%= render 'layouts/navbar1'%>
+<%end%>
+
+<div class="container main-wall">
+  <div class="row">
+    <!-- Leftbar  -->
+    <div class="col-xs-2">
+      <%= render 'layouts/leftbar'%>
+    </div>
+
+    <!-- Contests area -->
+    <div class="col-xs-7">
+      <div class="contests-area">
+        <!-- Display a little header -->
+        <h3>Showing all causes</h3>
+
+        <!-- Displaying actual contests -->
+        <% @causes.each do |cause| %>
+          <%= render 'cause', :cause => cause, :full => false %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="col-xs-3">
+      <%= render 'layouts/suggestions'%>
+    </div>
+  </div>
+</div>
+
+
+<!-- Editing cause modal -->
+<script type="text/javascript">
+  // Editing a cause
+  $("[id^=edit_cause").click(function() {
+    cause_id = this.id.substring(10, this.id.length)
+    console.log('causeid '+cause_id)
+    $("#new_cause_intro").val($('#cause_intro'+cause_id).val())
+    $("#new_cause_detail").val($('#cause_detail'+cause_id).text())
+    $("#new_cause_whymatters").val($('#cause_whymatters'+cause_id).text())
+    $('#editCauseModal').modal('show');
+  })
+
+  // Updating a cause
+  $("#new_cause_submit").click(function() {
+    const cause_intro = $("#new_cause_intro").val()
+    const cause_detail = $("#new_cause_detail").val()
+    const cause_whymatters = $("#new_cause_whymatters").val()
+
+    // Sending ajax request to follow the cause
+    $.ajax({
+      url: "/update_cause",
+      type: "POST",
+      data: {
+        cause_id: cause_id,
+        cause_intro: cause_intro,
+        cause_detail: cause_detail,
+        cause_whymatters: cause_whymatters
+      },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        $('#editCauseModal').modal('hide')
+
+        if (data.status.localeCompare("success") == 0) {
+          alert("updated")
+          location.reload()
+        } else {  
+          alert("failed to update")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    })
+  })
+</script>

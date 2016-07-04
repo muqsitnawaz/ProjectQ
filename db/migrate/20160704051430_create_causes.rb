@@ -2,10 +2,11 @@ class CreateCauses < ActiveRecord::Migration
   def change
     create_table :causes do |t|
       t.belongs_to :user, index:true
+      t.string :cause_type
       t.string :intro
       t.string :detail
       t.string :whymatters
-      t.string  :image
+      t.string :image
 
       t.timestamps null: false
     end

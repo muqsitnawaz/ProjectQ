@@ -185,33 +185,33 @@
 
   // Updating a contest
   $("#new_contest_submit").click(function() {
-  const contest_content = $("#new_contest_content").val()
-  const contest_detail = $("#new_contest_detail").val()
+    const contest_content = $("#new_contest_content").val()
+    const contest_detail = $("#new_contest_detail").val()
 
-  // Sending ajax request to follow the contest
-  $.ajax({
-    url: "/update_contest",
-    type: "POST",
-    data: {
-      contest_id: contest_id,
-      contest_content: contest_content,
-      contest_detail: contest_detail
-    },
-    dataType: "json",
-    complete: function() {},
-    success: function(data, textStatus, xhr) {
-      $('#editContestModal').modal('hide')
+    // Sending ajax request to follow the contest
+    $.ajax({
+      url: "/update_contest",
+      type: "POST",
+      data: {
+        contest_id: contest_id,
+        contest_content: contest_content,
+        contest_detail: contest_detail
+      },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        $('#editContestModal').modal('hide')
 
-      if (data.status.localeCompare("success") == 0) {
-        alert("updated")
-        location.reload()
-      } else {
-        alert("failed to update")
+        if (data.status.localeCompare("success") == 0) {
+          alert("updated")
+          location.reload()
+        } else {
+          alert("failed to update")
+        }
+      },
+      error: function() {
+        alert("error")
       }
-    },
-    error: function() {
-      alert("error")
-    }
+    })
   })
-})
 </script>

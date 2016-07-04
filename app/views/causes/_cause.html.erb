@@ -1,0 +1,67 @@
+<!-- Template for rendering a cause -->
+<div class="row" style="margin-top: 0.5em;">
+  <div class="col-xs-12">
+    <div>
+      <!-- Cause's header -->
+      <div class="row">
+        <!-- Hidden field for cause intro -->
+        <input type="text" id="cause_intro<%= cause.id %>" value="<%= cause.intro %>" hidden>
+
+        <!-- Cause's content -->
+        <div class="col-xs-10 question-content" >
+          <%= link_to cause.intro, causes_path(:id => cause.id) %>
+        </div>
+
+        <!-- Cause edit and delete buttons -->
+        <div class="col-xs-2">
+          <% if cause.user == current_user %>
+            <i id="edit_cause<%= cause.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+            <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, causes_path(:id => cause.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Displaying cause's type -->
+      <div class="row">
+        <div class="col-xs-12">
+          <p>Cause Type: <%= cause.cause_type %></p>
+        </div>
+      </div>
+
+      <!-- Cause's owner name -->
+      <div class="row">
+        <div class="col-xs-12">
+          <p>Started by <%= cause.user.name %>,<i> <%= (Time.now.to_date - cause.created_at.to_date).to_i %> day(s) ago</i></p>
+          <%= social_share_button_tag(cause.intro) %>
+        </div>
+      </div>
+    </div>
+    <br/>
+
+    <% if !cause.image.nil? && cause.image.length != 0 %>
+      <!-- Showing cause's image -->
+      <img src="<%= cause.image %>" class="img img-responsive">
+      <br/>
+    <% end %>
+
+    <div class="question-details">
+      <p id="cause_detail<%= cause.id %>"><%= cause.detail %></p>
+    </div>
+
+    <div class="question-details">
+      <p style="font-weight: bold; font-style: normal;">Why it matters?</p>
+      <p id="cause_whymatters<%= cause.id %>"><%= cause.whymatters %></p>
+    </div>
+
+    <!-- Rendering answers for the question -->
+    <div class="col-xs-12" style="margin-top: 1em;">
+      <% if !cause.cause_comments.empty? %>
+        <hr>
+
+        <p>Need to render cause comments</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<hr class="question-hr">

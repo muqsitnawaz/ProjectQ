@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20160704051430) do
 
   create_table "causes", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "cause_type"
     t.string   "intro"
     t.string   "detail"
     t.string   "whymatters"

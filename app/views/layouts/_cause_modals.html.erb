@@ -1,0 +1,89 @@
+<!-- Posting cause modal -->
+<div class="modal bnr-modal fade" id="causeModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+           <h4>Starting a New Cause</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <% @cause = Cause.new %>
+          <%= form_for @cause,:url =>{:controller=>"causes",:action=>"create"} do |f| %>
+          <div class="form-group">
+            <div class="row" style="padding-top:1em;">
+              <div class="col-xs-6">
+                <p><strong>Cause type</strong></p>
+                <%= f.select :cause_type, options_for_select(get_all_cause_types), autofocus: true, class: ' form-control' %>
+              </div>
+              <div class="col-xs-6">
+                <p><strong>Cause intro</strong></p>
+                <%= f.text_field :intro, class: 'form-control', placeholder: 'A brief introduction' %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-5 col-xs-offset-1">
+                <p><strong>Cause detail</strong></p>
+                <%= f.text_area :detail, cols: 20, rows: 3, class: 'question-detail form-control', placeholder: 'Please provide some detail' %>
+              </div>
+              <div class="col-xs-6">
+                <p><strong>Why does it matter?</strong></p>
+                <%= f.text_area :whymatters, cols: 20, rows: 3, class: 'question-detail form-control', placeholder: 'Why does this matter to you?' %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image upload -->
+          <div class="row" style="border-left: 1px solid #e7e7e7;">
+            <center>
+              <%= f.file_field :image,class: 'btn' %> <br>
+              <%= f.submit "Post Cause",class:'btn btn-squared btn-ask1'%>
+            </center>
+          </div>
+          <%end%>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Editing cause modal -->
+<div class="modal bnr-modal fade" id="editCauseModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Cause</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <input id="new_cause_intro" type="text" class="form-control">
+            <textarea id="new_cause_detail" class="form-control"></textarea>
+            <textarea id="new_cause_whymatters" class="form-control"></textarea>
+            <br>
+
+            <center>
+              <input id="new_cause_submit" type="submit" value="Update Cause" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Posting cause comment modal -->

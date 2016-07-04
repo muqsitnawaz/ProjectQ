@@ -174,61 +174,6 @@ class ApplicationController < ActionController::Base
     ]
   end
 
-  def get_all_interests
-    [
-      'Technology',
-    'Science',
-    'Books',
-    'Business',
-    'Movies',
-    'Health',
-    'Visiting and Travel',
-    'Music',
-    'Education',
-    'Food',
-    'Psychology',
-    'Design',
-    'History',
-    'Economics',
-    'Cooking',
-    'Entertainment',
-    'Writing',
-    'Sports',
-    'Photography',
-    'Philosophy',
-    'Marketing',
-    'Finance',
-    'Mathematics',
-    'Fashion and Style',
-    'Politics',
-    'Literature',
-    'Computer Science',
-    'Television Series',
-    'Startups',
-    'Fine Art',
-    'Physics',
-    'Entrepreneurship',
-    'Google',
-    'Journalism',
-    'Investing',
-    'Healthy Eating',
-    'Software Engineering',
-    'India',
-    'Mobile Phones',
-    'Computer Programming',
-    'Medicine and Healthcare',
-    'Nutrition',
-    'Money',
-    'Current Events in Technology',
-    'Dating and Relationships',
-    'Silicon Valley',
-    'Writers and Authors',
-    'Business Strategy',
-    'Novels',
-    'Small Businesses'
-    ]
-  end
-
 protected
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :email, :password) }

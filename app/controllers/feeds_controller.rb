@@ -2,8 +2,6 @@ class FeedsController < ApplicationController
 	before_filter :authenticate_user!, except: [ :index ]
 
   def index
-    @interests = get_all_interests.sort!
-
     if user_signed_in?
       @questions = Question.all
       matches = []
@@ -22,15 +20,12 @@ class FeedsController < ApplicationController
   end
 
   def notifications
-    @interests = get_all_interests.sort!
     @notifications = Notification.where(:user_id => current_user.id).order('created_at DESC')
   end
 
   # User profile related methods
   def profile
   	@user = current_user
-
-  	@interests = get_all_interests.sort!
 
   	@degrees = get_all_degrees
   	@subjects = get_all_subjects
