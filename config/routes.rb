@@ -40,6 +40,10 @@ Rails.application.routes.draw do
   post '/disagree' => 'causes#disagree'
   post '/follow_cause' => 'causes#follow'
 
+  # Causes comments paths
+  resource :cause_comments
+  post '/update_cause_comment' => 'cause_comments#update'
+
   get 'staticpages/login'
   get 'staticpages/signup'
 

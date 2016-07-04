@@ -15,7 +15,7 @@
         <!-- Cause edit and delete buttons -->
         <div class="col-xs-2">
           <% if cause.user == current_user %>
-            <i id="edit_cause<%= cause.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+            <i id="edit_causeC<%= cause.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
             <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, causes_path(:id => cause.id), method: :delete, data: { confirm: 'Are you sure?'} %>
           <% end %>
         </div>
@@ -55,13 +55,14 @@
 
     <!-- Rendering cause buttons -->
     <% if cause.user.id != current_user.id %>
-      <button id="agree_<%= cause.id %>" class="btn btn-defalt">Agree | <%= cause.num_agree %></button>
-      <button id="disagree_<%= cause.id %>" class="btn btn-defalt">Disagree | <%= cause.num_disagree %></button>
+      <button id="commentC<%= cause.id %>" class="btn btn-default">Comment | <%= cause.cause_comments.length %></button>
       <% if current_user.causes_followed.include? cause.id %>
         <button class="btn btn-defalt" style="color:blue;">Following</button>
       <% else %>
         <button id="follow_cause<%= cause.id %>" class="btn btn-defalt">Follow</button>
       <% end %>
+      <button id="agree_<%= cause.id %>" class="btn btn-defalt">Agree | <%= cause.num_agree %></button>
+      <button id="disagree_<%= cause.id %>" class="btn btn-defalt">Disagree | <%= cause.num_disagree %></button>
     <% end %>
 
     <!-- Rendering answers for the question -->
@@ -69,7 +70,9 @@
       <% if !cause.cause_comments.empty? %>
         <hr>
 
-        <p>Need to render cause comments</p>
+        <% cause.cause_comments.each do |cause_comment| %>
+          <%= render 'causes/cause_comment', :cause_comment => cause_comment %>
+        <% end %>
       <% end %>
     </div>
   </div>

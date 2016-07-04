@@ -1,0 +1,30 @@
+<div style="padding: 5px;">
+  <div class="row">
+    <!-- Showing contest answer and username -->
+    <div class="col-xs-10">
+      <!-- to make read more link -->
+      <% if cause_comment.comment.length > 250 %>
+        <p id="cause_comment_comment<%= cause_comment.id %>" class="truncated-comment" style="display:inline;"><%= truncate(cause_comment.comment, length: 250) %></p>
+        <%= link_to 'Read more', '', id: "read-more-#{cause_comment.id}" %>
+        <script>
+          $('#read-more-<%= cause_comment.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(".truncated-comment").html('<%= escape_javascript cause_comment.comment %>')
+          })
+        </script>
+      <% else %>
+        <p id="cause_comment_comment<%= cause_comment.id %>"><%= cause_comment.comment %></p>
+      <% end %>
+    </div>
+
+    <!-- Showing edit and delete options -->
+    <div class="col-xs-2">
+      <% if cause_comment.user == current_user %>
+        <i id="edit_cause_commentC<%= cause_comment.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, cause_comments_path(:id => cause_comment.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% end %>
+    </div>
+  </div>
+
+  <p style="margin-top: 0.3em;"><i> - <%= cause_comment.user.name %></i></p>
+</div>

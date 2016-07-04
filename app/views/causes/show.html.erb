@@ -32,9 +32,17 @@
 
 <!-- Editing cause modal -->
 <script type="text/javascript">
+  // Commenting a cause
+  $("[id^=commentC]").click(function() {
+    cause_id = this.id.substring(8, this.id.length)
+    $("#cause-header").html($("#cause_intro"+cause_id).val())
+    $("#cause_comment_cause_id").val(cause_id)
+    $('#causeCommentModal').modal('show');
+  })
+
   // Editing a cause
-  $("[id^=edit_cause").click(function() {
-    cause_id = this.id.substring(10, this.id.length)
+  $("[id^=edit_causeC").click(function() {
+    cause_id = this.id.substring(11, this.id.length)
     console.log('causeid '+cause_id)
     $("#new_cause_intro").val($('#cause_intro'+cause_id).val())
     $("#new_cause_detail").val($('#cause_detail'+cause_id).text())
@@ -75,6 +83,43 @@
       }
     })
   })
+
+  // Editing a cause comment
+  $("[id^=edit_cause_commentC").click(function() {
+    cause_comment_id = this.id.substring(19, this.id.length)
+    $("#new_cause_comment_comment").val($('#cause_comment_comment'+cause_comment_id).text())
+    $('#editCauseCommentModal').modal('show');
+  })
+
+  // Updating a cause comment
+  $("#new_cause_comment_submit").click(function() {
+    const cause_comment_comment = $("#new_cause_comment_comment").val()
+
+    // Sending ajax request to update the cause
+    $.ajax({
+      url: "/update_cause_comment",
+      type: "POST",
+      data: {
+        cause_comment_id: cause_comment_id,
+        cause_comment_comment: cause_comment_comment,
+      },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        $('#editCauseCommentModal').modal('hide')
+
+        if (data.status.localeCompare("success") == 0) {
+          alert("updated")
+          location.reload()
+        } else {  
+          alert("failed to update")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    })
+  })  
 
   // Aggree to Cause
   $("[id^=agree_]").click(function() {

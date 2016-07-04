@@ -63,6 +63,8 @@ class CausesController < ApplicationController
     if @cause.user == current_user
       @cause.destroy
       flash[:notice] = 'cause deleted'
+    else
+      flash[:notice] = "not sufficient permission"
     end
 
     redirect_to request.path

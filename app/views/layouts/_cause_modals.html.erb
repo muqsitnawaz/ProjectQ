@@ -54,6 +54,41 @@
   </div>
 </div>
 
+<!-- Modal for posting cause comment -->
+<div class="modal bnr-modal fade" id="causeCommentModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4 id="cause-header"></h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <% @cause_comment = CauseComment.new %>
+          <%= form_for @cause_comment, :url => { :controller =>"cause_comments", :action =>"create"}  do |f| %>
+          <div class="form-group">
+            <%= f.text_area :comment, rows: 5, class: 'form-control' %>
+            <%= f.hidden_field :cause_id %>
+          </div>
+          <div class="row" style="padding-top:3em;">
+            <center>
+              <%= f.submit "Post Comment", class:'btn btn-squared btn-ask1'%>
+            </center>
+          </div>
+          <%end%>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
 <!-- Editing cause modal -->
 <div class="modal bnr-modal fade" id="editCauseModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -86,4 +121,33 @@
   </div>
 </div>
 
-<!-- Posting cause comment modal -->
+
+<!-- Editing cause comment modal -->
+<div class="modal bnr-modal fade" id="editCauseCommentModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Comment</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <input id="new_cause_comment_comment" type="text" class="form-control">
+            <br>
+
+            <center>
+              <input id="new_cause_comment_submit" type="submit" value="Update Cause" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
