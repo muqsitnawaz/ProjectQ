@@ -39,7 +39,15 @@
         <p><a href="<%= causes_path(:type => :followed) %>">Followed</a></p>
         <p><a href="<%= causes_path(:type => :agreed) %>">Agreed</a></p>
         <p><a href="<%= causes_path(:type => :disagreed) %>">Disagreed</a></p>
-        <p><a href="">Following</a></p>
+      </div>
+
+      <!-- Articles and its submenu -->
+      <div id="menu-item4" style="font-weight: bold;">
+        <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Articles</span>
+      </div>
+
+      <div id="menu-item3-links" style="margin-left: 3em;" class="<%= user_signed_in? ? '' : 'hidden' %>">
+        <p><%= link_to 'Write an Article', new_articles_path %></p>
       </div>
     </div>
   </div>
@@ -50,7 +58,7 @@
 <script type="text/javascript">
   $("[id^=menu-item]").click(function() {
     const id = this.id.substring(9, this.id.length)
-    
+
     <% if user_signed_in? %>
       $("#menu-item"+id+"-links").toggleClass("hidden")
     <% else %>

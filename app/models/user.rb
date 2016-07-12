@@ -8,13 +8,14 @@ class User < ActiveRecord::Base
   has_many :questions
   has_many :contests
   has_many :causes
+  has_many :articles
 
   has_many :answers
   has_many :contest_answers
   has_many :cause_comments
-  
+
   has_many :replies
-  
+
   has_many :notifications
 
   # Profile info

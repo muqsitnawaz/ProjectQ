@@ -47,6 +47,10 @@ Rails.application.routes.draw do
   get 'staticpages/login'
   get 'staticpages/signup'
 
+  # Articles paths
+  resource :articles
+  patch "articles/:id" => "articles#update", as: "update_article"
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
