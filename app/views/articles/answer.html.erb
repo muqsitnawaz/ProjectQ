@@ -1,0 +1,38 @@
+<% if !user_signed_in? %>
+  <%= render 'layouts/navbar1'%>
+<%end%>
+
+<div class="container main-wall">
+  <div class="row">
+    <!-- Leftbar  -->
+    <div class="col-xs-2">
+      <%= render 'layouts/leftbar'%>
+    </div>
+
+    <!-- New article area -->
+    <div class="col-xs-7">
+      <%= render 'article_requests/article_request', :article_request => @article_request %>
+      <hr>
+
+      <%= form_for @article, :url => {:controller =>"articles", :action =>"create_answer"} do |f| %>
+        <%= f.text_field :article_request_id, value: @article_request.id %>
+
+        <p><strong>Heading</strong></p>
+        <%= f.text_field :heading, autofocus: true, class: 'form-control',placeholder: 'A heading for your article' %> <br>
+
+        <p><strong>Introduction (Optional)</strong></p>
+        <%= f.text_area :intro, class: 'form-control', placeholder: 'An introduction of your article' %><br>
+
+        <p><strong>Content</strong></p>
+        <%= f.text_area :content, class: 'form-control', placeholder: 'Start writing here...' %><br>
+
+        <%= f.submit "Create", class:'btn btn-default' %>
+      <% end %>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="col-xs-3">
+      <%= render 'layouts/suggestions'%>
+    </div>
+  </div>
+</div>

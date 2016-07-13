@@ -1,0 +1,35 @@
+<% if !user_signed_in? %>
+  <%= render 'layouts/navbar1'%>
+<%end%>
+
+<div class="container main-wall">
+  <div class="row">
+    <!-- Leftbar  -->
+    <div class="col-xs-2">
+      <%= render 'layouts/leftbar'%>
+    </div>
+
+    <!-- New article area -->
+    <div class="col-xs-7">
+      <h2>Request an Article on ProjectQ</h2><br>
+
+      <%= form_for @article_request, :url => {:controller =>"article_requests", :action =>"create"} do |f| %>
+        <p><strong>Topics</strong></p>
+        <%= f.select :topics, options_for_select(get_all_interests.sort!), {}, {:multiple => true, :size => 3 } %> <br>
+
+        <p><strong>Heading</strong></p>
+        <%= f.text_field :heading, autofocus: true, class: 'form-control',placeholder: 'A heading for your request' %> <br>
+
+        <p><strong>Explanation (Optional)</strong></p>
+        <%= f.text_area :explanation, class: 'form-control', placeholder: 'Explanation goes here...' %><br>
+
+        <%= f.submit "Create", class:'btn btn-default' %>
+      <% end %>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="col-xs-3">
+      <%= render 'layouts/suggestions'%>
+    </div>
+  </div>
+</div>

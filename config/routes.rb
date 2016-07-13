@@ -50,6 +50,11 @@ Rails.application.routes.draw do
   # Articles paths
   resource :articles
   patch "articles/:id" => "articles#update", as: "update_article"
+  get "answer_article_request/:id" => "articles#answer", as: "answer_article_request"
+  post "create_answer" => "articles#create_answer", as: "create_answer"
+
+  # Article requests
+  resources :article_requests
 
 
   # The priority is based upon order of creation: first created -> highest priority.

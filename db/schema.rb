@@ -30,14 +30,26 @@ ActiveRecord::Schema.define(version: 20160712190128) do
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
 
+  create_table "article_requests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "topics"
+    t.string   "heading"
+    t.string   "explanation"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "article_requests", ["user_id"], name: "index_article_requests_on_user_id", using: :btree
+
   create_table "articles", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "article_request_id", default: -1
     t.string   "heading"
     t.string   "intro"
     t.string   "content"
-    t.text     "topics",     default: "--- []\n"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.text     "topics",             default: "--- []\n"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree

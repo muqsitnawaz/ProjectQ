@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :answers
   has_many :contest_answers
   has_many :cause_comments
+  has_many :article_requests
 
   has_many :replies
 

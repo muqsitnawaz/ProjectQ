@@ -1,0 +1,22 @@
+<% if !user_signed_in? %>
+  <%= render 'layouts/navbar1'%>
+<%end%>
+
+<div class="container main-wall">
+  <div class="row">
+    <!-- Leftbar  -->
+    <div class="col-xs-2">
+      <%= render 'layouts/leftbar'%>
+    </div>
+
+    <!-- Article request area -->
+    <div class="col-xs-7">
+      <%= render 'article_request', :article_request => @article_request %>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="col-xs-3">
+      <%= render 'layouts/suggestions'%>
+    </div>
+  </div>
+</div>
