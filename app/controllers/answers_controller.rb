@@ -3,9 +3,12 @@ class AnswersController < ApplicationController
 
   def create
     @answer = current_user.answers.build(answer_params)
+    
     if @answer.save
-      redirect_to questions_path(:id => params[:answer][:question_id])
+      redirect_to question_path(:id => params[:answer][:question_id])
+      flash[:notice] = 'answer created'
     else
+      flash[:notice] = 'answer creation failed'
       redirect_to root_path
     end
   end
@@ -37,7 +40,8 @@ class AnswersController < ApplicationController
 
     if @answer.user == current_user
       @answer.destroy
-      redirect_to questions_path(:id => question_id)
+      flash[:notice] = 'answer destroyed'
+      redirect_to question_path(:id => question_id)
     else
       flash[:notice] = "not sufficient permission"
       redirect_to root_path

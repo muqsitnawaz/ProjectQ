@@ -10,3 +10,21 @@
 .question-area {
   margin-left: 2em;
 }
+
+.thumb {
+  width: 50px;
+}
+
+.btn.btn-default {
+  font-size: 12px;
+  padding: 5px; 
+}
+
+.question-content > a {
+  color: black;
+}
+
+.question-content > a:hover {
+  color: black;
+  text-decoration: underline;
+}

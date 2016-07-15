@@ -1,79 +1,90 @@
 <!-- Template for rendering a question -->
-<div class="row" style="margin-top: 0.5em;">
+<div class="row question" style="margin-top: 0.5em;">
   <div class="col-xs-12">
     <!-- Question's topics -->
-    <p>
-      <i>In</i>
-      <% question.topics.each do |topic| %>
-        <%= topic %>
-      <% end %>
+    <p class="text-muted">
+      In
+      <i>
+        <% question.topics.each do |topic| %>
+          <%= topic %>
+        <% end %>
+      </i>
+      - <%= question.updated_at.strftime('%-d %B, %Y') %>
     </p>
 
-    <div>
-      <!-- Hidden field for question content -->
-      <input type="text" id="question_content<%= question.id %>" value="<%= question.content %>" hidden>
+    <!-- Hidden field for question content -->
+    <input type="text" id="question_content<%= question.id %>" value="<%= question.content %>" hidden>
 
-      <!-- Question's header -->
-      <div class="row">
-        <!-- Question's content -->
-        <div class="col-xs-10 question-content" >
-          <%= link_to question.content, questions_path(:id => question.id) %>
-        </div>
-
-        <!-- Question edit and delete buttons -->
-        <div class="col-xs-2">
-          <% if question.user == current_user %>
-            <i id="edit_question<%= question.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-            <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, questions_path(:id => question.id), method: :delete, data: { confirm: 'Are you sure?'} %>
-          <% end %>
-        </div>
+    <!-- Question's header -->
+    <div class="row">
+      <!-- Question's content -->
+      <div class="col-xs-10 question-content" >
+        <%= link_to question.content, question_path(:id => question.id) %>
       </div>
 
+      <!-- Question edit and delete buttons -->
+      <div class="col-xs-2">
+        <% if user_signed_in? && question.user == current_user %>
+          <i id="edit_question<%= question.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+          <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, questions_path(:id => question.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+        <% end %>
+      </div>
+    </div>
+
+    <% if full == true %>
       <!-- Question's owner name -->
       <div class="row">
         <div class="col-xs-12">
           <p>Posted by <%= question.user.name %>,<i> <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</i></p>
-          <%= social_share_button_tag(question.content) %>
         </div>
       </div>
-
-    </div><br/>
-
-    <% if question.image.length != 0 %>
-      <img src="<%= question.image %>" class="img img-responsive">
       <br/>
-    <% end %>
-
-    <div class="question-details">
-      <p id="question_detail<%= question.id %>"><%= question.detail %></p>
-    </div>
-
-    <!-- Showing Answer, Follow and Share buttons -->
-    <% if !current_user.nil? %>  
-      <% if question.user_id != current_user.id %>
-        <button id="answerQ<%= question.id %>" class="btn btn-default">Answer | <%= question.answers.length %></button>
-        <% if !current_user.following.include? question.id %>
-          <button id="follow<%= question.id %>" class="btn btn-default">Follow</button>
-        <% else %>
-          <button class="btn btn-default following" style="color: blue;">Following</button>
-        <% end %>
+  
+      <% if question.image.length != 0 %>
+        <img src="<%= question.image %>" class="img img-responsive">
+        <br/>
       <% end %>
+  
+      <div class="question-details">
+        <p id="question_detail<%= question.id %>"><%= question.detail %></p>
+      </div>
+  
+      <!-- Bottom buttons -->
+      <% if user_signed_in? %>  
+        <div class="row">
+          <div class="col-xs-9">
+            <!-- Bottom left buttons -->
+            <button id="answerQ<%= question.id %>" class="btn btn-default">Answer | <%= question.answers.length %></button>
+       
+            <% if !current_user.following.include? question.id %>
+              <button id="follow<%= question.id %>" class="btn btn-default">Follow</button>
+            <% else %>
+              <button class="btn btn-default following" style="color: blue;">Following</button>
+            <% end %>
+          </div>
+          <!-- Bottom right buttons -->
+          <div class="col-xs-3" style="margin-top: 0.8em;">
+            <%= social_share_button_tag(question.content) %>
+          </div>
+        </div>
+      <% end %>
+      
+      <hr>
     <% end %>
 
-    <!-- Rendering answers for the question -->
-    <div class="col-xs-12" style="margin-top: 1em;">
-      <% if !answers.empty? %>
-        <hr>
-
+    <% if !answers.empty? %>
+      <div class="col-xs-12" style="margin-top: 1em;">
+        
+        <!-- Rendering answers -->
         <% if full == true %>
           <% answers.each do |answer| %>
-            <%= render 'questions/answer', :answer => answer, :full => full %>
+            <%= render 'questions/answer', :answer => answer %>
           <% end %>
         <% else %>
-          <%= render 'questions/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0], :full => full %>
+          <%= render 'questions/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0] %>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
 

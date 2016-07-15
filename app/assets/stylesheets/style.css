@@ -3,6 +3,10 @@ a:hover {
   color:#AAAAAA;
 }
 
+#body {
+  background-color: #f2f2f2;
+}
+
 /*navbar*/
 .btn-ask{
   background-color:#212121;
@@ -142,7 +146,7 @@ padding-bottom: 3px;
 }
 /*main page*/
 .left-bar{
-  border: 1px solid #383838;
+  border-right: 1px solid #383838;
   padding-left: 5px;
   margin-left: 20px;
 }
@@ -153,8 +157,8 @@ padding-bottom: 3px;
 }
 
 .suggestions {
-  border: 1px solid #383838;
-  margin-left: 40px;
+  border-left: 1px solid #383838;
+  margin-left: 30px;
   padding-left: 0.8em;
 }
 .heading-7{

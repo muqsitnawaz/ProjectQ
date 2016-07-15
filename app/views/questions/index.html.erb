@@ -12,7 +12,9 @@
     <!-- Questions area -->
     <div class="col-xs-7">
       <div class="question-area">
-        <%= render 'question', :question => @question, :answers => @question.answers.order('created_at DESC'), :full => true %>
+        <% @questions.each do |question| %>
+          <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
+        <% end %>
       </div>
     </div>
 

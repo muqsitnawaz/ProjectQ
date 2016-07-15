@@ -1,32 +1,37 @@
 class QuestionsController < ApplicationController
   before_filter :authenticate_user!, except: [ :show ]
+  
+  def index
+    if user_signed_in?
+      if params[:type] == 'asked'
+        @questions = Question.where(:user_id => current_user.id)
+      elsif params[:type] == 'answered'
+        @questions = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id})
+      elsif params[:type] == 'following'
+        @questions = Question.where(:id => current_user.following)
+      end
+    else 
+      @questions = Question.all.order('updated_at DESC')
+    end
+  end
+  
+  def show
+    @question = Question.find_by_id(params[:id])
+    
+    if @question.nil?
+      flash[:notice] = 'question not found'
+      redirect_to root_path
+    end
+  end
 
   def create
     @question = current_user.questions.build(question_params)
+    
     if @question.save
       redirect_to questions_path(:id => @question.id)
       flash[:notice] = 'question created'
     else
       redirect_to root_path
-    end
-  end
-
-  def show
-    # Fetching questions depending upon query type
-    if params[:id].nil?
-      if user_signed_in?
-        if params[:type] == 'asked'
-          @questions = Question.where(:user_id => current_user.id)
-        elsif params[:type] == 'answered'
-          @questions = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id})
-        elsif params[:type] == 'following'
-          @questions = Question.where(:id => current_user.following)
-        end
-      else 
-        @questions = Question.all.order('updated_at DESC')
-      end
-    else
-      @question = Question.find_by_id(params[:id])
     end
   end
 

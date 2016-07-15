@@ -17,6 +17,14 @@ $("[id^=replyA]").click(function() {
   $('#replyModal').modal('show');
 });
 
+// Showing relpies
+$("[id^=showReplies]").click(function() {
+  answer_id = this.id.substring(11, this.id.length)
+  console.log('id: '+answer_id)
+
+  $("#replies"+answer_id).toggleClass('hidden')
+})
+
 // Editing a question
 $("[id^=edit_question]").click(function() {
   question_id = this.id.substring(13, this.id.length)

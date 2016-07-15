@@ -1,17 +1,23 @@
 <div style="margin: 2em 0em; padding: 5px;">
   <div class="row">
-    <!-- Showing answer and username -->
-    <div class="col-xs-10">
-      <p id="reply<%= reply.id %>"><%= reply.reply %></p>
-      <i>- <%= reply.user.name %></i>
+    <div class="col-xs-2">
+      <%= image_tag 'thumb.jpg', class: 'img img-responsive', width: 45 %>
     </div>
-
-    <!-- Showing edit and delete options -->
-    <div class="col-xs-2" style="margin-left: -5px;">
+    <div class="col-xs-8" style="margin-left: -40px;">
+      <%= reply.user.name %>
+    </div>
+    <div class="col-xs-2" style="margin-left: 40px;">
       <% if reply.user == current_user %>
         <i id="edit_reply<%= reply.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
         <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, replies_path(:id => reply.id), method: :delete, data: { confirm: 'Are you sure?'} %>
       <% end %>
+    </div>
+  </div>
+  
+  <div class="row" style="margin-top: 0.5em;">
+    <!-- Showing answer and username -->
+    <div class="col-xs-12">
+      <p id="reply<%= reply.id %>"><%= reply.reply %></p>
     </div>
   </div>
 </div>

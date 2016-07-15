@@ -7,7 +7,7 @@
       </div>
 
       <!-- Showing to user only -->
-      <div id="menu-item1-links" style="margin-left: 3em;" class="<%= user_signed_in? ? '' : 'hidden' %>">
+      <div id="menu-item1-links" style="margin-left: 3em;" class="hidden">
         <p><a href="<%= questions_path(:type => :asked) %>">Asked</a></p>
         <p><a href="<%= questions_path(:type => :answered) %>">Answered</a></p>
         <p><a href="<%= questions_path(:type => :following) %>">Following</a></p>
@@ -18,7 +18,7 @@
         <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Contests</span>
       </div>
 
-      <div id="menu-item2-links" style="margin-left: 3em;" class="<%= user_signed_in? ? '' : 'hidden' %>">
+      <div id="menu-item2-links" style="margin-left: 3em;" class="hidden">
         <p><a href="<%= contests_path(:type => :open) %>">View Contests</a></p>
         <!-- Not for admin -->
         <% if !is_admin? %>
@@ -33,7 +33,7 @@
         <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Causes</span>
       </div>
 
-      <div id="menu-item3-links" style="margin-left: 3em;" class="<%= user_signed_in? ? '' : 'hidden' %>">
+      <div id="menu-item3-links" style="margin-left: 3em;" class="hidden">
         <p><a href="#" data-toggle="modal" data-target="#causeModal">Start a Cause</a></p>
         <p><a href="<%= causes_path %>">View Causes</a></p>
         <p><a href="<%= causes_path(:type => :followed) %>">Followed</a></p>
@@ -46,7 +46,7 @@
         <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Articles</span>
       </div>
 
-      <div id="menu-item4-links" style="margin-left: 3em;" class="<%= user_signed_in? ? '' : 'hidden' %>">
+      <div id="menu-item4-links" style="margin-left: 3em;" class="hidden">
         <p><%= link_to 'Write an Article', new_articles_path %></p>
         <p><%= link_to 'Request an Article', new_article_request_path %></p>
         <p><%= link_to 'Answer a Request', article_requests_path %></p>

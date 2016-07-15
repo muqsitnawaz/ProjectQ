@@ -2,9 +2,12 @@ class RepliesController < ApplicationController
 
   def create
     @reply = current_user.replies.build(reply_params)
+    
     if @reply.save
-      redirect_to questions_path(:id => Answer.find_by_id(reply_params[:answer_id]).question.id)
+      redirect_to question_path(:id => Answer.find_by_id(reply_params[:answer_id]).question.id)
+      flash[:notice] = 'reply created'
     else
+      flash[:notice] = 'reply creation failed'
       redirect_to root_path
     end
   end
@@ -36,7 +39,8 @@ class RepliesController < ApplicationController
 
     if @reply.user == current_user
       @reply.destroy
-      redirect_to questions_path(:id => question_id)
+      flash[:notice] = 'reply destroyed'
+      redirect_to question_path(:id => question_id)
     else
       flash[:notice] = "not sufficient permission"
       redirect_to root_path

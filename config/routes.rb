@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # Feeds Controller
   root 'feeds#index'
   get '/profile' => 'feeds#profile', :as => 'profile'
+  get '/public/:id' => 'feeds#public_profile', :as => 'public_profile'
+  
   get '/notifications' => 'feeds#notifications', :as => 'notifications'
   post '/add_interest' => 'feeds#add_interest'
   post '/add_education' => 'feeds#add_education'
@@ -11,7 +13,7 @@ Rails.application.routes.draw do
   post '/update_location' => 'feeds#update_location'
 
   # Questions paths
-  resource :questions
+  resources :questions
   post '/follow' => 'questions#follow'
   post '/update_question' => 'questions#update'
 

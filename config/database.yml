@@ -14,7 +14,7 @@
 development:
   adapter: postgresql
   database: projectq_development
-  host: localhost
+  host: <%= ENV['IP'] %>
   username: muqsitnawaz
   password: B.D.c00p3r
   pool: 5
@@ -22,8 +22,7 @@ development:
 test:
   adapter: postgresql
   database: projectq_test
-  host: localhost
-  host: localhost
+  host: <%= ENV['IP'] %>
   username: muqsitnawaz
   password: B.D.c00p3r
   pool: 5

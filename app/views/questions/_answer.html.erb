@@ -1,10 +1,28 @@
 <div style="margin-bottom: 2em; padding: 5px;">
   <div class="row">
+    <div class="col-xs-2">
+      <%= image_tag 'thumb.jpg', class: 'img img-responsive', width: 45 %>
+    </div>
+    <div class="col-xs-8" style="margin-left: -50px;">
+      <%= answer.user.name %>
+      <p class="text-muted"><small>301 views</small></p>
+    </div>
+    <div class="col-xs-2" style="margin-left: 50px;">
+      <% if answer.user == current_user %>
+        <i id="edit_answerQ<%= answer.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, answers_path(:id => answer.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="row">
     <!-- Showing answer and username -->
-    <div class="col-xs-10">
+    <div class="col-xs-12">
       <!-- to make read more link -->
       <% if answer.answer.length > 250 %>
-        <p id="answer<%= answer.id %>" class="truncated-answer" style="display:inline;"><%= truncate(answer.answer, length: 250) %></p>
+        <div>
+          <p id="answer<%= answer.id %>" class="truncated-answer" style="display:inline;"><%= truncate(answer.answer, length: 250) %></p>
+        </div>
         <%= link_to 'Read more', '', id: "read-more-#{answer.id}" %>
         <script>
           $('#read-more-<%= answer.id %>').on('click', function(e) {
@@ -16,15 +34,7 @@
         <p id="answer<%= answer.id %>"><%= answer.answer %></p>
       <% end %>
       
-      <p style="margin-top: 0.3em;"><i> - <%= answer.user.name %></i></p>
-    </div>
-
-    <!-- Showing edit and delete options -->
-    <div class="col-xs-2">
-      <% if answer.user == current_user %>
-        <i id="edit_answerQ<%= answer.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, answers_path(:id => answer.id), method: :delete, data: { confirm: 'Are you sure?'} %>
-      <% end %>
+      <p class="text-muted"><small>Updated at <%= answer.updated_at.strftime('%-d %B, %Y') %></small></p>
     </div>
   </div>
 
@@ -43,23 +53,24 @@
     <div class="col-xs-10">
       <button id="upvote<%= answer.id %>" class="btn btn-default">Upvote | <%= answer.upvotes %></button>
       <button id="downvote<%= answer.id %>" class="btn btn-default">Downvote</button>
+      <button id="showReplies<%= answer.id %>" class="btn btn-default">Replies | <%= answer.replies.count %></button>
     </div>
+    
     <div class="col-xs-2">
-      <div style="margin-top:0.6em;">
+      <div style="margin-top:0.6em; margin-left: 1.3em;">
         <i id="replyA<%= answer.id %>" class="glyphicon glyphicon-share-alt" style="color: black;"></i>
-        <i class="glyphicon glyphicon-share" style="color: black;"></i>
       </div>
     </div>
   </div>
 
-  <!-- Showing replies -->
-  <% if full == true %>
-    <div class="row" style="">
-      <div class="col-xs-11 col-xs-offset-1">
-      <% answer.replies.each do |reply| %>
-        <%= render 'reply', :reply => reply %>
-      <% end %>
+  <!-- Hidden replies -->
+  <div class="row" style="">
+    <div class="col-xs-11 col-xs-offset-1">
+      <div id="replies<%= answer.id %>" class="hidden">
+        <% answer.replies.each do |reply| %>
+          <%= render 'reply', :reply => reply %>
+        <% end %>
       </div>
     </div>
-  <% end %>
+  </div>
 </div>
