@@ -11,6 +11,7 @@ class ArticleRequestsController < ApplicationController
 
   def create
     @article_request = current_user.article_requests.build(article_request_params)
+    
     if @article_request.save
       redirect_to article_request_path(:id => @article_request.id)
       flash[:notice] = 'article request created'

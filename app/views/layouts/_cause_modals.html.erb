@@ -20,7 +20,7 @@
             <div class="row" style="padding-top:1em;">
               <div class="col-xs-6">
                 <p><strong>Cause type</strong></p>
-                <%= f.select :cause_type, options_for_select(get_all_cause_types), autofocus: true, class: ' form-control' %>
+                <%= f.select :cause_type, options_for_select(get_all_cause_types), autofocus: true, class: 'form-control' %>
               </div>
               <div class="col-xs-6">
                 <p><strong>Cause intro</strong></p>
@@ -44,7 +44,7 @@
           <div class="row" style="border-left: 1px solid #e7e7e7;">
             <center>
               <%= f.file_field :image,class: 'btn' %> <br>
-              <%= f.submit "Post Cause",class:'btn btn-squared btn-ask1'%>
+              <%= f.submit "Post",class:'btn btn-squared btn-ask1'%>
             </center>
           </div>
           <%end%>
@@ -73,13 +73,48 @@
           <!-- create a new question using this modal -->
           <% @cause_comment = CauseComment.new %>
           <%= form_for @cause_comment, :url => { :controller =>"cause_comments", :action =>"create"}  do |f| %>
-          <div class="form-group">
-            <%= f.text_area :comment, rows: 5, class: 'form-control' %>
-            <%= f.hidden_field :cause_id %>
-          </div>
-          <div class="row" style="padding-top:3em;">
+            <div class="form-group">
+              <p><strong>Your comment</strong></p>
+              <%= f.text_area :comment, rows: 3, class: 'form-control' %><br>
+              <%= f.hidden_field :cause_id %>
+            </div>
             <center>
-              <%= f.submit "Post Comment", class:'btn btn-squared btn-ask1'%>
+              <%= f.submit "Post", class:'btn btn-ask1'%>
+            </center>
+          <% end %>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for posting cause reply -->
+<div class="modal bnr-modal fade" id="causeReplyModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Reply</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <% @cause_reply = CauseReply.new %>
+          <%= form_for @cause_reply, :url => { :controller =>"cause_replies", :action =>"create"}  do |f| %>
+          <div class="form-group">
+            <p><strong>Your reply</strong></p>
+            <%= f.text_area :reply, rows: 3, class: 'form-control' %><br>
+            <%= f.hidden_field :cause_comment_id %>
+          </div>
+          <div class="row">
+            <center>
+              <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
             </center>
           </div>
           <%end%>
@@ -106,13 +141,18 @@
       <section>
         <div class="modal-body modal-spa">
           <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
-            <input id="new_cause_intro" type="text" class="form-control">
-            <textarea id="new_cause_detail" class="form-control"></textarea>
-            <textarea id="new_cause_whymatters" class="form-control"></textarea>
+            <p><strong>Introduction</strong></p>
+            <input id="new_cause_intro" type="text" class="form-control"><br>
+            
+            <p><strong>Detail</strong></p>
+            <textarea id="new_cause_detail" class="form-control"></textarea><br>
+            
+            <p><strong>Why does it matter?</strong></p>
+            <textarea id="new_cause_whymatters" class="form-control"></textarea><br>
             <br>
 
             <center>
-              <input id="new_cause_submit" type="submit" value="Update Cause" class="btn btn-squared btn-ask1" />
+              <input id="new_cause_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />
             </center>
           </form>
         </div>
@@ -139,11 +179,41 @@
       <section>
         <div class="modal-body modal-spa">
           <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
-            <input id="new_cause_comment_comment" type="text" class="form-control">
-            <br>
+            <p><strong>Your comment</strong></p>
+            <input id="new_cause_comment_comment" type="text" class="form-control"><br>
 
             <center>
-              <input id="new_cause_comment_submit" type="submit" value="Update Cause" class="btn btn-squared btn-ask1" />
+              <input id="new_cause_comment_submit" type="submit" value="Update" class="btn btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for updating a cause reply -->
+<div class="modal bnr-modal fade" id="editCauseReplyModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Reply</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <p><strong>Your reply</strong></p>
+            <input id="new_cause_reply_reply" class="form-control" /><br>
+
+            <center>
+              <input id="new_cause_reply_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />
             </center>
           </form>
         </div>

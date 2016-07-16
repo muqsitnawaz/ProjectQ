@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :article_requests
 
   has_many :replies
+  has_many :cause_replies
 
   has_many :notifications
 

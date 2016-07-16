@@ -9,4 +9,7 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 
-Rails.application.config.assets.precompile += %w( script.js )
+Rails.application.config.assets.precompile += %w( questions_script.js )
+Rails.application.config.assets.precompile += %w( contests_script.js )
+Rails.application.config.assets.precompile += %w( causes_script.js )
+Rails.application.config.assets.precompile += %w( articles_script.js )

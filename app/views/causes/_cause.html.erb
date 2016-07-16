@@ -1,77 +1,88 @@
 <!-- Template for rendering a cause -->
 <div class="row" style="margin-top: 0.5em;">
   <div class="col-xs-12">
-    <div>
-      <!-- Cause's header -->
-      <div class="row">
-        <!-- Hidden field for cause intro -->
-        <input type="text" id="cause_intro<%= cause.id %>" value="<%= cause.intro %>" hidden>
+    <p><i><%= cause.cause_type %></i></p>
+    
+    <!-- Cause's header -->
+    <div class="row">
+      <!-- Hidden field for cause intro -->
+      <input type="text" id="cause_intro<%= cause.id %>" value="<%= cause.intro %>" hidden>
 
-        <!-- Cause's content -->
-        <div class="col-xs-10 question-content" >
-          <%= link_to cause.intro, causes_path(:id => cause.id) %>
-        </div>
-
-        <!-- Cause edit and delete buttons -->
-        <div class="col-xs-2">
-          <% if cause.user == current_user %>
-            <i id="edit_causeC<%= cause.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-            <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, causes_path(:id => cause.id), method: :delete, data: { confirm: 'Are you sure?'} %>
-          <% end %>
-        </div>
+      <!-- Cause's content -->
+      <div class="col-xs-10 question-content" >
+        <%= link_to cause.intro, cause_path(:id => cause.id) %>
       </div>
 
-      <!-- Displaying cause's type -->
-      <div class="row">
-        <div class="col-xs-12">
-          <p>Cause Type: <%= cause.cause_type %></p>
-        </div>
+      <!-- Cause edit and delete buttons -->
+      <div class="col-xs-2">
+        <% if cause.user == current_user %>
+          <i id="edit_causeC<%= cause.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+          <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, causes_path(:id => cause.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+        <% end %>
       </div>
+    </div>
+    
+    <% if full == false %>
+      <div class="question-details">
+        <p id="cause_detail<%= cause.id %>"><%= cause.detail %></p>
+      </div>
+    <% end %>
 
+    <% if full == true %>
       <!-- Cause's owner name -->
       <div class="row">
         <div class="col-xs-12">
-          <p>Started by <%= cause.user.name %>,<i> <%= (Time.now.to_date - cause.created_at.to_date).to_i %> day(s) ago</i></p>
-          <%= social_share_button_tag(cause.intro) %>
+          <p>Started by <%= link_to cause.user.name, public_profile_path(:id => cause.user.id) %>,<i> <%= (Time.now.to_date - cause.created_at.to_date).to_i %> day(s) ago</i></p>
+        </div>
+      </div><br/>
+  
+      <% if !cause.image.nil? && cause.image.length != 0 %>
+        <!-- Showing cause's image -->
+        <img src="<%= cause.image %>" class="img img-responsive">
+        <br/>
+      <% end %>
+  
+      <div class="question-details">
+        <p id="cause_detail<%= cause.id %>"><%= cause.detail %></p>
+      </div>
+  
+      <div class="question-details">
+        <p style="font-weight: bold; font-style: normal;">Why it matters?</p>
+        <p id="cause_whymatters<%= cause.id %>"><%= cause.whymatters %></p>
+      </div>
+  
+      <!-- Rendering cause buttons -->
+      <div class="row">
+        <div class="col-xs-9">
+          <% if user_signed_in? %>
+            <button id="commentC<%= cause.id %>" class="btn btn-default">Comment | <%= cause_comments.length %></button>
+            <% if current_user.causes_followed.include? cause.id %>
+              <button class="btn btn-default" style="color:blue;">Following</button>
+            <% else %>
+              <button id="follow_cause<%= cause.id %>" class="btn btn-default">Follow</button>
+            <% end %>
+            <button id="agree_<%= cause.id %>" class="btn btn-default">Agree | <%= cause.num_agree %></button>
+            <button id="disagree_<%= cause.id %>" class="btn btn-default">Disagree | <%= cause.num_disagree %></button>
+          <% end %>
+        </div>
+        <!-- Bottom right buttons -->
+        <div class="col-xs-3" style="margin-top: 0.8em;">
+          <%= social_share_button_tag(cause.detail) %>
         </div>
       </div>
-    </div>
-    <br/>
-
-    <% if !cause.image.nil? && cause.image.length != 0 %>
-      <!-- Showing cause's image -->
-      <img src="<%= cause.image %>" class="img img-responsive">
-      <br/>
     <% end %>
 
-    <div class="question-details">
-      <p id="cause_detail<%= cause.id %>"><%= cause.detail %></p>
-    </div>
-
-    <div class="question-details">
-      <p style="font-weight: bold; font-style: normal;">Why it matters?</p>
-      <p id="cause_whymatters<%= cause.id %>"><%= cause.whymatters %></p>
-    </div>
-
-    <!-- Rendering cause buttons -->
-    <% if cause.user.id != current_user.id %>
-      <button id="commentC<%= cause.id %>" class="btn btn-default">Comment | <%= cause.cause_comments.length %></button>
-      <% if current_user.causes_followed.include? cause.id %>
-        <button class="btn btn-defalt" style="color:blue;">Following</button>
-      <% else %>
-        <button id="follow_cause<%= cause.id %>" class="btn btn-defalt">Follow</button>
-      <% end %>
-      <button id="agree_<%= cause.id %>" class="btn btn-defalt">Agree | <%= cause.num_agree %></button>
-      <button id="disagree_<%= cause.id %>" class="btn btn-defalt">Disagree | <%= cause.num_disagree %></button>
-    <% end %>
-
-    <!-- Rendering answers for the question -->
     <div class="col-xs-12" style="margin-top: 1em;">
-      <% if !cause.cause_comments.empty? %>
-        <hr>
-
-        <% cause.cause_comments.each do |cause_comment| %>
-          <%= render 'causes/cause_comment', :cause_comment => cause_comment %>
+      <% if !cause_comments.empty? %>
+        <!-- Rendering comments -->
+        <% if full == true %>
+          <hr>
+        
+          <% cause_comments.each do |cause_comment| %>
+            <%= render 'causes/cause_comment', :cause_comment => cause_comment %>
+          <% end %>
+        <% else %>
+          <%= render 'causes/cause_comment', :cause_comment => cause_comments.sort_by {|a| a.created_at }.last %>
         <% end %>
       <% end %>
     </div>

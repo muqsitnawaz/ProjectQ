@@ -1,21 +1,20 @@
 class CausesController < ApplicationController
-  before_filter :authenticate_user!, except: [ :show ]
-
+  before_filter :authenticate_user!, except: [ :index, :show ]
+  
   # Creating a cause
   def create
     @cause = current_user.causes.build(cause_params)
     
     if @cause.save
-      redirect_to causes_path(:id => @cause.id)
       flash[:notice] = 'cause created'
+      redirect_to causes_path(:id => @cause.id)
     else
+      flash[:notice] = 'cause creation failed'
       redirect_to root_path
     end
   end
-
-  # Showing causes
-  def show
-
+  
+  def index
     if !params[:type].nil?
       if params[:type] == 'followed'
         @causes = Cause.where(:id => current_user.causes_followed)
@@ -29,6 +28,16 @@ class CausesController < ApplicationController
       end
     else
       @causes = Cause.all.order('created_at DESC')
+    end
+  end
+
+  # Showing causes
+  def show
+    @cause = Cause.find_by_id(params[:id])
+    
+    if @cause.nil?
+      flash[:notice] = 'cause not found'
+      redirect_to root_path
     end
   end
 
@@ -59,6 +68,7 @@ class CausesController < ApplicationController
   # Deleting a cause
   def destroy
     @cause = Cause.find_by_id(params[:id])
+    cause_id = @cause.id
 
     if @cause.user == current_user
       @cause.destroy
@@ -67,7 +77,7 @@ class CausesController < ApplicationController
       flash[:notice] = "not sufficient permission"
     end
 
-    redirect_to request.path
+    redirect_to causes_path
   end
 
   # Follow a cause

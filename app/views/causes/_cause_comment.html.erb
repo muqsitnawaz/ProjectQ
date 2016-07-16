@@ -1,11 +1,28 @@
 <div style="padding: 5px;">
   <div class="row">
-    <!-- Showing contest answer and username -->
+    <div class="col-xs-2">
+      <%= image_tag 'thumb.jpg', class: 'img img-responsive', width: 45 %>
+    </div>
+    <div class="col-xs-8" style="margin-left: -50px;">
+      <%= link_to cause_comment.user.name, public_profile_path(:id => cause_comment.user.id) %>
+      <p class="text-muted"><small>301 views</small></p>
+    </div>
+    <div class="col-xs-2" style="margin-left: 50px;">
+      <% if cause_comment.user == current_user %>
+        <i id="edit_cause_commentC<%= cause_comment.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, cause_comments_path(:id => cause_comment.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="row">
     <div class="col-xs-10">
-      <!-- to make read more link -->
       <% if cause_comment.comment.length > 250 %>
-        <p id="cause_comment_comment<%= cause_comment.id %>" class="truncated-comment" style="display:inline;"><%= truncate(cause_comment.comment, length: 250) %></p>
+        <div>
+          <p id="cause_comment_comment<%= cause_comment.id %>" class="truncated-comment" style="display:inline;"><%= truncate(cause_comment.comment, length: 250) %></p>  
+        </div>
         <%= link_to 'Read more', '', id: "read-more-#{cause_comment.id}" %>
+        
         <script>
           $('#read-more-<%= cause_comment.id %>').on('click', function(e) {
             e.preventDefault()
@@ -15,16 +32,33 @@
       <% else %>
         <p id="cause_comment_comment<%= cause_comment.id %>"><%= cause_comment.comment %></p>
       <% end %>
-    </div>
-
-    <!-- Showing edit and delete options -->
-    <div class="col-xs-2">
-      <% if cause_comment.user == current_user %>
-        <i id="edit_cause_commentC<%= cause_comment.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, cause_comments_path(:id => cause_comment.id), method: :delete, data: { confirm: 'Are you sure?'} %>
-      <% end %>
+      
+      <p class="text-muted"><small>Updated at <%= cause_comment.updated_at.strftime('%-d %B, %Y') %></small></p>
     </div>
   </div>
-
-  <p style="margin-top: 0.3em;"><i> - <%= cause_comment.user.name %></i></p>
+  
+  <!-- Like, Reply -->
+  <div class="row">
+    <div class="col-xs-10">
+      <button id="likeC<%= cause_comment.id %>" class="btn btn-default">Like | 0</button>
+      <button id="showCauseReplies<%= cause_comment.id %>" class="btn btn-default">Replies | <%= cause_comment.cause_replies.count %></button>
+    </div>
+    
+    <div class="col-xs-2">
+      <div style="margin-top:0.6em; margin-left: 1.3em;">
+        <i id="replyC<%= cause_comment.id %>" class="glyphicon glyphicon-share-alt" style="color: black;"></i>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Hidden replies -->
+  <div class="row" style="">
+    <div class="col-xs-11 col-xs-offset-1">
+      <div id="causeReplies<%= cause_comment.id %>" class="hidden">
+        <% cause_comment.cause_replies.each do |cause_reply| %>
+          <%= render 'causes/cause_reply', :cause_reply => cause_reply %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

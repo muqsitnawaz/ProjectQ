@@ -5,9 +5,10 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.build(question_params)
     
     if @question.save
-      redirect_to question_path(:id => @question.id)
       flash[:notice] = 'question created'
+      redirect_to question_path(:id => @question.id)
     else
+      flash[:notice] = 'question creation failed'
       redirect_to root_path
     end
   end
@@ -63,12 +64,16 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question = Question.find_by_id(params[:id])
+    question_id = @question.id
 
     if @question.user == current_user
       @question.destroy
+      flash[:notice] = 'cause deleted'
+    else 
+      flash[:notice] = 'not sufficient permission'
     end
 
-    redirect_to request.path
+    redirect_to questions_path
   end
 
   # Custom methods

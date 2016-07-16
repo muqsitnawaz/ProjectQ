@@ -1,0 +1,23 @@
+<div style="margin: 2em 0em; padding: 5px;">
+  <div class="row">
+    <div class="col-xs-2">
+      <%= image_tag 'thumb.jpg', class: 'img img-responsive', width: 45 %>
+    </div>
+    <div class="col-xs-8" style="margin-left: -40px;">
+      <%= link_to cause_reply.user.name, public_profile_path(:id => cause_reply.user.id) %>
+    </div>
+    <div class="col-xs-2" style="margin-left: 40px;">
+      <% if cause_reply.user == current_user %>
+        <i id="edit_cause_reply<%= cause_reply.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, cause_replies_path(:id => cause_reply.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="row" style="margin-top: 0.5em;">
+    <!-- Showing reply and username -->
+    <div class="col-xs-12">
+      <p id="cause_reply<%= cause_reply.id %>"><%= cause_reply.reply %></p>
+    </div>
+  </div>
+</div>

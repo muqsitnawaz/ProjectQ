@@ -5,9 +5,10 @@ class ContestAnswersController < ApplicationController
     @contest_answer = current_user.contest_answers.build(contest_answer_params)
     
     if @contest_answer.save
+      flash[:notice] = "answer created"
       redirect_to contests_path(:type => :open)
-      flash[:notice] = "answer posted"
     else
+      flash[:notice] = "answer creation failed"
       redirect_to root_path
     end
   end

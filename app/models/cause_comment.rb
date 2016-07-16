@@ -1,6 +1,8 @@
 class CauseComment < ActiveRecord::Base
   belongs_to :user
   belongs_to :cause
+  
+  has_many :cause_replies
 
   # Validations
   validates_associated :user

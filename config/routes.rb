@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   post '/mark_winner' => 'contest_answers#mark_winner'
 
   # Causes paths
-  resource :causes
+  resources :causes
   post '/update_cause' => 'causes#update'
   post '/agree' => 'causes#agree'
   post '/disagree' => 'causes#disagree'
@@ -47,8 +47,8 @@ Rails.application.routes.draw do
   resource :cause_comments
   post '/update_cause_comment' => 'cause_comments#update'
 
-  get 'staticpages/login'
-  get 'staticpages/signup'
+  resource :cause_replies
+  post '/update_cause_reply' => 'cause_replies#update'
 
   # Articles paths
   resource :articles
@@ -59,19 +59,9 @@ Rails.application.routes.draw do
   # Article requests
   resources :article_requests
 
+  get 'staticpages/login'
+  get 'staticpages/signup'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
 end

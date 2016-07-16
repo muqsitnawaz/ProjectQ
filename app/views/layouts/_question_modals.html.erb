@@ -38,7 +38,7 @@
           <div class="row" style="border-left: 1px solid #e7e7e7;">
             <center>
               <%= f.file_field :image,class: 'btn' %> <br>
-              <%= f.submit "Post Question",class:'btn btn-squared btn-ask1'%>
+              <%= f.submit "Post",class:'btn btn-squared btn-ask1'%>
             </center>
           </div>
           <% end %>
@@ -68,13 +68,14 @@
           <% @answer = Answer.new %>
           <%= form_for @answer, :url => { :controller =>"answers", :action =>"create"}  do |f| %>
           <div class="form-group">
-            <%= f.text_area :answer, rows: 5, class: 'form-control' %>
+            <p><strong>Your answer</strong></p>
+            <%= f.text_area :answer, rows: 3, class: 'form-control' %><br>
             <%= f.hidden_field :question_id %>
           </div>
-          <div class="row" style="padding-top:3em;">
+          <div class="row">
             <center>
-              <%= f.file_field :image,class: 'btn btn-squared btn-ask1' %>
-              <%= f.submit "Post Answer", class:'btn btn-squared btn-ask1'%>
+              <%= f.file_field :image %><br>
+              <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
             </center>
           </div>
           <%end%>
@@ -104,12 +105,13 @@
           <% @reply = Reply.new %>
           <%= form_for @reply, :url => { :controller =>"replies", :action =>"create"}  do |f| %>
           <div class="form-group">
-            <%= f.text_area :reply, rows: 5, class: 'form-control' %>
+            <p><strong>Your reply</strong></p>
+            <%= f.text_area :reply, rows: 3, class: 'form-control' %><br>
             <%= f.hidden_field :answer_id %>
           </div>
-          <div class="row" style="padding-top:3em;">
+          <div class="row">
             <center>
-              <%= f.submit "Post Reply", class:'btn btn-squared btn-ask1'%>
+              <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
             </center>
           </div>
           <%end%>
@@ -136,12 +138,14 @@
       <section>
         <div class="modal-body modal-spa">
           <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
-            <input id="new_question_content" type="text" class="form-control">
-            <textarea id="new_question_detail" class="form-control"></textarea>
-            <br>
+            <p><strong>Heading</strong></p>
+            <input id="new_question_content" type="text" class="form-control"><br>
+            
+            <p><strong>Detail</strong></p>
+            <textarea id="new_question_detail" class="form-control"></textarea><br>
 
             <center>
-              <input id="new_question_submit" type="submit" value="Update Question" class="btn btn-squared btn-ask1" />
+              <input id="new_question_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />
             </center>
           </form>
         </div>
@@ -167,11 +171,11 @@
       <section>
         <div class="modal-body modal-spa">
           <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
-            <textarea id="new_answer_answer" class="form-control"></textarea>
-            <br>
+            <p><strong>Your answer</strong></p>
+            <textarea id="new_answer_answer" class="form-control"></textarea><br>
 
             <center>
-              <input id="new_answer_submit" type="submit" value="Update Answer" class="btn btn-squared btn-ask1" />
+              <input id="new_answer_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />
             </center>
           </form>
         </div>
@@ -197,11 +201,11 @@
       <section>
         <div class="modal-body modal-spa">
           <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
-            <input id="new_reply_reply" class="form-control" />
-            <br>
+            <p><strong>Your reply</strong></p>
+            <input id="new_reply_reply" class="form-control" /><br>
 
             <center>
-              <input id="new_reply_submit" type="submit" value="Update Reply" class="btn btn-squared btn-ask1" />
+              <input id="new_reply_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />
             </center>
           </form>
         </div>

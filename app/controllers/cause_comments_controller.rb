@@ -6,9 +6,10 @@ class CauseCommentsController < ApplicationController
     @cause_comment = current_user.cause_comments.build(cause_comment_params)
     
     if @cause_comment.save
-      redirect_to causes_path
-      flash[:notice] = "cause comment posted"
+      flash[:notice] = "cause comment created"
+      redirect_to cause_path(:id => @cause_comment.cause_id)
     else
+      flash[:notice] = "cause comment creation failed"
       redirect_to root_path
     end
   end
@@ -40,12 +41,12 @@ class CauseCommentsController < ApplicationController
 
     if @cause_comment.user == current_user
       @cause_comment.destroy
-      flash[:notice] = "comment deleted"
-      redirect_to causes_path(:id => cause_id)
+      flash[:notice] = "cause comment deleted"
     else
       flash[:notice] = "not sufficient permission"
-      redirect_to root_path
     end
+    
+    redirect_to cause_path(:id => cause_id)
   end
 
 def cause_comment_params

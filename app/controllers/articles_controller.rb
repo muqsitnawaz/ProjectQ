@@ -73,8 +73,8 @@ class ArticlesController < ApplicationController
     @article.topics = @article_request.topics
 
     if @article.save
-      redirect_to articles_path(:id => @article.id)
       flash[:notice] = 'article created'
+      redirect_to articles_path(:id => @article.id)
     else
       flash[:notice] = 'article creation failed'
       redirect_to root_path

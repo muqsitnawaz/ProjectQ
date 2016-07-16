@@ -8,7 +8,9 @@
     <!-- Contests area -->
     <div class="col-xs-7">
       <div class="contests-area">
-        <%= render 'cause', :cause => @cause, :cause_comments => @cause.cause_comments, :full => true %>
+        <% @causes.each do |cause| %>
+          <%= render 'cause', :cause => cause, :cause_comments => cause.cause_comments, :full => false %>
+        <% end %>
       </div>
     </div>
 
@@ -18,6 +20,5 @@
     </div>
   </div>
 </div>
-
 
 <%= javascript_include_tag "causes_script", "data-turbolinks-track" => true  %>

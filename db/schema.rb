@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716145343) do
+ActiveRecord::Schema.define(version: 20160716195417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,17 @@ ActiveRecord::Schema.define(version: 20160716145343) do
 
   add_index "cause_comments", ["cause_id"], name: "index_cause_comments_on_cause_id", using: :btree
   add_index "cause_comments", ["user_id"], name: "index_cause_comments_on_user_id", using: :btree
+
+  create_table "cause_replies", force: :cascade do |t|
+    t.integer  "cause_comment_id"
+    t.integer  "user_id"
+    t.string   "reply",            null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "cause_replies", ["cause_comment_id"], name: "index_cause_replies_on_cause_comment_id", using: :btree
+  add_index "cause_replies", ["user_id"], name: "index_cause_replies_on_user_id", using: :btree
 
   create_table "causes", force: :cascade do |t|
     t.integer  "user_id"

@@ -36,16 +36,16 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = Answer.find_by_id(params[:id])
-    question_id =@answer.question.id
+    question_id =@answer.question_id
 
     if @answer.user == current_user
       @answer.destroy
       flash[:notice] = 'answer destroyed'
-      redirect_to question_path(:id => question_id)
     else
       flash[:notice] = "not sufficient permission"
-      redirect_to root_path
     end
+    
+    redirect_to question_path(:id => question_id)
   end
 
   # Upvoting an answer
