@@ -1,14 +1,14 @@
 <small class="text-muted"><%= notification.created_at.strftime('%H:%M:%S, %-d %B %Y') %></small><br/>
 
 <% if notification.notification_type == 1 %>
-	<p><%= User.find_by_id(notification.poster_id).name %> answered your 
+	<p><%= link_to poster.name, public_profile_path(:id => poster.id) %> answered your 
 		<%= link_to 'question', questions_path(:id => notification.question_id) %></p>
 <% elsif notification.notification_type == 2 %>
-	<p><%= User.find_by_id(notification.poster_id).name %> answered a 
+	<p><%= link_to poster.name, public_profile_path(:id => poster.id) %> answered a 
 		<%= link_to 'question', questions_path(:id => notification.question_id) %>
 		you're following</p>
 <% elsif notification.notification_type == 3 %>
-	<p><%= User.find_by_id(notification.poster_id).name %> replied to your answer on 
+	<p><%= link_to poster.name, public_profile_path(:id => poster.id) %> replied to your answer on 
 		<%= link_to 'question', questions_path(:id => notification.question_id) %></p>
 <% else %>
 	<p style="color: red;">Invalid notification</p>

@@ -10,7 +10,7 @@
 
         <p>
         <% @user.interests.sort.each do |interest| %>
-           <%= interest.titleize %> .
+           <%= link_to interest.titleize, questions_path(:topic => interest) %> .
         <% end %>
         </p>
 

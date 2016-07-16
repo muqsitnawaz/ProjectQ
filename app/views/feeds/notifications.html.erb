@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-xs-4">
       <% @notifications.each do |notification| %>
-        <%= render 'notification', :notification => notification %>
+        <%= render 'notification', :notification => notification, :poster => User.find_by_id(notification.poster_id) %>
       <% end %>
     </div>
   </div>

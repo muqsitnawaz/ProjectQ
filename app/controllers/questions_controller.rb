@@ -13,16 +13,20 @@ class QuestionsController < ApplicationController
   end
   
   def index
-    if user_signed_in?
-      if params[:type] == 'asked'
-        @questions = Question.where(:user_id => current_user.id)
-      elsif params[:type] == 'answered'
-        @questions = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id})
-      elsif params[:type] == 'following'
-        @questions = Question.where(:id => current_user.following)
+    if params[:topic].nil?
+      if user_signed_in?
+        if params[:type] == 'asked'
+          @questions = Question.where(:user_id => current_user.id).order('created_at DESC')
+        elsif params[:type] == 'answered'
+          @questions = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id}).order('created_at DESC')
+        elsif params[:type] == 'following'
+          @questions = Question.where(:id => current_user.following).order('created_at DESC')
+        end
+      else 
+        @questions = Question.all.order('created_at DESC')
       end
-    else 
-      @questions = Question.all.order('updated_at DESC')
+    else
+      @questions = Question.all.order('created_at DESC').reject {|q| !q.topics.include? params[:topic]}
     end
   end
   

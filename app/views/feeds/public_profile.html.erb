@@ -27,7 +27,7 @@
       <div class="row">
         <div class="col-xs-3">
           <h4>Feeds</h4>
-          <hr>
+          <hr class="profile-hr">
           
           <ul class='links-list'>
             <li><%= link_to 'Answers', public_profile_path(:id => @user.id) %></li>
@@ -49,10 +49,19 @@
       <h4>Views on <%= @user.name %></h4><hr class='profile-hr'>
       <p class='text-muted'>200 profile views</p>
       
-      <h4>About User</h4><hr class='profile-hr'>
+      <!-- About user: education and employment -->
+      <h4 style="margin-top:1em;">About User</h4><hr class='profile-hr'>
+      <% @user.employments.each do |emp| %>
+        <p>Worked as <%= emp[:position] %> at <%= emp[:organization] %> from <%= emp[:start] %> to <%= emp[:end] %></p>
+      <% end %>
+      <% @user.education.each do |edu| %>
+        <p><%= edu[:degree] %> in <%= edu[:subject] %> from <%= edu[:school] %></p>
+      <% end %>
+      <% if !@user.location.empty? %>
+        <p>Lives in <%= @user.location %></p>
+      <% end %>
       
-      
-      <h4>Knows About</h4><hr class='profile-hr'>
+      <h4 style="margin-top:1em;">Knows About</h4><hr class='profile-hr'>
 
       <% @user.interests.reject { |i| i.empty? }.each do |interest| %>
         <p class='text-bold' style="margin-bottom: 0;"><%= interest %></p>

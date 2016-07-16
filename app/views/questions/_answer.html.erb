@@ -4,7 +4,7 @@
       <%= image_tag 'thumb.jpg', class: 'img img-responsive', width: 45 %>
     </div>
     <div class="col-xs-8" style="margin-left: -50px;">
-      <%= answer.user.name %>
+      <%= link_to answer.user.name, public_profile_path(:id => answer.user.id) %>
       <p class="text-muted"><small>301 views</small></p>
     </div>
     <div class="col-xs-2" style="margin-left: 50px;">

@@ -6,7 +6,7 @@
       In
       <i>
         <% question.topics.each do |topic| %>
-          <%= topic %>
+          <%= link_to topic, questions_path(:topic => topic) %>
         <% end %>
       </i>
       - <%= question.updated_at.strftime('%-d %B, %Y') %>
@@ -35,7 +35,7 @@
       <!-- Question's owner name -->
       <div class="row">
         <div class="col-xs-12">
-          <p>Posted by <%= question.user.name %>,<i> <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</i></p>
+          <p>Posted by <%= link_to question.user.name, public_profile_path(:id => question.user.id) %>,<i> <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</i></p>
         </div>
       </div>
       <br/>

@@ -4,7 +4,7 @@
       <%= image_tag 'thumb.jpg', class: 'img img-responsive', width: 45 %>
     </div>
     <div class="col-xs-8" style="margin-left: -40px;">
-      <%= reply.user.name %>
+      <%= link_to reply.user.name, public_profile_path(:id => reply.user.id) %>
     </div>
     <div class="col-xs-2" style="margin-left: 40px;">
       <% if reply.user == current_user %>

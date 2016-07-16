@@ -3,7 +3,7 @@ class FeedsController < ApplicationController
 
   def index
     if user_signed_in?
-      @questions = Question.all
+      @questions = Question.all.order('created_at DESC')
       matches = []
 
       @questions.each do |question|
@@ -89,5 +89,9 @@ class FeedsController < ApplicationController
   	@user.location = params[:location]
   	@user.save
   	redirect_to profile_path
+  end
+private
+  def get_education(education)
+    
   end
 end
