@@ -53,12 +53,13 @@ padding-bottom: 3px;
 }
 .btn-nav {
   border-radius:20px;
-  width: 40px;
-  height:37px;
+  width: 42px;
+  height: 37px;
   background-color:#212121;
-  color:#fff;
+  color: #fff;
   margin-left: 1em;
 }
+
 .btn-nav:hover {
   background-color: #fff;
   border: 1px solid #212121;

@@ -1,6 +1,17 @@
 class QuestionsController < ApplicationController
   before_filter :authenticate_user!, except: [ :show ]
   
+  def create
+    @question = current_user.questions.build(question_params)
+    
+    if @question.save
+      redirect_to question_path(:id => @question.id)
+      flash[:notice] = 'question created'
+    else
+      redirect_to root_path
+    end
+  end
+  
   def index
     if user_signed_in?
       if params[:type] == 'asked'
@@ -20,17 +31,6 @@ class QuestionsController < ApplicationController
     
     if @question.nil?
       flash[:notice] = 'question not found'
-      redirect_to root_path
-    end
-  end
-
-  def create
-    @question = current_user.questions.build(question_params)
-    
-    if @question.save
-      redirect_to questions_path(:id => @question.id)
-      flash[:notice] = 'question created'
-    else
       redirect_to root_path
     end
   end

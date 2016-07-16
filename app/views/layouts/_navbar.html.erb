@@ -35,9 +35,14 @@
         <i class="glyphicon glyphicon-bullhorn"></i>
       <% end %>
 
-      <%= link_to profile_path, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-user"></i>
-      <% end %>
+      <div class="dropdown" style="display: inline;">
+        <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="<%= profile_path %>">Edit</a></li>
+          <li><a href="<%= public_profile_path(:id => current_user.id) %>">Preview</a></li>
+        </ul>
+      </div>
 
       <!--logout link  -->
       <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-nav" do %>

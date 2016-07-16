@@ -31,6 +31,27 @@ class FeedsController < ApplicationController
   	@subjects = get_all_subjects
   	@location = @user.location
   end
+  
+  def public_profile
+    @user = User.find_by_id(params[:id])
+    option = params[:option]
+    
+    if @user.nil?
+      flash[:notice] = 'user not found'
+      redirect_to root_path
+    else
+      if option.nil?
+        @questions = Question.where(:id => Answer.where(:user_id => @user.id).map {|a| a.question_id}).order('created_at DESC')
+      elsif option == 'questions'
+        @questions = Question.where(:user_id => @user.id).order('created_at DESC')
+      elsif option == 'all_activity'
+        # do something
+        @questions = Question.where("user_id = ? or id = ?", @user.id, 
+          Answer.where(:user_id => @user.id).map {|a| a.question_id}).order('created_at DESC')
+        
+      end
+    end
+  end
 
   def add_interest
   	@user = User.find_by_id(current_user.id)

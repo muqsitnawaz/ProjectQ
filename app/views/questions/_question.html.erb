@@ -68,15 +68,15 @@
           </div>
         </div>
       <% end %>
-      
-      <hr>
     <% end %>
 
     <% if !answers.empty? %>
-      <div class="col-xs-12" style="margin-top: 1em;">
+      <div class="col-xs-12" style="margin-top: 1em; margin-bottom: -2em;">
         
         <!-- Rendering answers -->
         <% if full == true %>
+          <hr>
+        
           <% answers.each do |answer| %>
             <%= render 'questions/answer', :answer => answer %>
           <% end %>
@@ -84,6 +84,11 @@
           <%= render 'questions/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0] %>
         <% end %>
       </div>
+    <% else %>
+    
+      <% if full == false %>
+        <p class='text-muted'>Be the first to answer</p>
+      <% end %>
     <% end %>
   </div>
 </div>

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Feeds Controller
   root 'feeds#index'
   get '/profile' => 'feeds#profile', :as => 'profile'
-  get '/public/:id' => 'feeds#public_profile', :as => 'public_profile'
+  get '/profile/:id' => 'feeds#public_profile', :as => 'public_profile'
   
   get '/notifications' => 'feeds#notifications', :as => 'notifications'
   post '/add_interest' => 'feeds#add_interest'

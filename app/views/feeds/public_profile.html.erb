@@ -1,0 +1,66 @@
+<% if !user_signed_in? %>
+  <%= render 'layouts/navbar1'%>
+<% end %>
+
+<div class="container" style="padding-top: 3em;">
+  <div class="row">
+    
+    <!--Left side: Profile and feeds-->
+    <div class="col-xs-9">
+      
+      <div class="row">
+        <div class="col-xs-3">
+          <%= image_tag 'thumb.jpg', height: '150px' %>
+        </div>
+        
+        <div class="col-xs-9">
+          <h2><%= @user.name %></h2>
+          
+          <p>Life is the infinite interaction between variables within life itself; 
+          and I am trying to learn about it everyday</p>
+          
+          <div class="btn btn-default">Follow | 2</div>
+        </div>
+      </div>
+      <hr>
+      
+      <div class="row">
+        <div class="col-xs-3">
+          <h4>Feeds</h4>
+          <hr>
+          
+          <ul class='links-list'>
+            <li><%= link_to 'Answers', public_profile_path(:id => @user.id) %></li>
+            <li><%= link_to 'Questions', public_profile_path(:id => @user.id, :option => 'questions')  %></li>
+            <li><%= link_to 'All Activity', public_profile_path(:id => @user.id, :option => 'all_activity')  %></li>
+          </ul>
+        </div>
+        
+        <div class="col-xs-9">
+          <% @questions.each do |question| %>
+            <%= render 'questions/question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
+    <!--Right side: About info-->
+    <div class="col-xs-3">
+      <h4>Views on <%= @user.name %></h4><hr class='profile-hr'>
+      <p class='text-muted'>200 profile views</p>
+      
+      <h4>About User</h4><hr class='profile-hr'>
+      
+      
+      <h4>Knows About</h4><hr class='profile-hr'>
+
+      <% @user.interests.reject { |i| i.empty? }.each do |interest| %>
+        <p class='text-bold' style="margin-bottom: 0;"><%= interest %></p>
+        <p style="color:grey; margin-top: 0;"><small><%= link_to 'Answers', questions_path(:topic => interest) %></small></p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<%= javascript_include_tag "script", "data-turbolinks-track" => true  %>
