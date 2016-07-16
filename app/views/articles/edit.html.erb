@@ -22,7 +22,7 @@
         <%= f.text_area :intro, class: 'form-control', placeholder: 'An introduction of your article' %><br>
 
         <p><strong>Content</strong></p>
-        <%= f.text_area :content, class: 'form-control', placeholder: 'Start writing here...' %><br>
+        <%= f.cktext_area :content, class: 'form-control', placeholder: 'Start writing here...' %><br>
 
         <%= f.submit "Update", class:'btn btn-default' %>
       <% end %>

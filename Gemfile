@@ -52,6 +52,8 @@ end
 #custom used
 gem 'devise'
 gem 'carrierwave'
+gem 'mini_magick'
+gem 'ckeditor'
 gem 'autoprefixer-rails'
 gem 'social-share-button'
 
