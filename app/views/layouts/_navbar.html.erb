@@ -3,38 +3,44 @@
     <div class="col-md-2 col-md-offset-1 project-name">
       projectQ
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-md-offset-1">
       <br/>
       <div class="input-group">
-        <span class="input-group-addon glyphicon glyphicon-search" id="sizing-addon"></span>
         <input class="form-control" id="search-bar" placeholder="search" style="background-color:#fff;border:none;border-bottom:1px solid #383838;outline:none;">
+        <span class="input-group-addon glyphicon glyphicon-search" id="sizing-addon"></span>
       </div>
-    </div>
-
-    <!-- Ask question dropdown -->
-    <div class="col-md-1">
-      <br/>
-      <input type="button" class="btn btn-ask" id="getquote" value="Ask Question" data-toggle="modal" data-target="#myModal">
     </div>
 
     <!-- Glyphicons - right side -->
     <div class="col-md-3 col-md-offset-1 button-group-nav">
       <br/>
-      <!-- read wall -->
+      <!-- Newsfeed -->
       <%= link_to root_path, class: "btn btn-nav" do %>
         <i class="glyphicon glyphicon-list-alt"></i>
       <% end %>
 
-      <!-- give answers -->
-      <%= link_to new_user_registration_path, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-pencil"></i>
-      <% end %>
+      <!-- Create something option -->
+      <div class="dropdown" style="display: inline;">
+        <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-pencil"></i>
+        <span class="caret"></span></button>
+        <% if user_signed_in? %>
+          <ul class="dropdown-menu">
+          <li><a href="" data-toggle="modal" data-target="#myModal">Ask a Question</a></li>
+          <% if is_admin? %>
+            <li><a href="" data-toggle="modal" data-target="#contestModal">Start a Contest</a></li>
+          <% end %>
+          <li><a href="" data-toggle="modal" data-target="#causeModal">Start a Cause</a></li>
+          <li><a href="<%= new_articles_path %>">Write an Article</a></li>
+        </ul>
+        <% end %>
+      </div>
 
-      <!-- notifications -->
+      <!-- Notifications -->
       <%= link_to notifications_path, class: "btn btn-nav" do %>
         <i class="glyphicon glyphicon-bullhorn"></i>
       <% end %>
 
+      <!-- Edit/Preview profile -->
       <div class="dropdown" style="display: inline;">
         <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>
         <span class="caret"></span></button>
@@ -44,12 +50,10 @@
         </ul>
       </div>
 
-      <!--logout link  -->
+      <!-- Logout -->
       <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-nav" do %>
         <i class="glyphicon glyphicon-off"></i>
       <% end %>
-
-      <!--profile pic show to make  -->
     </div>
   </div>
 </div>
@@ -57,6 +61,7 @@
 <!-- Rendering modals for posting and editing -->
 <% if user_signed_in? %>
   <%= render 'layouts/question_modals' %>
+  <%= render 'layouts/contest_modals' %>
   <%= render 'layouts/cause_modals' %>
 <%else%>
   <%= render 'layouts/signup' %>

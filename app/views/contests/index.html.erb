@@ -8,7 +8,9 @@
     <!-- Contests area -->
     <div class="col-xs-7">
       <div class="contests-area">
-        <%= render 'contest', :contest => @contest, :contest_answers => @contest.contest_answers, :is_admin => @is_admin, :full => true %>
+        <% @contests.each do |contest| %>
+          <%= render 'contest', :contest => contest, :contest_answers => contest.contest_answers, :is_admin => @is_admin, :full => false %>
+        <% end %>
       </div>
     </div>
 

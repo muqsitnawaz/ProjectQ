@@ -1,6 +1,6 @@
 <div class="nav-bar">
   <div class="row">
-    <div class="col-md-2 project-name">
+    <div class="col-md-2 col-md-offset-1 project-name">
       projectQ
     </div>
     <div class="col-md-3 col-md-offset-1">
@@ -10,26 +10,12 @@
         <input class="form-control" id="search-bar" placeholder="search" style="background-color:#fff;border:none;border-bottom:1px solid #383838;outline:none;">
       </div>
     </div>
-    <!-- ask question dropdown -->
-    <div class="col-md-1">
-      <br/>
-      <input type="button" class="btn btn-ask" id="getquote" value="Ask Question" data-toggle="modal" data-target="#myModal1">
-    </div>
-    <div class="col-md-3 col-md-offset-1 button-group-nav">
-      <br/>
-    <!-- read wall -->
-      <%= link_to new_user_registration_path, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-list-alt"></i>
-      <% end %>
-
-    <!-- give answers -->
-      <%= link_to new_user_registration_path, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-pencil"></i>
-      <% end %>
-      <%= link_to "Sign In", new_user_session_path, class: "btn btn-ask1"%>
-    <!-- notifications -->
     
-    <!--profile pic show to make  -->
+    <div class="col-md-3 col-md-offset-2 button-group-nav">
+      <br/>
+      <!-- New users buttons -->
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-ask1"%>
+      <%= link_to "Sign In", new_user_session_path, class: "btn btn-ask1"%>
     </div>
   </div>
 </div>

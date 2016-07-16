@@ -1,5 +1,5 @@
 class FeedsController < ApplicationController
-	before_filter :authenticate_user!, except: [ :index ]
+	before_filter :authenticate_user!, except: [ :index, :public_profile ]
 
   def index
     if user_signed_in?
@@ -53,6 +53,7 @@ class FeedsController < ApplicationController
     end
   end
 
+  # Helper methods
   def add_interest
   	@user = User.find_by_id(current_user.id)
   	if !@user.interests.include? params[:interest]
@@ -89,9 +90,5 @@ class FeedsController < ApplicationController
   	@user.location = params[:location]
   	@user.save
   	redirect_to profile_path
-  end
-private
-  def get_education(education)
-    
   end
 end

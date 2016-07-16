@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_filter :authenticate_user!, except: [ :show ]
+  before_filter :authenticate_user!, except: [:index, :show ]
 
   def create
     @answer = current_user.answers.build(answer_params)

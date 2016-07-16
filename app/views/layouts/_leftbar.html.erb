@@ -19,6 +19,9 @@
       </div>
 
       <div id="menu-item2-links" style="margin-left: 3em;" class="hidden">
+        <% if is_admin? %>
+          <p><a hred="#" style="margin-top: 1em;" data-toggle="modal" data-target="#contestModal">Start a Contest</a></p>
+        <% end %>
         <p><a href="<%= contests_path(:type => :open) %>">View Contests</a></p>
         <!-- Not for admin -->
         <% if !is_admin? %>

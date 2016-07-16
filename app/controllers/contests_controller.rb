@@ -1,38 +1,17 @@
 class ContestsController < ApplicationController
-  before_filter :authenticate_user!, except: [ :show ]
+  before_filter :authenticate_user!, except: [:index, :show ]
 
-  # Creating a contest, admin only
-  def create
-    if is_admin?
-      @contest = current_user.contests.build(contest_params)
-
-      if @contest.save
-        redirect_to contests_path(:id => @contest.id)
-      else
-        flash[:notice] = "contest couldn't be created"
-        redirect_to root_path
-      end
-    else
-      flash[:notice] = 'not sufficient permission'
-      redirect_to root_path
-    end
-  end
-
-  def show
+  def index
     if is_admin?                # Check for admin
       @is_admin = true
 
-      if !params[:id].nil?      # Only admin can see a single contest
-        @contest = @contest = Contest.find_by_id(params[:id])
+      if params[:type] == 'open'
+        @contests = Contest.where(:user_id => current_user.id,:status => 'open').order('created_at DESC')
+      elsif params[:type] == 'close'
+        @contests = Contest.where(:status => 'close').order('created_at DESC')
       else
-        if params[:type] == 'open'
-          @contests = Contest.where(:user_id => current_user.id,:status => 'open').order('created_at DESC')
-        elsif params[:type] == 'close'
-          @contests = Contest.where(:status => 'close').order('created_at DESC')
-        else
-          flash[:notice] = 'invalid request'
-          redirect_to root_path
-        end
+        flash[:notice] = 'invalid request'
+        redirect_to root_path
       end
     elsif user_signed_in?       # Check for users
       if params[:type] == 'open'
@@ -49,6 +28,38 @@ class ContestsController < ApplicationController
       end
     else                        # Otherwise
       @contests = Contest.all.order('created_at DESC')
+    end
+  end
+  
+  def show
+    if is_admin?                # Check for admin
+      @is_admin = true
+      @contest = Contest.find_by_id(params[:id])
+      
+      if @contest.nil?
+        flash[:notice] = 'contest not found'
+        redirect_to root_path
+      end
+    else
+      flash[:notice] = 'not sufficient permission'
+      redirect_to root_path
+    end
+  end
+
+  # Creating a contest, admin only
+  def create
+    if is_admin?
+      @contest = current_user.contests.build(contest_params)
+
+      if @contest.save
+        redirect_to contest_path(:id => @contest.id)
+      else
+        flash[:notice] = "contest couldn't be created"
+        redirect_to root_path
+      end
+    else
+      flash[:notice] = 'not sufficient permission'
+      redirect_to root_path
     end
   end
 
@@ -80,11 +91,15 @@ class ContestsController < ApplicationController
     @contest = Contest.find_by_id(params[:id])
 
     if is_admin?
-      @contest.destroy
-      flash[:notice] = "contest deleted"
+      if @contest.nil?
+        flash[:notice] = 'contest not found'
+      else
+        @contest.destroy
+        flash[:notice] = "contest deleted"
+      end
     end
 
-    redirect_to request.path
+    redirect_to root_path
   end
 protected
   def contest_params

@@ -6,16 +6,20 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
   <%= csrf_meta_tags %>
+  
   <% if user_signed_in? %>
-
-  	<!-- Rendering navigation bar -->
     <%= render 'layouts/navbar'%>
-    <% else %>
+  <% else %>
+    <%= render 'layouts/navbar1'%>
+  <% end %>
 
-  <%end%>
+  
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
 </head>
 <body>
-<%= yield %>
+  <%= yield %>
 
 </body>
 </html>

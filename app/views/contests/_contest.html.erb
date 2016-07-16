@@ -1,50 +1,47 @@
 <!-- Template for rendering a contest -->
 <div class="row" style="margin-top: 0.5em; margin-bottom:1em;">
   <div class="col-xs-12">
-    <div>
-      <!-- Hidden field for contest's content -->
-      <input type="text" id="contest_content<%= contest.id %>" value="<%= contest.content %>" hidden>
+    <!-- Hidden field for contest's content -->
+    <input type="text" id="contest_content<%= contest.id %>" value="<%= contest.content %>" hidden>
 
-      <div class="row">
-        <!-- Contest's status and deadline -->
-        <div class="col-xs-12">
-          <% if contest.status == 'open' %>
-            <p><strong><span class="status-open"><%= contest.status.upcase! %></span>, ENDS ON <%= contest.end_date %></strong></p>
-          <% else %>
-            <p><strong><span class="status-closed"><%= contest.status.upcase! %></span>, CLOSED ON <%= contest.end_date %></strong></p>
-          <% end %>
-        </div>
-
-        <div class="col-xs-12">
-          <% if contest.winner_chosen %>
-            <p><strong>WON BY <span style="color:green;"><%= User.find_by_id(contest.winner_id).name.upcase! %></span></strong></p>
-          <% end %>
-        </div>
-
-        <!-- Contest's content -->
-        <div class="col-xs-10 question-content" >
-          <% if is_admin %>
-            <%= link_to contest.content, contests_path(:id => contest.id) %>
-          <% else %>
-            <p> <%= contest.content %> </p>
-          <% end %>
-        </div>
-
-        <!-- Contest edit and delete buttons -->
-        <div class="col-xs-2">
-          <% if is_admin %>
-            <i id="edit_contest<%= contest.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-            <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, contests_path(:id => contest.id), method: :delete, data: { confirm: 'Are you sure?'} %>
-          <% end %>
-        </div>
+    <div class="row">
+      <!-- Contest's status and deadline -->
+      <div class="col-xs-12">
+        <% if contest.status == 'open' %>
+          <p><strong><span class="status-open"><%= contest.status.upcase! %></span>, ENDS ON <%= contest.end_date %></strong></p>
+        <% else %>
+          <p><strong><span class="status-closed"><%= contest.status.upcase! %></span>, CLOSED ON <%= contest.end_date %></strong></p>
+        <% end %>
       </div>
 
-      <!-- Contest's OP -->
-      <div class="row">
-        <div class="col-xs-12">
-          <p>Posted by Admin,<i> <%= (Time.now.to_date - contest.created_at.to_date).to_i %> day(s) ago</i></p>
-          <%= social_share_button_tag(contest.content) %>
-        </div>
+      <div class="col-xs-12">
+        <% if contest.winner_chosen %>
+          <p><strong>WON BY <span style="color:green;"><%= User.find_by_id(contest.winner_id).name.upcase! %></span></strong></p>
+        <% end %>
+      </div>
+
+      <!-- Contest's content -->
+      <div class="col-xs-10 question-content" >
+        <% if is_admin %>
+          <%= link_to contest.content, contest_path(:id => contest.id) %>
+        <% else %>
+          <p> <%= contest.content %> </p>
+        <% end %>
+      </div>
+
+      <!-- Contest edit and delete buttons -->
+      <div class="col-xs-2">
+        <% if is_admin %>
+          <i id="edit_contest<%= contest.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
+          <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, contests_path(:id => contest.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Contest's OP -->
+    <div class="row">
+      <div class="col-xs-12">
+        <p>Posted by Admin,<i> <%= (Time.now.to_date - contest.created_at.to_date).to_i %> day(s) ago</i></p>
       </div>
     </div><br/>
 
@@ -57,21 +54,30 @@
       <p id="contest_detail<%= contest.id %>"><%= contest.detail %></p>
     </div>
 
-    <!-- Showing Answer and End Now buttons only if contest is open -->
-    <% if !contest.winner_chosen %> 
-      <% if is_admin %>
-        <button class="btn btn-default">Answers | <%= contest.contest_answers.length %></button>
-        <button id="endC<%= contest.id %>" class="btn btn-default">End Now</button>
-      <% else %>
-        <button id="answerC<%= contest.id %>" class="btn btn-default">Answer | <%= contest.contest_answers.length %></button>
-      <% end %>
+    <!-- Showing bottom buttons only to user -->
+    <% if user_signed_in? && !contest.winner_chosen %>
+      <div class="row">
+        <div class="col-xs-9">
+          <% if is_admin %>
+            <button class="btn btn-default"><%= link_to 'Participants', contest_path(:id => contest.id) %> | <%= contest.contest_answers.length %></button>
+            <button id="endC<%= contest.id %>" class="btn btn-default">End Now</button>
+          <% else %>
+            <button id="answerC<%= contest.id %>" class="btn btn-default">Participate | <%= contest.contest_answers.length %></button>
+          <% end %>
+        </div>
+        <div class="col-xs-3" style="margin-top: 0.8em;">
+          <%= social_share_button_tag(contest.content) %>
+        </div>
+      </div>
     <% end %>
 
-    <!-- Showing contest's answers -->
+    <!-- Showing contest's answers only to admin -->
     <% if is_admin && full == true %>
-      <hr>
-      <% contest.contest_answers.each do |contest_answer| %>
-        <%= render 'contest_answer', :contest_answer => contest_answer %>
+      <% if !contest_answers.empty? %>
+        <hr>
+        <% contest_answers.each do |contest_answer| %>
+          <%= render 'contest_answer', :contest_answer => contest_answer %>
+        <% end %>
       <% end %>
     <% end %>
   </div>
