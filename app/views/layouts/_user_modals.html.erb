@@ -1,0 +1,33 @@
+<!-- Modal for posting cause comment -->
+<div class="modal bnr-modal fade" id="signUpModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Sign Up</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <% @cause_comment = CauseComment.new %>
+          <%= form_for @cause_comment, :url => { :controller =>"cause_comments", :action =>"create"}  do |f| %>
+            <div class="form-group">
+              <p><strong>Your comment</strong></p>
+              <%= f.text_area :comment, rows: 3, class: 'form-control' %><br>
+              <%= f.hidden_field :cause_id %>
+            </div>
+            <center>
+              <%= f.submit "Post", class:'btn btn-ask1'%>
+            </center>
+          <% end %>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
