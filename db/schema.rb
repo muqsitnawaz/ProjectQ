@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(version: 20160717055417) do
     t.boolean  "is_admin",               default: false
     t.text     "education",              default: "--- []\n"
     t.text     "interests",              default: "--- []\n"
+    t.text     "knows_about",            default: "--- []\n"
     t.text     "employments",            default: "--- []\n"
     t.string   "location",               default: ""
     t.text     "following",              default: "--- []\n"
@@ -200,8 +201,6 @@ ActiveRecord::Schema.define(version: 20160717055417) do
     t.datetime "confirmation_sent_at"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
-    t.string   "provider"
-    t.string   "uid"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

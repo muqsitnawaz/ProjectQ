@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   # Profile info
   serialize :education
   serialize :interests
+  serialize :knows_about
   serialize :employments
 
   # Questions

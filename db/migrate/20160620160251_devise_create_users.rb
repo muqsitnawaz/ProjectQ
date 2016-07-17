@@ -8,6 +8,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # Personal info
       t.text :education,            default: []
       t.text :interests,            default: []
+      t.text :knows_about,          default: []
       t.text :employments,          default: []
       t.string :location,           default: ""
 
