@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
-  devise_for :users,:controllers => { :omniauth_callbacks => "callbacks" }
+  
+  devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
 
   # Feeds Controller
   root 'feeds#index'
