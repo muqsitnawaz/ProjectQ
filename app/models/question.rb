@@ -3,7 +3,7 @@ class Question < ActiveRecord::Base
   include SearchCop
 
   search_scope :search do
-    attributes :content, :detail
+    attributes :content, :detail, :topics
   end
   
   belongs_to :user

@@ -30,7 +30,17 @@ class QuestionsController < ApplicationController
   
   def search
     @query = params[:query]
-    @questions = Question.search(@query)
+    
+    @items = []
+    questions = Question.search(@query)
+    contests = Contest.search(@query)
+    causes = Cause.search(@query)
+    articles = Article.search(@query)
+    
+    (@items << questions).flatten!
+    (@items << contests).flatten!
+    (@items << causes).flatten!
+    (@items << articles).flatten!
   end
   
   def create

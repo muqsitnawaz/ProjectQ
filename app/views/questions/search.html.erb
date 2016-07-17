@@ -8,8 +8,16 @@
     <!-- Questions area -->
     <div class="col-xs-7">
       <div class="question-area">
-        <% @questions.each do |question| %>
-          <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
+        <% @items.each do |item| %>
+          <% if item.class.name == "Question" %>
+            <%= render 'questions/question', :question => item, :answers => item.answers.order('created_at DESC'), :full => false %>
+          <% elsif item.class.name == "Contest" %>
+            <%= render 'contests/contest', :contest => item, :contest_answers => item.contest_answers, :is_admin => is_admin?, :full => false %>
+          <% elsif item.class.name == "Cause" %>
+            <%= render 'causes/cause', :cause => item, :cause_comments => item.cause_comments, :full => false %>
+          <% elsif item.class.name == "Article" %>
+            <%= render 'articles/article', :article => item, :full => false %>
+          <% end %>
         <% end %>
       </div>
     </div>

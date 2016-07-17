@@ -1,4 +1,11 @@
 class Article < ActiveRecord::Base
+  # Search engine stuff
+  include SearchCop
+
+  search_scope :search do
+    attributes :heading, :intro, :content, :topics
+  end
+  
   belongs_to :user
 
   serialize :topics

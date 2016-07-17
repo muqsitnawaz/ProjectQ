@@ -1,4 +1,11 @@
 class Cause < ActiveRecord::Base
+  # Search engine stuff
+  include SearchCop
+
+  search_scope :search do
+    attributes :cause_type, :intro, :detail, :whymatters
+  end
+  
   belongs_to :user
   has_many :cause_comments
 

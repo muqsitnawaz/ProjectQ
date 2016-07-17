@@ -1,4 +1,11 @@
 class Contest < ActiveRecord::Base
+  # Search engine stuff
+  include SearchCop
+
+  search_scope :search do
+    attributes :content, :detail, :topics
+  end
+  
   has_many :contest_answers
   belongs_to :user
 
