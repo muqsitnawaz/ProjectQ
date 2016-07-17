@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :questions
   post '/follow' => 'questions#follow'
   post '/update_question' => 'questions#update'
+  get '/search' => 'questions#search'
 
   # Answers paths
   resource :answers

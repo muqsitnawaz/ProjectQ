@@ -1,0 +1,24 @@
+<div class="container main-wall">
+  <div class="row">
+    <!-- Leftbar  -->
+    <div class="col-xs-2">
+      <%= render 'layouts/leftbar'%>
+    </div>
+
+    <!-- Questions area -->
+    <div class="col-xs-7">
+      <div class="question-area">
+        <% @questions.each do |question| %>
+          <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="col-xs-3">
+      <%= render 'layouts/suggestions'%>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag "questions_script", "data-turbolinks-track" => true  %>

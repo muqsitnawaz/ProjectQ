@@ -1,4 +1,11 @@
 class Question < ActiveRecord::Base
+  # Search engine stuff
+  include SearchCop
+
+  search_scope :search do
+    attributes :content, :detail
+  end
+  
   belongs_to :user
   has_many :answers
   

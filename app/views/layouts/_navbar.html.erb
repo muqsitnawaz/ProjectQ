@@ -5,9 +5,15 @@
     </div>
     <div class="col-md-3 col-md-offset-1">
       <br/>
-      <div class="input-group">
-        <input class="form-control" placeholder="Search our database">
-        <span class="input-group-addon glyphicon glyphicon-search" id="sizing-addon"></span>
+      <div>
+        <%= form_tag("/search", method: "get") do %>
+          <div class="input-group">
+            <%= text_field_tag(:query, "", :class=>"form-control", :placeholder=>"Search") %>
+            <span class="input-group-btn">
+              <%= submit_tag("Search", :class=>"btn btn-secondary", :name=>"submit") %>
+            </span>
+          </div>
+        <% end %>
       </div>
     </div>
 

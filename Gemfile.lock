@@ -137,6 +137,7 @@ GEM
     orm_adapter (0.5.0)
     pg (0.18.4)
     pkg-config (1.1.7)
+    polyglot (0.3.5)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -184,6 +185,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    search_cop (1.0.6)
+      treetop
     social-share-button (0.3.1)
       coffee-rails
       sass-rails
@@ -198,6 +201,8 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.4)
+    treetop (1.6.5)
+      polyglot (~> 0.3)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
@@ -236,6 +241,7 @@ DEPENDENCIES
   rails_12factor
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  search_cop
   social-share-button
   sqlite3
   turbolinks
