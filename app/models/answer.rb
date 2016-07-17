@@ -3,9 +3,10 @@ class Answer < ActiveRecord::Base
     # Notification of form 'User answered your question'
     notification1 = Notification.new({
       :user_id => answer.question.user_id,
+      :poster_id => answer.user_id,
+      :resource_type => "Question",
       :notification_type => 1,
-      :question_id => answer.question.id,
-      :poster_id => answer.user_id
+      :resource_id => answer.question_id
     })
     notification1.save
 
@@ -13,9 +14,10 @@ class Answer < ActiveRecord::Base
     answer.question.followers.each do |follower|
       notification2 = Notification.new({
         :user_id => follower,
+        :poster_id => answer.user_id,
+        :resource_type => "Question",
         :notification_type => 2,
-        :question_id => answer.question.id,
-        :poster_id => answer.user_id
+        :resource_id => answer.question_id
       })
       notification2.save
     end

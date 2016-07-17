@@ -9,8 +9,8 @@
     </div>
     <div class="col-xs-2" style="margin-left: 50px;">
       <% if cause_comment.user == current_user %>
-        <i id="edit_cause_commentC<%= cause_comment.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, cause_comments_path(:id => cause_comment.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+        <a id="edit_cause_commentC<%= cause_comment.id %>" class="icon-text">edit</a>
+        <%= link_to 'delete', cause_comments_path(:id => cause_comment.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
       <% end %>
     </div>
   </div>
@@ -40,7 +40,6 @@
   <!-- Like, Reply -->
   <div class="row">
     <div class="col-xs-10">
-      <button id="likeC<%= cause_comment.id %>" class="btn btn-default">Like | 0</button>
       <button id="showCauseReplies<%= cause_comment.id %>" class="btn btn-default">Replies | <%= cause_comment.cause_replies.count %></button>
     </div>
     
@@ -51,10 +50,10 @@
     </div>
   </div>
   
-  <!-- Hidden replies -->
+  <!-- Hidden cause replies -->
   <div class="row" style="">
     <div class="col-xs-11 col-xs-offset-1">
-      <div id="causeReplies<%= cause_comment.id %>" class="hidden">
+      <div id="causeReplies<%= cause_comment.id %>" class="hidden" style="margin-top: 1em; margin-bottom: -1em;">
         <% cause_comment.cause_replies.each do |cause_reply| %>
           <%= render 'causes/cause_reply', :cause_reply => cause_reply %>
         <% end %>

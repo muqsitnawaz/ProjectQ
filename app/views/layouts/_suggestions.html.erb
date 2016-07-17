@@ -1,23 +1,18 @@
 <div class="suggestions">
-  <div class="heading-7"><u>Trending</u></div>
-  <div class="details">
-    <li>Xbox One S Announcement</li>
-  </div>
-  <br/>
-  <div class="details">
-    <li>Xbox One S Announcement</li>
-  </div>
-  <br/>
-  <div class="details">
-    <li>Xbox One S Announcement</li>
-  </div>
-  <br/>
-  <div class="details">
-    <li>Xbox One S Announcement</li>
-  </div>
-  <br/>
-  <div class="details">
-    <li>Xbox One S Announcement</li>
-  </div>
-  <br/>
+  <div class="heading-7">Trending</div>
+  <hr class='profile-hr'>
+  
+  <% if user_signed_in? %>
+    <% @questions = Question.order('created_at DESC').limit(10).sort_by {|q| -q.answers.count} %>
+    
+    <% @questions.each do |question| %>
+      <p><a><%= link_to question.content, question_path(:id => question.id), class: 'icon-text' %></a></p>
+    <% end %>
+  <% else %>
+    <% @questions = Question.order('created_at DESC').limit(10).sort_by {|q| -q.answers.count} %>
+    
+    <% @questions.each do |question| %>
+      <p><a><%= link_to question.content, question_path(:id => question.id), class: 'icon-text' %></a></p>
+    <% end %>
+  <% end %>
 </div>

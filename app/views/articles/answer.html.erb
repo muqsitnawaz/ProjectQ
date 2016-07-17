@@ -7,11 +7,12 @@
 
     <!-- New article area -->
     <div class="col-xs-7">
-      <%= render 'article_requests/article_request', :article_request => @article_request %>
+      <%= render 'article_requests/article_request', :article_request => @article_request, :full => true %>
       <hr>
+      <h4>Your Response</h4>
 
       <%= form_for @article, :url => {:controller =>"articles", :action =>"create_answer"} do |f| %>
-        <%= f.text_field :article_request_id, value: @article_request.id %>
+        <%= f.hidden_field :article_request_id, value: @article_request.id %>
 
         <p><strong>Heading</strong></p>
         <%= f.text_field :heading, autofocus: true, class: 'form-control',placeholder: 'A heading for your article' %> <br>
@@ -20,7 +21,7 @@
         <%= f.text_area :intro, class: 'form-control', placeholder: 'An introduction of your article' %><br>
 
         <p><strong>Content</strong></p>
-        <%= f.text_area :content, class: 'form-control', placeholder: 'Start writing here...' %><br>
+        <%= f.cktext_area :content, class: 'form-control', placeholder: 'Start writing here...' %><br>
 
         <%= f.submit "Create", class:'btn btn-default' %>
       <% end %>

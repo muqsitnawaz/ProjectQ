@@ -1,9 +1,10 @@
 <div style="margin: 2em 0em; padding: 5px;">
+  <!-- Article header -->
   <div class="row">
     <div class="col-xs-10">
       <p>In
         <% article_request.topics.each do |topic| %>
-          <%= topic %>
+          <%= link_to topic, articles_path(:topic => topic) %>
         <% end %>
       </p>
     </div>
@@ -16,12 +17,20 @@
     </div>
   </div>
 
+  <!-- Article body -->
   <div class="row">
     <div class="col-xs-12">
-      <h2 style="margin-top:0px;"><%= link_to article_request.heading, article_request_path(:id => article_request.id) %></h2>
-      <p>By <i style="color:green;"><%= article_request.user.name %></i>, <%= article_request.created_at.strftime('%d-%m-%Y') %></p>
-
-      <p><%= article_request.explanation %></p>
+      <div class="question-content" style="margin-top:0px;">
+        <%= link_to article_request.heading, article_request_path(:id => article_request.id) %>
+      </div>
+      
+      <% if full == true %>
+        <p>By <i style="color:green;"><%= article_request.user.name %></i>, <%= article_request.created_at.strftime('%d-%m-%Y') %></p>
+  
+        <p><%= article_request.explanation %></p>
+      <% else %>
+        <br>
+      <% end %>
     </div>
   </div>
 
@@ -34,13 +43,17 @@
     <%= link_to '<div class="btn btn-default">View Response</div>'.html_safe, article_request_path(:id => article_request.id) %>
   <% else %>
     <% if @articles.empty? %>
-      <h3 style="color:red;">No responses yet</h3>
+      <h4 style="color:red;">No responses yet</h4>
     <% else %>
       <hr>
-      <h3>Responses</h3>
+      <h4>Responses</h4>
       <% @articles.each do |article| %>
-        <h3><%= link_to article.heading, articles_path(:id => article.id) %></h3>
-        <small class="text-muted"><%= article.created_at.strftime('%H:%M:%S, %-d %B %Y') %></small><br/>
+        <div style="margin-bottom: 0.8em;">
+          <div class="question-content">
+            <%= link_to article.heading, article_path(:id => article.id) %>
+          </div>
+          <small class="text-muted">By <%= link_to article.user.name, public_profile_path(:id => article.user_id) %> on <%= article.created_at.strftime('%-d %B, %Y') %></small><br>
+        </div>
       <% end %>
     <% end %>
   <% end %>

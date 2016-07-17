@@ -25,8 +25,8 @@
       <!-- Question edit and delete buttons -->
       <div class="col-xs-2">
         <% if user_signed_in? && question.user == current_user %>
-          <i id="edit_question<%= question.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-          <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, questions_path(:id => question.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+          <a id="edit_question<%= question.id %>" class="icon-text">edit</a>
+          <%= link_to 'delete', question_path(:id => question.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
         <% end %>
       </div>
     </div>

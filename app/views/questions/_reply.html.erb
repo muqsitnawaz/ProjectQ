@@ -1,15 +1,15 @@
-<div style="margin: 2em 0em; padding: 5px;">
+<div style="padding: 5px;">
   <div class="row">
     <div class="col-xs-2">
       <%= image_tag 'thumb.jpg', class: 'img img-responsive', width: 45 %>
     </div>
-    <div class="col-xs-8" style="margin-left: -40px;">
+    <div class="col-xs-7" style="margin-left: -40px;">
       <%= link_to reply.user.name, public_profile_path(:id => reply.user.id) %>
     </div>
-    <div class="col-xs-2" style="margin-left: 40px;">
+    <div class="col-xs-3" style="margin-left: 40px;">
       <% if reply.user == current_user %>
-        <i id="edit_reply<%= reply.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, replies_path(:id => reply.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+        <a id="edit_reply<%= reply.id %>" class="icon-text">edit</a>
+        <%= link_to 'delete', replies_path(:id => reply.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
       <% end %>
     </div>
   </div>

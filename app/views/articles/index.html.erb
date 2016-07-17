@@ -5,11 +5,10 @@
       <%= render 'layouts/leftbar'%>
     </div>
 
-    <!-- Article request area -->
+    <!-- New article area -->
     <div class="col-xs-7">
-      <% @article_requests.each do |article_request| %>
-        <%= render 'article_request', :article_request => article_request, :full => false %>
-        <hr>
+      <% @articles.each do |article| %>
+        <%= render 'article', :article => article, :full => false %>
       <% end %>
     </div>
 

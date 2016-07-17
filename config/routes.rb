@@ -51,8 +51,7 @@ Rails.application.routes.draw do
   post '/update_cause_reply' => 'cause_replies#update'
 
   # Articles paths
-  resource :articles
-  patch "articles/:id" => "articles#update", as: "update_article"
+  resources :articles
   get "answer_article_request/:id" => "articles#answer", as: "answer_article_request"
   post "create_answer" => "articles#create_answer", as: "create_answer"
 

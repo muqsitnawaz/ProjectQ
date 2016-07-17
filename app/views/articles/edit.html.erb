@@ -9,7 +9,7 @@
     <div class="col-xs-7">
       <h2>Edit your Article</h2><br>
 
-      <%= form_for @article, :url => edit_articles_path  do |f| %>
+      <%= form_for @article  do |f| %>
         <%= f.hidden_field :id %>
 
         <p><strong>Topics</strong></p>

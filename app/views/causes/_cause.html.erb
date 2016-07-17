@@ -16,14 +16,14 @@
       <!-- Cause edit and delete buttons -->
       <div class="col-xs-2">
         <% if cause.user == current_user %>
-          <i id="edit_causeC<%= cause.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-          <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, causes_path(:id => cause.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+          <a id="edit_causeC<%= cause.id %>" class="icon-text">edit</a>
+          <%= link_to 'delete', causes_path(:id => cause.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
         <% end %>
       </div>
     </div>
     
     <% if full == false %>
-      <div class="question-details">
+      <div class="question-details" style="margin-bottom:-1em;">
         <p id="cause_detail<%= cause.id %>"><%= cause.detail %></p>
       </div>
     <% end %>

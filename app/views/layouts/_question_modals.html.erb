@@ -19,9 +19,8 @@
           <%= form_for @question,:url =>{ :controller =>"questions", :action =>"create"}  do |f| %>
           <div class="form-group">
             <div class="row" style="padding-top:1em;">
-              <label class="col-md-1 col-md-offset-1 control-label"><span class="glyphicon glyphicon-search"></span></label>
-              <div class="col-md-5">
-                <%= f.text_field :content, autofocus: true,id: 'ask-question',class: 'question-ask-field form-control',placeholder: 'What do you want to ask?'%> <br>
+              <div class="col-md-10 col-md-offset-1">
+                <%= f.text_field :content, autofocus: true, class:'form-control',placeholder: 'What do you want to ask?'%> <br>
               </div>
             </div>
 

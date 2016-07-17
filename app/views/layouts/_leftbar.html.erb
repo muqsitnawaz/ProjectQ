@@ -3,7 +3,7 @@
     <div class="left-bar-comp">
       <!-- Questions and its submenu -->
       <div id="menu-item1" style="font-weight: bold;">
-        <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Questions</span>
+        <i class="icons glyphicon glyphicon-question-sign" style="margin-top:10px;"></i><a class="icon-text">Questions</a></span>
       </div>
 
       <!-- Showing to user only -->
@@ -15,7 +15,7 @@
 
       <!-- Contests and its submenu -->
       <div id="menu-item2" style="font-weight: bold;">
-        <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Contests</span>
+        <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><a class="icon-text">Contests</a></span>
       </div>
 
       <div id="menu-item2-links" style="margin-left: 3em;" class="hidden">
@@ -33,7 +33,7 @@
 
       <!-- Causes and its submenu -->
       <div id="menu-item3" style="font-weight: bold;">
-        <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Causes</span>
+        <i class="icons glyphicon glyphicon-heart" style="margin-top:10px;"></i><a class="icon-text">Causes</a></span>
       </div>
 
       <div id="menu-item3-links" style="margin-left: 3em;" class="hidden">
@@ -46,11 +46,12 @@
 
       <!-- Articles and its submenu -->
       <div id="menu-item4" style="font-weight: bold;">
-        <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><span id="icon-text">Articles</span>
+        <i class="icons glyphicon glyphicon-paperclip" style="margin-top:10px;"></i><a class="icon-text">Articles</a></span>
       </div>
 
       <div id="menu-item4-links" style="margin-left: 3em;" class="hidden">
-        <p><%= link_to 'Write an Article', new_articles_path %></p>
+        <p><%= link_to 'Read Articles', articles_path %></p>
+        <p><%= link_to 'Write an Article', new_article_path %></p>
         <p><%= link_to 'Request an Article', new_article_request_path %></p>
         <p><%= link_to 'Answer a Request', article_requests_path %></p>
       </div>

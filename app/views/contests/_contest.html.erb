@@ -23,17 +23,19 @@
       <!-- Contest's content -->
       <div class="col-xs-10 question-content" >
         <% if is_admin %>
-          <%= link_to contest.content, contest_path(:id => contest.id) %>
+          <%= link_to contest.content, contest_path(:id => contest.id) %>,
         <% else %>
-          <p> <%= contest.content %> </p>
+          <%= contest.content %>,
         <% end %>
+        
+        <span style="color: green;">USD <%= contest.prize %></span>
       </div>
 
       <!-- Contest edit and delete buttons -->
       <div class="col-xs-2">
         <% if is_admin %>
-          <i id="edit_contest<%= contest.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-          <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, contests_path(:id => contest.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+          <a id="edit_contest<%= contest.id %>" class="icon-text">edit</a>
+          <%= link_to 'delete', contests_path(:id => contest.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
         <% end %>
       </div>
     </div>
@@ -50,7 +52,7 @@
       <br/>
     <% end %>
 
-    <div class="question-details">
+    <div class="question-details" style="margin-top:-1em;">
       <p id="contest_detail<%= contest.id %>"><%= contest.detail %></p>
     </div>
 

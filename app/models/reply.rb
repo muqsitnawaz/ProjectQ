@@ -3,9 +3,10 @@ class Reply < ActiveRecord::Base
     # Notification of form 'User answered your question'
     notification = Notification.new({
       :user_id => reply.answer.user_id,
+      :poster_id => reply.user_id,
+      :resource_type => "Question",
       :notification_type => 3,
-      :question_id => reply.answer.question.id,
-      :poster_id => reply.user_id
+      :resource_id => reply.answer.question_id
     })
     notification.save
   end

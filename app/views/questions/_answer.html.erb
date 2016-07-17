@@ -9,8 +9,8 @@
     </div>
     <div class="col-xs-2" style="margin-left: 50px;">
       <% if answer.user == current_user %>
-        <i id="edit_answerQ<%= answer.id %>" class="glyphicon glyphicon-edit" style="color: green;"></i>
-        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, answers_path(:id => answer.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+        <a id="edit_answerQ<%= answer.id %>" class="icon-text">edit</a>
+        <%= link_to 'delete', answers_path(:id => answer.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
       <% end %>
     </div>
   </div>
@@ -67,7 +67,7 @@
   <!-- Hidden replies -->
   <div class="row" style="">
     <div class="col-xs-11 col-xs-offset-1">
-      <div id="replies<%= answer.id %>" class="hidden">
+      <div id="replies<%= answer.id %>" class="hidden" style="margin-top: 1em; margin-bottom: -1em;">
         <% answer.replies.each do |reply| %>
           <%= render 'questions/reply', :reply => reply %>
         <% end %>

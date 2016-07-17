@@ -29,14 +29,5 @@ class CreateQuestions < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-
-    create_table :notifications do |t|
-      t.belongs_to :user, index:true
-      t.integer :notification_type
-      t.integer :question_id
-      t.integer :poster_id
-
-      t.timestamps null: false
-    end
   end
 end

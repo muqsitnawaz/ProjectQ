@@ -34,6 +34,16 @@ class ContestAnswersController < ApplicationController
           :status => "success"
         }
       end
+      
+      # Generating notifcation to winner
+      notif = Notification.new({
+        :user_id => contest.winner_id,
+        :poster_id => current_user.id,
+        :resource_type => "Contest",
+        :notification_type => 1,
+        :resource_id => contest.id
+      })
+      notif.save
     else
       if request.xhr?
         render :json => {

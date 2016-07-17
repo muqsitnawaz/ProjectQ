@@ -3,10 +3,6 @@ a:hover {
   color:#AAAAAA;
 }
 
-#body {
-  background-color: #f2f2f2;
-}
-
 /*navbar*/
 .btn-ask{
   background-color:#212121;
@@ -29,18 +25,15 @@ a:hover {
   border: 1px solid #212121;
 }
 .nav-bar{
-  border: 1px solid #383838;
+  border-bottom: 1px solid #383838;
+  background-color: white;
+  padding-bottom: 0.6em;
 }
 .project-name{
   font-size: 46px;
   padding-left: 10px;
   color: #383838;
   font-family: sans-serif;
-}
-#search-bar{
-width: 300px;
-height: 35px;
-padding-bottom: 3px;
 }
 .search-field {
   border: none;
@@ -178,67 +171,67 @@ padding-bottom: 3px;
   margin-left: 15px;
   margin-bottom: 10px;
 }
-#icon-text{
-  margin-top: -2em;
-  margin-left: 5px;
+
+.icon-text {
+  color: black;
+  cursor: pointer;
 }
+
+.icon-text:hover {
+  color: black;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+div[id^="menu-item"] > p > a {
+    color: #AAAAAA;
+}
+
+div[id^="menu-item"] > p > a:hover {
+    color: #797676;
+}
+
 #icon-sub-text {
   color: #383838;
   font-style: italic;
   font-size: 12px;
   margin-left:8px;
 }
+
 #icon-sub-text:hover {
-  color:#AAAAAA;
+  color: #AAAAAA;
   text-decoration:none;
 }
-#icon-text:hover{
-  color:#AAAAAA;
-  text-decoration:none;
-}
-.glyphicon.glyphicon-comment{
+
+.icons.glyphicon {
   font-size: 40px;
   border: 1px solid #383838;
   color: #C6C6C6;
 }
-.glyphicon.glyphicon-heart{
-  font-size: 40px;
-  border: 1px solid #383838;
-  color: #C6C6C6;
-}
-.glyphicon.glyphicon-globe {
-  font-size: 40px;
-  border: 1px solid #383838;
-  color: #C6C6C6;
-}
+
 
 /*question area*/
 .question-content {
   font-size: 18px;
   font-weight: bold;
-  font-color:#383838;
+  color: #383838;
 }
 
 .question-details{
   font-size: 16px;
   font-style: italic;
-  font-color:#383838;
+  color: #383838;
+}
 
-}
-.question-image{
-  background:url("question-image.jpg");
-  width:400px;
-  height: 200px;
-}
 #views{
   font-size: 13px;
   font-family: serif;
-  font-color:#383838;
+  color:#383838;
 }
 #answers{
   font-size: 14px;
   font-family: sans-serif;
-  font-color:#383838;
+  color:#383838;
 }
 #Upvote{
   color:#83AAE5;

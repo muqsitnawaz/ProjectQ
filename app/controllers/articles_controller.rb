@@ -1,5 +1,13 @@
 class ArticlesController < ApplicationController
-  before_filter :authenticate_user!, except: [ :show ]
+  before_filter :authenticate_user!, except: [ :index, :show ]
+  
+  def index
+    if params[:type].nil?
+      @articles = Article.all.order('created_at DESC')
+    else
+      @articles = Article.all.order('created_at DESC').reject {|q| !q.topics.include? params[:topic]}
+    end
+  end
 
   def new
     @article = Article.new
@@ -7,8 +15,9 @@ class ArticlesController < ApplicationController
 
   def create
     @article = current_user.articles.build(article_params)
+    
     if @article.save
-      redirect_to articles_path(:id => @article.id)
+      redirect_to article_path(:id => @article.id)
       flash[:notice] = 'article created'
     else
       flash[:notice] = 'article creation failed'
@@ -42,7 +51,7 @@ class ArticlesController < ApplicationController
     @article = Article.find_by_id(params[:article][:id])
 
     if @article.update(article_params)
-      redirect_to articles_path(:id => @article.id)
+      redirect_to article_path(:id => @article.id)
     else
       render 'edit'
     end
@@ -58,12 +67,13 @@ class ArticlesController < ApplicationController
       flash[:notice] = 'not sufficient permission'
     end
 
-    redirect_to root_path
+    redirect_to articles_path
   end
 
   def answer
     article_request_id = params[:id]
     @article_request = ArticleRequest.find_by_id(article_request_id)
+    @articles = Article.where(:article_request_id => @article_request.id)
     @article = Article.new
   end
 
@@ -74,11 +84,21 @@ class ArticlesController < ApplicationController
 
     if @article.save
       flash[:notice] = 'article created'
-      redirect_to articles_path(:id => @article.id)
+      redirect_to article_path(:id => @article.id)
     else
       flash[:notice] = 'article creation failed'
       redirect_to root_path
     end
+    
+    # Generating notifcation to user
+    notif = Notification.new({
+      :user_id => @article_request.user_id,
+      :poster_id => current_user.id,
+      :resource_type => "Article",
+      :notification_type => 1,
+      :resource_id => @article_request.id
+    })
+    notif.save
   end
 
 private

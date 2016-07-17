@@ -121,6 +121,16 @@ class CausesController < ApplicationController
           :status => "success"
         }
       end
+      
+      # Generating notifcation to cause_owner
+      notif = Notification.new({
+        :user_id => @cause.user_id,
+        :poster_id => current_user.id,
+        :resource_type => "Cause",
+        :notification_type => 3,
+        :resource_id => @cause.id
+      })
+      notif.save
     else
       if request.xhr?
         render :json => {
@@ -146,6 +156,16 @@ class CausesController < ApplicationController
           :status => "success"
         }
       end
+      
+      # Generating notifcation to cause_owner
+      notif = Notification.new({
+        :user_id => @cause.user_id,
+        :poster_id => current_user.id,
+        :resource_type => "Cause",
+        :notification_type => 4,
+        :resource_id => @cause.id
+      })
+      notif.save
     else
       if request.xhr?
         render :json => {

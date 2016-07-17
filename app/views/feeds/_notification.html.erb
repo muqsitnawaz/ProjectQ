@@ -1,15 +1,38 @@
 <small class="text-muted"><%= notification.created_at.strftime('%H:%M:%S, %-d %B %Y') %></small><br/>
 
-<% if notification.notification_type == 1 %>
-	<p><%= link_to poster.name, public_profile_path(:id => poster.id) %> answered your 
-		<%= link_to 'question', questions_path(:id => notification.question_id) %></p>
-<% elsif notification.notification_type == 2 %>
-	<p><%= link_to poster.name, public_profile_path(:id => poster.id) %> answered a 
-		<%= link_to 'question', questions_path(:id => notification.question_id) %>
-		you're following</p>
-<% elsif notification.notification_type == 3 %>
-	<p><%= link_to poster.name, public_profile_path(:id => poster.id) %> replied to your answer on 
-		<%= link_to 'question', questions_path(:id => notification.question_id) %></p>
-<% else %>
-	<p style="color: red;">Invalid notification</p>
+<% if notification.resource_type == 'Question' %>
+  <% if notification.notification_type == 1 %>
+    <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> answered your 
+      <%= link_to 'question', question_path(:id => notification.resource_id) %></p>
+  <% elsif notification.notification_type == 2 %>
+    <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> answered a 
+      followed <%= link_to 'question', question_path(:id => notification.resource_id) %></p>
+  <% elsif notification.notification_type == 3 %>
+    <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> replied to your answer on 
+      <%= link_to 'question', question_path(:id => notification.resource_id) %></p>
+  <% end %>
+<% elsif notification.resource_type == 'Cause' %>
+  <% if notification.notification_type == 1 %>
+    <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> commented on your 
+      <%= link_to 'cause', cause_path(:id => notification.resource_id) %></p>
+  <% elsif notification.notification_type == 2 %>
+    <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> replied to your comment on 
+      <%= link_to 'cause', cause_path(:id => notification.resource_id) %></p>
+  <% elsif notification.notification_type == 3 %>
+    <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> aggreed with your 
+      <%= link_to 'cause', cause_path(:id => notification.resource_id) %></p>
+  <% elsif notification.notification_type == 4 %>
+    <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> disagreed with your 
+      <%= link_to 'cause', cause_path(:id => notification.resource_id) %></p>
+  <% end %>
+<% elsif notification.resource_type == 'Contest' %>
+  <% if notification.notification_type == 1 %>
+    <p>Congrats! <%= link_to poster.name, public_profile_path(:id => poster.id) %> choose you winner of 
+      <%= link_to 'contest', contest_path(:id => notification.resource_id) %></p>
+  <% end %>
+<% elsif notification.resource_type == 'Article' %>
+  <% if notification.notification_type == 1 %>
+    <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> answered your 
+      <%= link_to 'article request', article_request_path(:id => notification.resource_id) %></p>
+  <% end %>
 <% end %>
