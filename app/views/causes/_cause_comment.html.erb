@@ -38,17 +38,19 @@
   </div>
   
   <!-- Like, Reply -->
-  <div class="row">
-    <div class="col-xs-10">
-      <button id="showCauseReplies<%= cause_comment.id %>" class="btn btn-default">Replies | <%= cause_comment.cause_replies.count %></button>
-    </div>
-    
-    <div class="col-xs-2">
-      <div style="margin-top:0.6em; margin-left: 1.3em;">
-        <i id="replyC<%= cause_comment.id %>" class="glyphicon glyphicon-share-alt" style="color: black;"></i>
+  <% if user_signed_in? %>
+    <div class="row">
+      <div class="col-xs-10">
+        <button id="showCauseReplies<%= cause_comment.id %>" class="btn btn-default">Replies | <%= cause_comment.cause_replies.count %></button>
+      </div>
+      
+      <div class="col-xs-2">
+        <div style="margin-top:0.6em; margin-left: 1.3em;">
+          <i id="replyC<%= cause_comment.id %>" class="glyphicon glyphicon-share-alt" style="color: black;"></i>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
   
   <!-- Hidden cause replies -->
   <div class="row" style="">

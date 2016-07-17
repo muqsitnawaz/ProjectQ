@@ -50,19 +50,21 @@
   <% end %>
 
   <!-- Upvote, downvote and reply buttons -->
-  <div class="row">
-    <div class="col-xs-10">
-      <button id="upvote<%= answer.id %>" class="btn btn-default">Upvote | <%= answer.upvotes %></button>
-      <button id="downvote<%= answer.id %>" class="btn btn-default">Downvote</button>
-      <button id="showReplies<%= answer.id %>" class="btn btn-default">Replies | <%= answer.replies.count %></button>
-    </div>
-    
-    <div class="col-xs-2">
-      <div style="margin-top:0.6em; margin-left: 1.3em;">
-        <i id="replyA<%= answer.id %>" class="glyphicon glyphicon-share-alt" style="color: black;"></i>
+  <% if user_signed_in? %>
+    <div class="row">
+      <div class="col-xs-10">
+        <button id="upvote<%= answer.id %>" class="btn btn-default">Upvote | <%= answer.upvotes %></button>
+        <button id="downvote<%= answer.id %>" class="btn btn-default">Downvote</button>
+        <button id="showReplies<%= answer.id %>" class="btn btn-default">Replies | <%= answer.replies.count %></button>
+      </div>
+      
+      <div class="col-xs-2">
+        <div style="margin-top:0.6em; margin-left: 1.3em;">
+          <i id="replyA<%= answer.id %>" class="glyphicon glyphicon-share-alt" style="color: black;"></i>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 
   <!-- Hidden replies -->
   <div class="row" style="">

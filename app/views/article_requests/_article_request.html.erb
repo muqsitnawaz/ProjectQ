@@ -34,8 +34,8 @@
     </div>
   </div>
 
-  <% if article_request.user_id != current_user.id %>
-    <%= link_to '<div class="btn btn-default">Answer</div>'.html_safe, answer_article_request_path(:id => article_request.id) %>
+  <% if user_signed_in? && article_request.user != current_user %>
+    <%= link_to '<div class="btn btn-default">Respond</div>'.html_safe, answer_article_request_path(:id => article_request.id) %>
   <% end %>
 
   <!-- Checking if its an index path -->
