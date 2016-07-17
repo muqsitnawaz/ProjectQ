@@ -14,18 +14,101 @@
       </div>
       <section>
         <div class="modal-body modal-spa">
-          <!-- create a new question using this modal -->
-          <% @cause_comment = CauseComment.new %>
-          <%= form_for @cause_comment, :url => { :controller =>"cause_comments", :action =>"create"}  do |f| %>
-            <div class="form-group">
-              <p><strong>Your comment</strong></p>
-              <%= f.text_area :comment, rows: 3, class: 'form-control' %><br>
-              <%= f.hidden_field :cause_id %>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <div>
+              <p><strong>Name</strong></p>
+              <%= f.text_field :name, autofocus: true,class: 'form-control',placeholder: 'Name' %>
             </div>
+            <br/>
+            <div>
+              <p><strong>Email</strong></p>
+              <%= f.email_field :email, autofocus: true,class: 'form-control',placeholder: 'Email' %>
+            </div>
+            <br/>
+            <div>
+              <% if @minimum_password_length %>
+      
+              <% end %>
+              <p><strong>Password</strong></p>
+              <%= f.password_field :password, autocomplete: "off",class: 'form-control',placeholder: 'Password' %>
+            </div>
+            <br/>
+            <div>
+              <p><strong>Confirm Password</strong></p>
+              <%= f.password_field :password_confirmation, autocomplete: "off",class: 'form-control',placeholder: 'Confirm Password' %>
+            </div><br/>
+            
             <center>
-              <%= f.submit "Post", class:'btn btn-ask1'%>
+              <!--Remeber me-->
+              <% if devise_mapping.rememberable? -%>
+                <div class="field">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>
+                </div>
+              <% end -%>
+              
+              <div class="row">
+                <div style="margin:0.5em 0em;"><%= render "devise/shared/links" %></div>
+                <p><%= f.submit "SIGN UP", class:"btn btn-default" %></p>
+              </div>
             </center>
-          <% end %>
+          <% end -%>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for posting cause comment -->
+<div class="modal bnr-modal fade" id="signInModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Sign In</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <%= form_for(resource, as: resource_name, url: new_session_path(resource_name)) do |f| %>
+            <div>
+              <p><strong>Email</strong></p>
+              <%= f.email_field :email, autofocus: true,class: 'form-control', placeholder: 'Email' %>
+            </div>
+            <br/>
+            <div>
+              <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <% end %>
+              <p><strong>Password</strong></p>
+              <%= f.password_field :password, autocomplete: "off",class: 'form-control',placeholder: 'Password' %>
+            </div><br>
+            
+            <center>
+              <!--Remember me-->
+              <% if devise_mapping.rememberable? -%>
+                <div class="field">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>
+                </div>
+              <% end -%>
+              
+              <!--Login button-->
+              <div class="row">
+                <div style="margin:0.5em 0em;"><%= render "devise/shared/links" %></div>
+                <p><%= f.submit "SIGN IN", class:"btn btn-default" %></p>
+                
+                <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                  <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+                <% end -%>
+              </div>
+            </center>
+          <% end -%>
         </div>
       </section>
     </div>

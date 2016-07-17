@@ -6,6 +6,33 @@ module ApplicationHelper
       return false
     end
   end
+  
+  # Devise helpers
+  def resource_name
+    :user
+  end
+
+  def resource
+    @resource ||= User.new
+  end
+
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
+  end
+  
+  def resource_class
+    devise_mapping.to
+  end
+  
+  def get_pretty_provider_name(provider)
+    if (provider == 'GoogleOauth2')
+      return '<i class="fa fa-2x fa-google-plus-official" style="color: #D62D20;" aria-hidden="true"></i>'
+    elsif (provider == 'Facebook')
+      return '<i class="fa fa-2x fa-facebook-square" style="color: #3B5998;" aria-hidden="true"></i>'
+    elsif (provider == 'Twitter') 
+      return '<i class="fa fa-2x fa-twitter-square" style="color: #326ADA;" aria-hidden="true"></i>'
+    end
+  end
 
   # Cause helper methods
   def get_all_cause_types

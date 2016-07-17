@@ -11,11 +11,13 @@
       </div>
     </div>
     
-    <div class="col-md-3 col-md-offset-2 button-group-nav">
-      <br/>
-      <!-- New users buttons -->
-      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-ask1"%>
-      <%= link_to "Sign In", new_user_session_path, class: "btn btn-ask1"%>
+    <div class="col-md-3 col-md-offset-2 button-group-nav"><br/>
+      <div class="btn btn-ask1" data-toggle="modal" data-target="#signUpModal">Sign Up</div>
+      <div class="btn btn-ask1" data-toggle="modal" data-target="#signInModal">Sign In</div>
     </div>
   </div>
 </div>
+
+<% if !user_signed_in? %>
+  <%= render 'layouts/user_modals' %>
+<% end %>
