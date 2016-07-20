@@ -1,3 +1,6 @@
+require 'resque'
+require_relative './workers/articles/article_request_article_notif'
+
 class ArticlesController < ApplicationController
   before_filter :authenticate_user!, except: [ :index, :show ]
   
@@ -90,15 +93,8 @@ class ArticlesController < ApplicationController
       redirect_to root_path
     end
     
-    # Generating notifcation to user
-    notif = Notification.new({
-      :user_id => @article_request.user_id,
-      :poster_id => current_user.id,
-      :resource_type => "Article",
-      :notification_type => 1,
-      :resource_id => @article_request.id
-    })
-    notif.save
+    # Generating notifcation
+    Resque.enqueue(ArticleRequestArticleNotif, @article_request.id, current_user.id)
   end
 
 private
