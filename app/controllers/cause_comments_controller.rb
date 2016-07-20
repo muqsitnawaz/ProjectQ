@@ -1,3 +1,6 @@
+require 'resque'
+require_relative './workers/causes/cause_comment_notif'
+
 class CauseCommentsController < ApplicationController
   before_filter :authenticate_user!, except: [ :show ]
 
@@ -7,6 +10,9 @@ class CauseCommentsController < ApplicationController
     
     if @cause_comment.save
       flash[:notice] = "cause comment created"
+      
+      # Generating notification and redirecting
+      Resque.enqueue(CauseCommentNotif, @cause_comment.id)
       redirect_to cause_path(:id => @cause_comment.cause_id)
     else
       flash[:notice] = "cause comment creation failed"

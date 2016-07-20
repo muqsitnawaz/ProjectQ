@@ -1,3 +1,7 @@
+require 'resque'
+require_relative './workers/contests/answer_winner_notif'
+require_relative './workers/contests/contest_answer_notif'
+
 class ContestAnswersController < ApplicationController
 	before_filter :is_admin?, except: [ :create ]
 
@@ -6,6 +10,9 @@ class ContestAnswersController < ApplicationController
     
     if @contest_answer.save
       flash[:notice] = "answer created"
+      
+      # Generating notifcation and redirecting
+      Resque.enqueue(ContestAnswerNotif, @contest_answer.id)
       redirect_to contests_path(:type => :open)
     else
       flash[:notice] = "answer creation failed"
@@ -35,15 +42,8 @@ class ContestAnswersController < ApplicationController
         }
       end
       
-      # Generating notifcation to winner
-      notif = Notification.new({
-        :user_id => contest.winner_id,
-        :poster_id => current_user.id,
-        :resource_type => "Contest",
-        :notification_type => 1,
-        :resource_id => contest.id
-      })
-      notif.save
+      # Generating notifcation
+      Resque.enqueue(AnswerWinnerNotif, contest.id, current_user.id)
     else
       if request.xhr?
         render :json => {

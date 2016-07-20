@@ -1,3 +1,7 @@
+require 'resque'
+require_relative './workers/questions/question_answer_notif'
+require_relative './workers/questions/question_answer_follower_notif'
+
 class AnswersController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show ]
 
@@ -5,8 +9,14 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answer_params)
     
     if @answer.save
-      redirect_to question_path(:id => params[:answer][:question_id])
       flash[:notice] = 'answer created'
+      
+      # Generating notification and redirecting
+      Resque.enqueue(QuestionAnswerNotif, @answer.id)
+      @answer.question.followers.each do |follower|
+        Resque.enqueue(QuestionAnswerFollowerNotif, @answer.id, follower)
+      end
+      redirect_to question_path(:id => params[:answer][:question_id])
     else
       flash[:notice] = 'answer creation failed'
       redirect_to root_path

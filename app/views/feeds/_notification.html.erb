@@ -6,7 +6,7 @@
       <%= link_to 'question', question_path(:id => notification.resource_id) %></p>
   <% elsif notification.notification_type == 2 %>
     <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> answered a 
-      followed <%= link_to 'question', question_path(:id => notification.resource_id) %></p>
+      <%= link_to 'question', question_path(:id => notification.resource_id) %> you're following</p>
   <% elsif notification.notification_type == 3 %>
     <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> replied to your answer on 
       <%= link_to 'question', question_path(:id => notification.resource_id) %></p>
@@ -28,6 +28,9 @@
 <% elsif notification.resource_type == 'Contest' %>
   <% if notification.notification_type == 1 %>
     <p>Congrats! <%= link_to poster.name, public_profile_path(:id => poster.id) %> choose you winner of 
+      <%= link_to 'contest', contest_path(:id => notification.resource_id) %></p>
+  <% elsif notification.notification_type == 2 %>
+    <p><%= link_to poster.name, public_profile_path(:id => poster.id) %> answered on your 
       <%= link_to 'contest', contest_path(:id => notification.resource_id) %></p>
   <% end %>
 <% elsif notification.resource_type == 'Article' %>

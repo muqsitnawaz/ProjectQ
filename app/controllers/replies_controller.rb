@@ -1,11 +1,16 @@
-class RepliesController < ApplicationController
+require 'resque'
+require_relative './workers/questions/answer_reply_notif'
 
+class RepliesController < ApplicationController
   def create
     @reply = current_user.replies.build(reply_params)
     
     if @reply.save
       flash[:notice] = 'reply created'
-      redirect_to question_path(:id => Answer.find_by_id(reply_params[:answer_id]).question.id)
+      
+      # Generating notification and redirecting
+      Resque.enqueue(AnswerReplyNotif, @reply.id)
+      redirect_to question_path(:id => @reply.answer.question_id)
     else
       flash[:notice] = 'reply creation failed'
       redirect_to root_path
