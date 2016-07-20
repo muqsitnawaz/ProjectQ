@@ -1,3 +1,7 @@
+require 'resque'
+require_relative './workers/causes/cause_agree_notif'
+require_relative './workers/causes/cause_disagree_notif'
+
 class CausesController < ApplicationController
   before_filter :authenticate_user!, except: [ :index, :show ]
   
@@ -122,15 +126,8 @@ class CausesController < ApplicationController
         }
       end
       
-      # Generating notifcation to cause_owner
-      notif = Notification.new({
-        :user_id => @cause.user_id,
-        :poster_id => current_user.id,
-        :resource_type => "Cause",
-        :notification_type => 3,
-        :resource_id => @cause.id
-      })
-      notif.save
+      # Generating notifcation
+      Resque.enqueue(CauseAgreeNotif, @cause.id, current_user.id)
     else
       if request.xhr?
         render :json => {
@@ -157,15 +154,8 @@ class CausesController < ApplicationController
         }
       end
       
-      # Generating notifcation to cause_owner
-      notif = Notification.new({
-        :user_id => @cause.user_id,
-        :poster_id => current_user.id,
-        :resource_type => "Cause",
-        :notification_type => 4,
-        :resource_id => @cause.id
-      })
-      notif.save
+      # Generating notifcation
+      Resque.enqueue(CauseDisagreeNotif, @cause.id, current_user.id)
     else
       if request.xhr?
         render :json => {

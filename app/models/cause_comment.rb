@@ -1,14 +1,10 @@
+require 'resque'
+require_relative './workers/causes/cause_comment_notif'
+
 class CauseComment < ActiveRecord::Base
-  before_create do |cause_comment|
+  after_create do |cause_comment|
     # Notification of form 'User comment on your cause'
-    notif = Notification.new({
-      :user_id => cause_comment.cause.user_id,
-      :poster_id => cause_comment.user_id,
-      :resource_type => "Cause",
-      :notification_type => 1,
-      :resource_id => cause_comment.cause_id
-    })
-    notif.save
+    Resque.enqueue(CauseCommentNotif, cause_comment.id)
   end
   
   belongs_to :user
