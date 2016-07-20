@@ -1,25 +1,17 @@
-class Answer < ActiveRecord::Base
-  before_create do |answer|
-    # Notification of form 'User answered your question'
-    notification1 = Notification.new({
-      :user_id => answer.question.user_id,
-      :poster_id => answer.user_id,
-      :resource_type => "Question",
-      :notification_type => 1,
-      :resource_id => answer.question_id
-    })
-    notification1.save
+require 'resque'
+require_relative './workers/questions/question_answer_notif'
+require_relative './workers/questions/question_answer_follower_notif'
 
+class Answer < ActiveRecord::Base
+  # Sending notifcations to users after answer is created
+  
+  after_create do |answer|
+    # Notification of form 'User answered your question'
+    Resque.enqueue(QuestionAnswerNotif, answer.id)
+    
     # Notification of form 'User answered a question you're following
     answer.question.followers.each do |follower|
-      notification2 = Notification.new({
-        :user_id => follower,
-        :poster_id => answer.user_id,
-        :resource_type => "Question",
-        :notification_type => 2,
-        :resource_id => answer.question_id
-      })
-      notification2.save
+      Resque.enqueue(QuestionAnswerFollowerNotif, answer.id, follower)
     end
   end
 

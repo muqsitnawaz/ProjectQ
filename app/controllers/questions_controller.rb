@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_filter :authenticate_user!, except: [:index, :show ]
+  before_filter :authenticate_user!, except: [:index, :show, :search ]
   
   def index
     if params[:topic].nil?

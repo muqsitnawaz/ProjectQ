@@ -186,6 +186,8 @@ ActiveRecord::Schema.define(version: 20160717055417) do
     t.text     "causes_agreed",          default: "--- []\n"
     t.text     "causes_disagreed",       default: "--- []\n"
     t.text     "causes_followed",        default: "--- []\n"
+    t.boolean  "read",                   default: false
+    t.integer  "profile_views",          default: 0
     t.string   "email",                  default: "",         null: false
     t.string   "encrypted_password",     default: "",         null: false
     t.string   "reset_password_token"

@@ -43,7 +43,7 @@
 
       <!-- Notifications -->
       <%= link_to notifications_path, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-bullhorn"></i>
+        <i class="glyphicon glyphicon-bullhorn" style="<%= current_user.read == false ? 'color: green;' : '' %>"></i>
       <% end %>
 
       <!-- Edit/Preview profile -->

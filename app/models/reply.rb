@@ -1,14 +1,10 @@
+require 'resque'
+require_relative './workers/questions/answer_reply_notif'
+
 class Reply < ActiveRecord::Base
-  before_create do |reply|
-    # Notification of form 'User answered your question'
-    notification = Notification.new({
-      :user_id => reply.answer.user_id,
-      :poster_id => reply.user_id,
-      :resource_type => "Question",
-      :notification_type => 3,
-      :resource_id => reply.answer.question_id
-    })
-    notification.save
+  after_create do |reply|
+    # Notification of form 'User relplied to your answer'
+    Resque.enqueue(AnswerReplyNotif, reply.id)
   end
 
   belongs_to :answer

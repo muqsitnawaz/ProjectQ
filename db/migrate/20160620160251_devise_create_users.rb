@@ -19,6 +19,10 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :causes_agreed,          default: []
       t.text :causes_disagreed,       default: []
       t.text :causes_followed,        default: []
+      
+      # Other fields
+      t.boolean :read,                default: false
+      t.integer :profile_views,       default: 0
 
       ## Database authenticatable
       t.string :email,              null: false, default: ""

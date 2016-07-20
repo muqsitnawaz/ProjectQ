@@ -21,6 +21,8 @@ class FeedsController < ApplicationController
 
   def notifications
     @notifications = Notification.where(:user_id => current_user.id).order('created_at DESC')
+    current_user.read = true
+    current_user.save
   end
 
   # User profile related methods
@@ -53,6 +55,9 @@ class FeedsController < ApplicationController
       end
       
       @items = @items.order('created_at DESC')
+      
+      @user.profile_views += 1
+      @user.save
     end
   end
 
