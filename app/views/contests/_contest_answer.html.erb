@@ -1,7 +1,11 @@
 <div style="padding: 5px;">
   <div class="row">
     <div class="col-xs-2">
-      <%= image_tag 'thumb.jpg', class: 'img img-responsive', width: 45 %>
+      <% if contest_answer.user.profile_pic.length != 0 %>
+        <%= image_tag contest_answer.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
+      <% else %>
+        <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
+      <% end %>
     </div>
     <div class="col-xs-8" style="margin-left: -50px;">
       <%= link_to contest_answer.user.name, public_profile_path(:id => contest_answer.user.id) %>

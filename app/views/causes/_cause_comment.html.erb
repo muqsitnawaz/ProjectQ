@@ -1,7 +1,11 @@
 <div style="padding: 5px;">
   <div class="row">
     <div class="col-xs-2">
-      <%= image_tag 'thumb.jpg', class: 'img img-responsive', width: 45 %>
+      <% if cause_comment.user.profile_pic.length != 0 %>
+        <%= image_tag cause_comment.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
+      <% else %>
+        <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
+      <% end %>
     </div>
     <div class="col-xs-8" style="margin-left: -50px;">
       <%= link_to cause_comment.user.name, public_profile_path(:id => cause_comment.user.id) %>
@@ -40,14 +44,9 @@
   <!-- Like, Reply -->
   <% if user_signed_in? %>
     <div class="row">
-      <div class="col-xs-10">
+      <div class="col-xs-12">
+        <button id="replyC<%= cause_comment.id %>" class="btn btn-default">Reply</button>
         <button id="showCauseReplies<%= cause_comment.id %>" class="btn btn-default">Replies | <%= cause_comment.cause_replies.count %></button>
-      </div>
-      
-      <div class="col-xs-2">
-        <div style="margin-top:0.6em; margin-left: 1.3em;">
-          <i id="replyC<%= cause_comment.id %>" class="glyphicon glyphicon-share-alt" style="color: black;"></i>
-        </div>
       </div>
     </div>
   <% end %>

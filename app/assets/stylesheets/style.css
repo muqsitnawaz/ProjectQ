@@ -5,6 +5,11 @@ a:hover {
 
 
 /* Make the badge float in the top right corner of the button */
+
+.img-smround {
+  border-radius: 50%;
+}
+
 .button_badge {
   background-color: #fa3e3e;
   border-radius: 2px;

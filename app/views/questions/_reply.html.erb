@@ -1,7 +1,11 @@
 <div style="padding: 5px;">
   <div class="row">
     <div class="col-xs-2">
-      <%= image_tag 'thumb.jpg', class: 'img img-responsive', width: 45 %>
+      <% if reply.user.profile_pic.length != 0 %>
+        <%= image_tag reply.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
+      <% else %>
+        <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
+      <% end %>
     </div>
     <div class="col-xs-7" style="margin-left: -40px;">
       <%= link_to reply.user.name, public_profile_path(:id => reply.user.id) %>

@@ -1,6 +1,5 @@
 class QuestionsController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show, :search ]
-  caches_page :index, :show
   
   def index
     if params[:topic].nil?
@@ -47,9 +46,6 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.build(question_params)
     
-    # Expiring index cache
-    # expire_page action: 'index'
-    
     if @question.save
       flash[:notice] = 'question created'
       redirect_to question_path(:id => @question.id)
@@ -66,9 +62,6 @@ class QuestionsController < ApplicationController
       @question.content = params[:question_content]
       @question.detail = params[:question_detail]
       @question.save
-      
-      # Expiring show cache
-      # expire_page action: 'show', id: params[:question_id]
 
       if request.xhr?
         render :json => {
@@ -90,9 +83,6 @@ class QuestionsController < ApplicationController
     if @question.user == current_user
       @question.destroy
       flash[:notice] = 'question deleted'
-      
-      # Expiring index cache
-      # expire_page action: 'index'
     else 
       flash[:notice] = 'not sufficient permission'
     end
@@ -119,9 +109,6 @@ class QuestionsController < ApplicationController
         @question.followers << @user.id
         @question.save
       end
-      
-      # Expiring show cache
-      # expire_page action: 'show', id: params[:question_id]
     end
 
     if request.xhr?
