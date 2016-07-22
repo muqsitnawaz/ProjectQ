@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ProjectQ</title>
+  <link rel="stylesheet" media="all" href="/assets/answers.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/article_requests.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/articles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/bootstrap.min.self-04ace02906f367183f471ceb1c391c26a80e5246636e97717b0116231697716c.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/callbacks.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/cause_comments.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/cause_replies.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/causes.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/contest_answers.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/contests.self-929d608da722d790e40592912519443473a9e73fbad7b957b6d055f64185ab89.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/feeds.self-05a025d3359cf7d0c361c64cd273bdce50e9aa8851f256bfdf4b608db3f9e406.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/questions.self-3e351cc9ac2ac3340d8f21310a0373652672120746fa56796cc4077b14df4902.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/registrations.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/replies.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/style.self-56d95f063cb989f87fbd26390fb9d9e75418cb32a3c87c9e45482dfd12a286a8.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/application.self-e71817212629a5980439b72499d9d659be167e8b4f807d2f8068a988b90b2a1b.css?body=1" data-turbolinks-track="true" />
+<link rel="stylesheet" media="all" href="/assets/social-share-button.self-63fce8f2634387d043501d88b9ca5ee6a261331061f25bd76e5a291e7d2bd7f7.css?body=1" data-turbolinks-track="true" />
+  <script src="/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/affix.self-d2b642d8fbfc1d7041e2edefd66683ada567a980789dcd6f94fddda0b33408b5.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/alert.self-a29e91e8cd3ddaba9bbc466901d53ec2127e9256b9b941905d525a3a716bd1a5.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/button.self-a6cb16785434acb365ae426aef9f1fce05ed553cae7a965e4471c3da71509175.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/carousel.self-57eb8422043cf0a85b7a9dc6843916eb0a3e35b419c7798a5eb254b918997631.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/collapse.self-7dc8bfbc2fbfabd2bad62c58ff8ffeaf8f20fb87c7ca6cd35f06d4dc19632587.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/dropdown.self-9314126777c6be5443e37ea7f7967d7914d72b3e60449ba50edc967446373059.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/tab.self-122235057fbd4c6c7da377d59dc58f47b44cb1088a2e38e6ee6ce9d8ac29a26a.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/transition.self-09ff30b1e8a93d1f7728b9855f55d9c9d8d5734c8861e0d8139994e50944572a.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/scrollspy.self-a155b9d4b2f978905f0326c0f6635e1134fe91c6bfbfcbad079fa24a9fef2b0e.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/modal.self-72f95ffa1071297725a9ac91989693d56d1abf23f441a47455073b0da2857a5b.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/tooltip.self-11cf547be953f25f511cec668f6690473fd97b2f65502e4032f4030999a3f0c3.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap/popover.self-77d8e3a2499c1104ef146396a68b82469ee2bdb365199b874694698d10405e9a.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/bootstrap-sprockets.self-fbfa5ad7d9aa0afe439ec4ff3883acc4cb92b62cb67c40d674320c9aa1d4642d.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/social-share-button.self-77d9cecb21c1d3b336fdc42c822548d9ab79e01b2107c0961312506f8fee3a32.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/ckeditor/init.self-2f3e80b764bc18c9362e6f3326e1f32d4a8bdceff67345a3453a93b111626ff3.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/ckeditor/ckeditor.self-d44511d44b2c01b6466fda92764336001e42a860f53ed63541c0f871afed5d7a.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/answers.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/article_requests.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/articles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/articles_script.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/callbacks.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/cause_comments.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/cause_replies.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/causes.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/causes_script.self-ae8fd0e89153c99260c9377afdbb9f71f6e8a211985c6977e75b8648cd1cab30.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/contest_answers.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/contests.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/contests_script.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/feeds.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/form.self-a717e6eda0f2ae1fb2b6d7f3e6a782de1728e3dfe4c7e6b1b14ba1fab1798496.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/questions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/questions_script.self-95276b53d069c9f95cab52f8084dc1a8b72a917c971647551c8a2283253b8421.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/registrations.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/replies.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" data-turbolinks-track="true"></script>
+<script src="/assets/application.self-44dc72337fbefc4f8c73fc8781b922cf9e4f99f8d068e6563c3820851d9390f6.js?body=1" data-turbolinks-track="true"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="t9WQBlTJfaCKaXlpRMu/80deXAQrbte7lJCh9Cij3sVEZDTbuGXlYX9BBL0KZXv07cdpcTGioOdHa/n8FKnxiA==" />
+  
+    <div class="nav-bar">
+  <div class="row">
+    <div class="col-md-2 col-md-offset-1 project-name">
+      projectQ
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+      <br/>
+      <div>
+        <form action="/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+          <div class="input-group">
+            <input type="text" name="query" id="query" value="" class="form-control" placeholder="Search" />
+            <span class="input-group-btn">
+              <input type="submit" name="submit" value="Search" class="btn btn-secondary" />
+            </span>
+          </div>
+</form>      </div>
+    </div>
+
+    <!-- Glyphicons - right side -->
+    <div class="col-md-3 col-md-offset-1 button-group-nav">
+      <br/>
+      <!-- Newsfeed -->
+      <a class="btn btn-nav" href="/">
+        <i class="glyphicon glyphicon-list-alt"></i>
+</a>
+      <!-- Create something option -->
+      <div class="dropdown" style="display: inline;">
+        <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-pencil"></i>
+        <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+              <li><a href="" data-toggle="modal" data-target="#myModal">Ask a Question</a></li>
+                <li><a href="" data-toggle="modal" data-target="#contestModal">Start a Contest</a></li>
+              <li><a href="" data-toggle="modal" data-target="#causeModal">Start a Cause</a></li>
+              <li><a href="/articles/new">Write an Article</a></li>
+        </ul>
+      </div>
+
+      <!-- Notifications -->
+      <a class="btn btn-nav" href="/notifications">
+        <i class="glyphicon glyphicon-bullhorn" style=""></i>
+</a>
+      <!-- Edit/Preview profile -->
+      <div class="dropdown" style="display: inline;">
+        <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="/profile">Edit</a></li>
+          <li><a href="/profile/1">Preview</a></li>
+        </ul>
+      </div>
+
+      <!-- Logout -->
+      <a class="btn btn-nav" rel="nofollow" data-method="delete" href="/users/sign_out">
+        <i class="glyphicon glyphicon-off"></i>
+</a>    </div>
+  </div>
+</div>
+
+<!-- Rendering modals for posting and editing -->
+  <!-- Modal for posting question -->
+<div class="modal bnr-modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>New Question</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <form class="new_question" id="new_question" enctype="multipart/form-data" action="/questions" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="zPsoipia4WEQlxIiqzv1wiRJ8J/A101NNZJQYpH+SEg/SoxXdDZ5oOW/b/bllTHFjtDF6tobOhHmaQhqrfRnBQ==" />
+          <div class="form-group">
+            <div class="row" style="padding-top:1em;">
+              <div class="col-md-10 col-md-offset-1">
+                <input autofocus="autofocus" class="form-control" placeholder="What do you want to ask?" type="text" name="question[content]" id="question_content" /> <br>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-5 col-xs-offset-1">
+                <textarea cols="20" rows="3" class="question-detail form-control" placeholder="Please provide some detail" name="question[detail]" id="question_detail">
+</textarea>
+              </div>
+              <div class="col-xs-4 col-xs-offset-1">
+                <input name="question[topics][]" type="hidden" value="" /><select multiple="multiple" size="3" name="question[topics][]" id="question_topics"><option value="Books">Books</option>
+<option value="Business">Business</option>
+<option value="Business Strategy">Business Strategy</option>
+<option value="Computer Programming">Computer Programming</option>
+<option value="Computer Science">Computer Science</option>
+<option value="Cooking">Cooking</option>
+<option value="Current Events in Technology">Current Events in Technology</option>
+<option value="Dating and Relationships">Dating and Relationships</option>
+<option value="Design">Design</option>
+<option value="Economics">Economics</option>
+<option value="Education">Education</option>
+<option value="Entertainment">Entertainment</option>
+<option value="Entrepreneurship">Entrepreneurship</option>
+<option value="Fashion and Style">Fashion and Style</option>
+<option value="Finance">Finance</option>
+<option value="Fine Art">Fine Art</option>
+<option value="Food">Food</option>
+<option value="Google">Google</option>
+<option value="Health">Health</option>
+<option value="Healthy Eating">Healthy Eating</option>
+<option value="History">History</option>
+<option value="India">India</option>
+<option value="Investing">Investing</option>
+<option value="Journalism">Journalism</option>
+<option value="Literature">Literature</option>
+<option value="Marketing">Marketing</option>
+<option value="Mathematics">Mathematics</option>
+<option value="Medicine and Healthcare">Medicine and Healthcare</option>
+<option value="Mobile Phones">Mobile Phones</option>
+<option value="Money">Money</option>
+<option value="Movies">Movies</option>
+<option value="Music">Music</option>
+<option value="Novels">Novels</option>
+<option value="Nutrition">Nutrition</option>
+<option value="Philosophy">Philosophy</option>
+<option value="Photography">Photography</option>
+<option value="Physics">Physics</option>
+<option value="Politics">Politics</option>
+<option value="Psychology">Psychology</option>
+<option value="Science">Science</option>
+<option value="Silicon Valley">Silicon Valley</option>
+<option value="Small Businesses">Small Businesses</option>
+<option value="Software Engineering">Software Engineering</option>
+<option value="Sports">Sports</option>
+<option value="Startups">Startups</option>
+<option value="Technology">Technology</option>
+<option value="Television Series">Television Series</option>
+<option value="Visiting and Travel">Visiting and Travel</option>
+<option value="Writers and Authors">Writers and Authors</option>
+<option value="Writing">Writing</option></select>
+              </div>
+            </div>
+          </div>
+          <!--  Image upload -->
+          <div class="row" style="border-left: 1px solid #e7e7e7;">
+            <center>
+              <input class="btn" type="file" name="question[image]" id="question_image" /> <br>
+              <input type="submit" name="commit" value="Post" class="btn btn-squared btn-ask1" />
+            </center>
+          </div>
+</form>        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for posting answer -->
+<div class="modal bnr-modal fade" id="answerModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4 id="question-header"></h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <form class="new_answer" id="new_answer" enctype="multipart/form-data" action="/answers" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="/kX4Hi7DIZuI/DscUNSuvjT6D07CTEJWbJleFPDVuMsN9FzDwm+5Wn3URsgeemq5nmM6O9iANQq/YgYczN+Xhg==" />
+          <div class="form-group">
+            <p><strong>Your answer</strong></p>
+            <textarea rows="3" class="form-control" name="answer[answer]" id="answer_answer">
+</textarea><br>
+            <input type="hidden" name="answer[question_id]" id="answer_question_id" />
+          </div>
+          <div class="row">
+            <center>
+              <input type="file" name="answer[image]" id="answer_image" /><br>
+              <input type="submit" name="commit" value="Post" class="btn btn-squared btn-ask1" />
+            </center>
+          </div>
+</form>        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for posting reply -->
+<div class="modal bnr-modal fade" id="replyModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Reply</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <form class="new_reply" id="new_reply" action="/replies" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="DwxFidPVKTVrhAJpi1SmC3OiRJwVpXPt3gwMuFP72Ab8veFUP3mx9J6sf73F+mIM2Ttx6Q9pBLEN91Swb/H3Sw==" />
+          <div class="form-group">
+            <p><strong>Your reply</strong></p>
+            <textarea rows="3" class="form-control" name="reply[reply]" id="reply_reply">
+</textarea><br>
+            <input type="hidden" name="reply[answer_id]" id="reply_answer_id" />
+          </div>
+          <div class="row">
+            <center>
+              <input type="submit" name="commit" value="Post" class="btn btn-squared btn-ask1" />
+            </center>
+          </div>
+</form>        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for editing a question -->
+<div class="modal bnr-modal fade" id="editQuestionModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Question</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <p><strong>Heading</strong></p>
+            <input id="new_question_content" type="text" class="form-control"><br>
+            
+            <p><strong>Detail</strong></p>
+            <textarea id="new_question_detail" class="form-control"></textarea><br>
+
+            <center>
+              <input id="new_question_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for editing an answer -->
+<div class="modal bnr-modal fade" id="editAnswerModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Answer</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <p><strong>Your answer</strong></p>
+            <textarea id="new_answer_answer" class="form-control"></textarea><br>
+
+            <center>
+              <input id="new_answer_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for updating a reply -->
+<div class="modal bnr-modal fade" id="editReplyModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Reply</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <p><strong>Your reply</strong></p>
+            <input id="new_reply_reply" class="form-control" /><br>
+
+            <center>
+              <input id="new_reply_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+  <!-- Posting contest modal -->
+<div class="modal bnr-modal fade" id="contestModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+           <h4>New Contest</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form class="new_contest" id="new_contest" enctype="multipart/form-data" action="/contests" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="EYzddM2zmyOhNTK+vk9Lbj3cMU7QYUSi1LBJp2kXmtXiPXmpIR8D4lQdT2rw4Y9pl0UEO8qtM/4HSxGvVR21mA==" />
+          <div class="form-group">
+            <div class="row" style="padding-top:1em;">
+              <div class="col-xs-6">
+                <p><strong>Contest header</strong></p>
+                <input autofocus="autofocus" class="question-ask-field form-control" placeholder="What do you want to ask?" type="text" name="contest[content]" id="contest_content" /> <br>
+              </div>
+              <div class="col-xs-6">
+                <p><strong>Winning prize</strong></p>
+                <input class="form-control" placeholder="Whats the winning prize" type="text" name="contest[prize]" id="contest_prize" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-6">
+                <p><strong>Contest detail</strong></p>
+                <textarea cols="20" rows="3" class="question-detail form-control" placeholder="Please provide some detail" name="contest[detail]" id="contest_detail">
+</textarea>
+              </div>
+              <div class="col-xs-6">
+                <p><strong>Please select end date</strong></p>
+                <select id="contest_end_date_1i" name="contest[end_date(1i)]">
+<option value="2011">2011</option>
+<option value="2012">2012</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+<option value="2016" selected="selected">2016</option>
+<option value="2017">2017</option>
+<option value="2018">2018</option>
+<option value="2019">2019</option>
+<option value="2020">2020</option>
+<option value="2021">2021</option>
+</select>
+<select id="contest_end_date_2i" name="contest[end_date(2i)]">
+<option value="1">January</option>
+<option value="2">February</option>
+<option value="3">March</option>
+<option value="4">April</option>
+<option value="5">May</option>
+<option value="6">June</option>
+<option value="7" selected="selected">July</option>
+<option value="8">August</option>
+<option value="9">September</option>
+<option value="10">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select>
+<select id="contest_end_date_3i" name="contest[end_date(3i)]">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22" selected="selected">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option value="29">29</option>
+<option value="30">30</option>
+<option value="31">31</option>
+</select>
+
+              </div>
+            </div>
+          </div>
+          <!-- for image upload -->
+          <div class="row" style="border-left: 1px solid #e7e7e7;">
+            <center>
+              <input class="btn" type="file" name="contest[image]" id="contest_image" /> <br>
+              <input type="submit" name="commit" value="Post Contest" class="btn btn-squared btn-ask1" />
+            </center>
+          </div>
+</form>        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Editing contest modal -->
+<div class="modal bnr-modal fade" id="editContestModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Contest</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <p><strong>Heading</strong></p>
+            <input id="new_contest_content" type="text" class="form-control"><br>
+            
+            <p><strong>Detail</strong></p>
+            <textarea id="new_contest_detail" class="form-control"></textarea><br>
+
+            <center>
+              <input id="new_contest_submit" type="submit" value="Update Contest" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Posting ContestAnswer modal -->
+<div class="modal bnr-modal fade" id="contestAnswerModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4 id="contest-header"></h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <form class="new_contest_answer" id="new_contest_answer" enctype="multipart/form-data" action="/contest_answers" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="kJb+9Q4L0P4P2UT5ZYhiQaAAsGpkADS5MUr7S2bFKhxjJ1oo4qdIP/rxOS0rJqZGCpmFH37MQ+XisaNDWs8FUQ==" />
+            <div class="form-group">
+              <p><strong>Your answer</strong></p>
+              <textarea rows="5" class="form-control" name="contest_answer[answer]" id="contest_answer_answer">
+</textarea><br>
+              <input type="hidden" name="contest_answer[contest_id]" id="contest_answer_contest_id" />
+            </div>
+            <center>
+              <input type="file" name="contest_answer[image]" id="contest_answer_image" /><br>
+              <input type="submit" name="commit" value="Post Answer" class="btn btn-ask1" />
+            </center>
+</form>        </div>
+      </section>
+    </div>
+  </div>
+</div>
+  <!-- Posting cause modal -->
+<div class="modal bnr-modal fade" id="causeModal" tabindex="-1" role="dialog" style="height:750px;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+           <h4>Starting a New Cause</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <section>
+            <form class="new_cause" id="new_cause" enctype="multipart/form-data" action="/causes" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="0AqppFtbQ1qK1NUYf939Bq7lwGtTkK2zTX8yGJO1wIAjuw15t/fbm3/8qMwxczkBBHz1Hklc2u+ehGoQr7/vzQ==" />
+            <div class="wizard">
+              <div class="wizard-inner">
+                <div class="connecting-line"></div>
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                      <!--steps of the form -->
+                      <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                        <span class="round-tab">
+                          <i class="glyphicon glyphicon-folder-open"></i>
+                        </span>
+                      </a>
+                    </li>
+
+                    <li role="presentation" class="disabled">
+                      <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                        <span class="round-tab">
+                          <i class="glyphicon glyphicon-pencil"></i>
+                        </span>
+                      </a>
+                    </li>
+
+                    <li role="presentation" class="disabled">
+                      <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+                        <span class="round-tab">
+                          <i class="glyphicon glyphicon-tree-deciduous"></i>
+                        </span>
+                      </a>
+                    </li>
+                    <li role="presentation" class="disabled">
+                      <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Step 4">
+                        <span class="round-tab">
+                          <i class="glyphicon glyphicon-envelope"></i>
+                        </span>
+                      </a>
+                  </li>
+
+                  <li role="presentation" class="disabled">
+                    <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                      <span class="round-tab">
+                        <i class="glyphicon glyphicon-ok"></i>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!--content in the forms  -->
+              <div class="tab-content">
+                  <div class="tab-pane active" role="tabpanel" id="step1">
+                      <div class="row" style="padding-top:1em;">
+                        <div class="col-xs-6 cause_quote">
+                          <h3> Start your cause & show the world what you care about </h3>
+                        </div>
+                        <div class="col-xs-6">
+                          <p><strong>Cause type</strong></p>
+                          <div class="form-group">
+                            <select name="cause[cause_type]" id="cause_cause_type"><option value="Raise funds">Raise funds</option>
+<option value="Spread awareness about something">Spread awareness about something</option>
+<option value="Protest against something">Protest against something</option>
+<option value="Draw world&#39;s attention">Draw world&#39;s attention</option></select>
+                        </div>
+                      </div>
+                    </div>
+                      <ul class="list-inline pull-right">
+                          <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                      </ul>
+                  </div>
+                  <!-- 2nd step -->
+                  <div class="tab-pane" role="tabpanel" id="step2">
+                      <div class="row" style="padding-top:1em;">
+                        <div class="col-xs-6 cause_quote">
+                          <h3> Start your cause & show the world what you care about </h3>
+                        </div>
+                        <div class="col-xs-6">
+                          <p><strong>Cause Intro</strong></p>
+                          <div class="form-group">
+                            <input class="form-control" placeholder="A brief introduction" type="text" name="cause[intro]" id="cause_intro" />
+                        </div>
+                      </div>
+                    </div>
+                      <ul class="list-inline pull-right">
+                          <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                      </ul>
+                  </div>
+                  <!-- causes details field -->
+                  <div class="tab-pane" role="tabpanel" id="step3">
+                      <div class="row" style="padding-top:1em;">
+                        <div class="col-xs-6 cause_quote">
+                          <h3> Start your cause & show the world what you care about </h3>
+                        </div>
+                        <div class="col-xs-6">
+                          <p><strong>Cause detail</strong></p>
+                          <div class="form-group">
+                            <textarea cols="20" rows="3" class="question-detail form-control" placeholder="Please provide some detail" name="cause[detail]" id="cause_detail">
+</textarea>
+                        </div>
+                      </div>
+                    </div>
+                      <ul class="list-inline pull-right">
+                          <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                      </ul>
+                  </div>
+                  <!-- for why it matters field  -->
+                  <div class="tab-pane" role="tabpanel" id="step4">
+                      <div class="row" style="padding-top:1em;">
+                        <div class="col-xs-6 cause_quote">
+                          <h3> Start your cause & show the world what you care about </h3>
+                        </div>
+                        <div class="col-xs-6">
+                          <p><strong>Cause detail</strong></p>
+                          <div class="form-group">
+                            <textarea cols="20" rows="3" class="question-detail form-control" placeholder="Why does this matter to you?" name="cause[whymatters]" id="cause_whymatters">
+</textarea>
+                          </div>
+                        </div>
+                    </div>
+                      <ul class="list-inline pull-right">
+                          <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                      </ul>
+                  </div>
+                  <!-- for image and create button  -->
+                  <div class="tab-pane" role="tabpanel" id="complete">
+                    <div class="row" style="padding-top:1em;">
+                      <div class="col-xs-6 cause_quote">
+                        <h3> Images creates stronger effect on people </h3>
+                      </div>
+                      <div class="col-xs-6">
+                        <p><strong>Upload Image</strong></p>
+                        <div class="form-group">
+                          <input class="btn" type="file" name="cause[image]" id="cause_image" />
+                       </div>
+                      </div>
+                    </div>
+                      <ul class="list-inline pull-right">
+                          <li><input type="submit" name="commit" value="Post" class="btn btn-squared btn-ask1" /></li>
+                      </ul>
+                  </div>
+                  <!-- ended -->
+                </section>
+              </div>
+            </section>
+</form>        </div>
+      </div>
+  </div>
+</div>
+
+<!--ended  -->
+
+<!-- Modal for posting cause comment -->
+<div class="modal bnr-modal fade" id="causeCommentModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4 id="cause-header"></h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <form class="new_cause_comment" id="new_cause_comment" action="/cause_comments" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="gB1f5n1rPQ8FESVIOxwqMGkDS6sVEC0lj8iTdWh/t4dzrPs7kcelzvA5WJx1su43w5p+3g/cWnlcM8t9VHWYyg==" />
+            <div class="form-group">
+              <p><strong>Your comment</strong></p>
+              <textarea rows="3" class="form-control" name="cause_comment[comment]" id="cause_comment_comment">
+</textarea><br>
+              <input type="hidden" name="cause_comment[cause_id]" id="cause_comment_cause_id" />
+            </div>
+            <center>
+              <input type="submit" name="commit" value="Post" class="btn btn-ask1" />
+            </center>
+</form>        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for posting cause reply -->
+<div class="modal bnr-modal fade" id="causeReplyModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Reply</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <!-- create a new question using this modal -->
+          <form class="new_cause_reply" id="new_cause_reply" action="/cause_replies" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="XJSYBxb+0haoxyPeQTPOnGvQXj0WdQXxJNmHmBgaOkOvJTza+lJK113vXgoPnQqbwUlrSAy5cq33It+QJBAVDg==" />
+          <div class="form-group">
+            <p><strong>Your reply</strong></p>
+            <textarea rows="3" class="form-control" name="cause_reply[reply]" id="cause_reply_reply">
+</textarea><br>
+            <input type="hidden" name="cause_reply[cause_comment_id]" id="cause_reply_cause_comment_id" />
+          </div>
+          <div class="row">
+            <center>
+              <input type="submit" name="commit" value="Post" class="btn btn-squared btn-ask1" />
+            </center>
+          </div>
+</form>        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Editing cause modal -->
+<div class="modal bnr-modal fade" id="editCauseModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Cause</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <p><strong>Introduction</strong></p>
+            <input id="new_cause_intro" type="text" class="form-control"><br>
+
+            <p><strong>Detail</strong></p>
+            <textarea id="new_cause_detail" class="form-control"></textarea><br>
+
+            <p><strong>Why does it matter?</strong></p>
+            <textarea id="new_cause_whymatters" class="form-control"></textarea><br>
+            <br>
+
+            <center>
+              <input id="new_cause_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Editing cause comment modal -->
+<div class="modal bnr-modal fade" id="editCauseCommentModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Comment</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <p><strong>Your comment</strong></p>
+            <input id="new_cause_comment_comment" type="text" class="form-control"><br>
+
+            <center>
+              <input id="new_cause_comment_submit" type="submit" value="Update" class="btn btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for updating a cause reply -->
+<div class="modal bnr-modal fade" id="editCauseReplyModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Reply</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
+            <p><strong>Your reply</strong></p>
+            <input id="new_cause_reply_reply" class="form-control" /><br>
+
+            <center>
+              <input id="new_cause_reply_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />
+            </center>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+
+  
+</head>
+<body style="background-color: #F5F5F5;">
+  <div class="container main-wall">
+  <div class="row">
+    <!-- Leftbar  -->
+    <div class="col-xs-2">
+      <div class="left-bar">
+  <div class="row">
+    <div class="left-bar-comp">
+      <!-- Questions and its submenu -->
+      <div id="menu-item1" style="font-weight: bold;">
+        <i class="icons glyphicon glyphicon-question-sign" style="margin-top:10px;"></i><a class="icon-text">Questions</a></span>
+      </div>
+
+      <!-- Showing to user only -->
+      <div id="menu-item1-links" style="margin-left: 3em;" class="hidden">
+        <p><a href="/questions?type=asked">Asked</a></p>
+        <p><a href="/questions?type=answered">Answered</a></p>
+        <p><a href="/questions?type=following">Following</a></p>
+      </div>
+
+      <!-- Contests and its submenu -->
+      <div id="menu-item2" style="font-weight: bold;">
+        <i class="icons glyphicon glyphicon-comment" style="margin-top:10px;"></i><a class="icon-text">Contests</a></span>
+      </div>
+
+      <div id="menu-item2-links" style="margin-left: 3em;" class="hidden">
+        <p><a href="/contests?type=open">View Contests</a></p>
+        
+        <!-- Not for admin -->
+        <p><a href="/contests?type=close">Closed Contests</a></p>
+      </div>
+
+      <!-- Causes and its submenu -->
+      <div id="menu-item3" style="font-weight: bold;">
+        <i class="icons glyphicon glyphicon-heart" style="margin-top:10px;"></i><a class="icon-text">Causes</a></span>
+      </div>
+
+      <div id="menu-item3-links" style="margin-left: 3em;" class="hidden">
+        <p><a href="/causes">View Causes</a></p>
+        <p><a href="/causes?type=followed">Followed</a></p>
+        <p><a href="/causes?type=agreed">Agreed</a></p>
+        <p><a href="/causes?type=disagreed">Disagreed</a></p>
+      </div>
+
+      <!-- Articles and its submenu -->
+      <div id="menu-item4" style="font-weight: bold;">
+        <i class="icons glyphicon glyphicon-paperclip" style="margin-top:10px;"></i><a class="icon-text">Articles</a></span>
+      </div>
+
+      <div id="menu-item4-links" style="margin-left: 3em;" class="hidden">
+        <p><a href="/articles">Read Articles</a></p>
+          <p><a href="/articles/new">Write an Article</a></p>
+          <p><a href="/article_requests/new">Request Articles</a></p>
+          <p><a href="/article_requests">Answer Requests</a></p>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+
+<script type="text/javascript">
+  $("[id^=menu-item]").click(function() {
+    const id = this.id.substring(9, this.id.length)
+
+      $("#menu-item"+id+"-links").toggleClass("hidden")
+  })
+</script>
+    </div>
+
+    <!-- Questions area -->
+    <div class="col-xs-7">
+      <div class="question-area">
+        <!-- Template for rendering a question -->
+<div class="row question" style="margin-top: 0.5em;">
+  <div class="col-xs-12">
+    <!-- Question's topics -->
+    <p class="text-muted">
+      In
+      <i>
+          <a href="/questions?topic="></a>
+          <a href="/questions?topic=Books">Books</a>
+      </i>
+      - 22 July, 2016
+    </p>
+
+    <!-- Hidden field for question content -->
+    <input type="text" id="question_content1" value="Question 1" hidden>
+
+    <!-- Question's header -->
+    <div class="row">
+      <!-- Question's content -->
+      <div class="col-xs-10 question-content" >
+        <a href="/questions/1">Question 1</a>
+      </div>
+
+      <!-- Question edit and delete buttons -->
+      <div class="col-xs-2">
+          <a id="edit_question1" class="icon-text">edit</a>
+          <a class="icon-text" data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/questions/1">delete</a>
+      </div>
+    </div>
+
+      <!-- Question's owner name -->
+      <div class="row">
+        <div class="col-xs-12">
+          <p>Posted by <a href="/profile/1">Muqsit Nawaz</a>,<i> 0 day(s) ago</i></p>
+        </div>
+      </div>
+      <br/>
+  
+  
+      <div class="question-details">
+        <p id="question_detail1">Question 1 content</p>
+      </div>
+  
+      <!-- Bottom buttons -->
+        <div class="row">
+          <div class="col-xs-9">
+            <!-- Bottom left buttons -->
+            <button id="answerQ1" class="btn btn-default">Answer | 2</button>
+       
+              <button id="follow1" class="btn btn-default">Follow</button>
+          </div>
+          <!-- Bottom right buttons -->
+          <div class="col-xs-3" style="margin-top: 0.8em;">
+            <div class='social-share-button' data-title='Question 1' data-img=''
+data-url='' data-desc='' data-via=''>
+<a rel="nofollow " data-site="twitter" class="ssb-icon ssb-twitter" onclick="return SocialShareButton.share(this);" title="Share to Twitter" href="#"></a>
+<a rel="nofollow " data-site="facebook" class="ssb-icon ssb-facebook" onclick="return SocialShareButton.share(this);" title="Share to Facebook" href="#"></a>
+<a rel="nofollow " data-site="google_plus" class="ssb-icon ssb-google_plus" onclick="return SocialShareButton.share(this);" title="Share to Google+" href="#"></a>
+</div>
+          </div>
+        </div>
+
+      <div class="col-xs-12" style="margin-top: 1em; margin-bottom: -2em;">
+        <!-- Rendering answers -->
+          <hr>
+        
+            <div style="margin-bottom: 2em; padding: 5px;">
+  <div class="row">
+    <div class="col-xs-2">
+        <img class="img img-responsive" width="45" src="/uploads/user/profile_pic/1/thumb_dp.jpg" alt="Thumb dp" />
+    </div>
+    <div class="col-xs-8" style="margin-left: -50px;">
+      <a href="/profile/1">Muqsit Nawaz</a>
+    </div>
+    <div class="col-xs-2" style="margin-left: 50px;">
+        <a id="edit_answerQ2" class="icon-text">edit</a>
+        <a class="icon-text" data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/answers?id=2">delete</a>
+    </div>
+  </div>
+  
+  <div class="row">
+    <!-- Showing answer and username -->
+    <div class="col-xs-12">
+      <!-- to make read more link -->
+        <p id="answer2">Answer by Muqsit</p>
+      
+      <p class="text-muted"><small>Updated at 22 July, 2016</small></p>
+    </div>
+  </div>
+
+
+  <!-- Upvote, downvote and reply buttons -->
+    <div class="row">
+      <div class="col-xs-10">
+        <button id="upvote2" class="btn btn-default">Upvote | 0</button>
+        <button id="downvote2" class="btn btn-default">Downvote</button>
+        <button id="replyA2" class="btn btn-default">Reply</button>
+        <button id="showReplies2" class="btn btn-default">Replies | 0</button>
+      </div>
+      
+      <div class="col-xs-2">
+        <div style="margin-top:0.6em; margin-left: 1.3em;">
+          <i id="replyA2" class="glyphicon glyphicon-share-alt" style="color: black;"></i>
+        </div>
+      </div>
+    </div>
+
+  <!-- Hidden replies -->
+  <div class="row" style="">
+    <div class="col-xs-11 col-xs-offset-1">
+      <div id="replies2" class="hidden" style="margin-top: 1em; margin-bottom: -1em;">
+      </div>
+    </div>
+  </div>
+</div>
+            <div style="margin-bottom: 2em; padding: 5px;">
+  <div class="row">
+    <div class="col-xs-2">
+        <img class="img img-responsive" width="45" src="/assets/thumb-b4fa7f04809f9693c0c79c50fdb46381418689bab21f95d6c29f2fcc593cc6eb.jpg" alt="Thumb b4fa7f04809f9693c0c79c50fdb46381418689bab21f95d6c29f2fcc593cc6eb" />
+    </div>
+    <div class="col-xs-8" style="margin-left: -50px;">
+      <a href="/profile/2">Nofel Yasin</a>
+    </div>
+    <div class="col-xs-2" style="margin-left: 50px;">
+    </div>
+  </div>
+  
+  <div class="row">
+    <!-- Showing answer and username -->
+    <div class="col-xs-12">
+      <!-- to make read more link -->
+        <p id="answer1">Answer by Nofel</p>
+      
+      <p class="text-muted"><small>Updated at 22 July, 2016</small></p>
+    </div>
+  </div>
+
+
+  <!-- Upvote, downvote and reply buttons -->
+    <div class="row">
+      <div class="col-xs-10">
+        <button id="upvote1" class="btn btn-default">Upvote | 0</button>
+        <button id="downvote1" class="btn btn-default">Downvote</button>
+        <button id="replyA1" class="btn btn-default">Reply</button>
+        <button id="showReplies1" class="btn btn-default">Replies | 0</button>
+      </div>
+      
+      <div class="col-xs-2">
+        <div style="margin-top:0.6em; margin-left: 1.3em;">
+          <i id="replyA1" class="glyphicon glyphicon-share-alt" style="color: black;"></i>
+        </div>
+      </div>
+    </div>
+
+  <!-- Hidden replies -->
+  <div class="row" style="">
+    <div class="col-xs-11 col-xs-offset-1">
+      <div id="replies1" class="hidden" style="margin-top: 1em; margin-bottom: -1em;">
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+  </div>
+</div>
+
+<hr class="question-hr">
+      </div>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="col-xs-3">
+      <div class="suggestions">
+  <div class="heading-7">Trending</div>
+  <hr class='profile-hr'>
+  
+    
+      <p><a><a class="icon-text" href="/questions/1">Question 1</a></a></p>
+      <p><a><a class="icon-text" href="/questions/2">Question 2</a></a></p>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<script src="/assets/questions_script.self-95276b53d069c9f95cab52f8084dc1a8b72a917c971647551c8a2283253b8421.js?body=1" data-turbolinks-track="true"></script>
+
+</body>
+</html>

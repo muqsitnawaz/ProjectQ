@@ -62,6 +62,15 @@ class FeedsController < ApplicationController
   end
 
   # Helper methods
+  def add_know_about
+  	@user = User.find_by_id(current_user.id)
+  	if !@user.knows_about.include? params[:know_about]
+  		@user.knows_about << params[:know_about]
+  	end
+  	@user.save
+  	redirect_to profile_path
+  end
+  
   def add_interest
   	@user = User.find_by_id(current_user.id)
   	if !@user.interests.include? params[:interest]
@@ -98,5 +107,29 @@ class FeedsController < ApplicationController
   	@user.location = params[:location]
   	@user.save
   	redirect_to profile_path
+  end
+  
+  def update_profile_pic
+    @user = User.find_by_id(current_user.id)
+    @user.update_attributes! profile_params_for_pic
+    @user.save
+  	redirect_to profile_path
+  end
+  
+  def mark_as_complete
+    @user = User.find_by_id(current_user.id)
+    
+    if !@user.knows_about.empty? && !@user.interests.empty? && !@user.education.empty? &&
+    !@user.profile_pic.nil? && !@user.employments.empty? && !@user.location.nil?
+      @user.completed = true
+      @user.save
+    end
+    
+    redirect_to profile_path
+  end
+  
+private
+  def profile_params_for_pic
+    params.require(:user).permit(:profile_pic)
   end
 end

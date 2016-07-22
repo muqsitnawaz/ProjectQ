@@ -25,5 +25,7 @@ module Quora
     config.assets.initialize_on_precompile = false
     
     config.autoload_paths = %W(#{config.root}/lib)
+    
+    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/deploy"
   end
 end

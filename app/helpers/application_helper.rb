@@ -26,11 +26,11 @@ module ApplicationHelper
   
   def get_pretty_provider_name(provider)
     if (provider == 'GoogleOauth2')
-      return '<i class="fa fa-2x fa-google-plus-official" style="color: #D62D20;" aria-hidden="true"></i>'
+      return '<i class="fa fa-3x fa-google-plus-official" style="color: #D62D20;" aria-hidden="true"></i>'
     elsif (provider == 'Facebook')
-      return '<i class="fa fa-2x fa-facebook-square" style="color: #3B5998;" aria-hidden="true"></i>'
+      return '<i class="fa fa-3x fa-facebook-square" style="color: #3B5998;" aria-hidden="true"></i>'
     elsif (provider == 'Twitter') 
-      return '<i class="fa fa-2x fa-twitter-square" style="color: #326ADA;" aria-hidden="true"></i>'
+      return '<i class="fa fa-3x fa-twitter-square" style="color: #326ADA;" aria-hidden="true"></i>'
     end
   end
 

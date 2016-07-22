@@ -9,10 +9,13 @@ Rails.application.routes.draw do
   get '/profile/:id' => 'feeds#public_profile', :as => 'public_profile'
   
   get '/notifications' => 'feeds#notifications', :as => 'notifications'
+  post '/add_know_about' => 'feeds#add_know_about'
   post '/add_interest' => 'feeds#add_interest'
   post '/add_education' => 'feeds#add_education'
   post '/add_employment' => 'feeds#add_employment'
   post '/update_location' => 'feeds#update_location'
+  patch '/update_profile_pic' => 'feeds#update_profile_pic'
+  post '/mark_as_complete' => 'feeds#mark_as_complete'
 
   # Questions paths
   resources :questions

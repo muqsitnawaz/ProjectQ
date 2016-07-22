@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 20160717055417) do
     t.string   "content",                         null: false
     t.string   "detail",                          null: false
     t.string   "image"
+    t.integer  "views",      default: 0
     t.text     "topics",     default: "--- []\n"
     t.text     "followers",  default: "--- []\n"
     t.datetime "created_at",                      null: false
@@ -175,8 +176,10 @@ ActiveRecord::Schema.define(version: 20160717055417) do
   add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
+    t.string   "profile_pic"
     t.string   "name",                   default: "",         null: false
     t.boolean  "is_admin",               default: false
+    t.boolean  "completed",              default: false
     t.text     "education",              default: "--- []\n"
     t.text     "interests",              default: "--- []\n"
     t.text     "knows_about",            default: "--- []\n"
@@ -186,7 +189,7 @@ ActiveRecord::Schema.define(version: 20160717055417) do
     t.text     "causes_agreed",          default: "--- []\n"
     t.text     "causes_disagreed",       default: "--- []\n"
     t.text     "causes_followed",        default: "--- []\n"
-    t.boolean  "read",                   default: false
+    t.boolean  "read",                   default: true
     t.integer  "profile_views",          default: 0
     t.string   "email",                  default: "",         null: false
     t.string   "encrypted_password",     default: "",         null: false
@@ -203,6 +206,8 @@ ActiveRecord::Schema.define(version: 20160717055417) do
     t.datetime "confirmation_sent_at"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

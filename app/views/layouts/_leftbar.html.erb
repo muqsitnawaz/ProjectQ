@@ -19,16 +19,14 @@
       </div>
 
       <div id="menu-item2-links" style="margin-left: 3em;" class="hidden">
-        <% if is_admin? %>
-          <p><a hred="#" style="margin-top: 1em;" data-toggle="modal" data-target="#contestModal">Start a Contest</a></p>
-        <% end %>
         <p><a href="<%= contests_path(:type => :open) %>">View Contests</a></p>
+        
         <!-- Not for admin -->
         <% if !is_admin? %>
           <p><a href="<%= contests_path(:type => :participated) %>">Participated</a></p>
           <p><a href="<%= contests_path(:type => :won) %>">Contests Won</a></p>
         <% end %>
-        <p><a href="<%= contests_path(:type => :close) %>">Contests Closed</a></p>
+        <p><a href="<%= contests_path(:type => :close) %>">Closed Contests</a></p>
       </div>
 
       <!-- Causes and its submenu -->
@@ -37,7 +35,6 @@
       </div>
 
       <div id="menu-item3-links" style="margin-left: 3em;" class="hidden">
-        <p><a href="#" data-toggle="modal" data-target="#causeModal">Start a Cause</a></p>
         <p><a href="<%= causes_path %>">View Causes</a></p>
         <p><a href="<%= causes_path(:type => :followed) %>">Followed</a></p>
         <p><a href="<%= causes_path(:type => :agreed) %>">Agreed</a></p>
@@ -51,9 +48,15 @@
 
       <div id="menu-item4-links" style="margin-left: 3em;" class="hidden">
         <p><%= link_to 'Read Articles', articles_path %></p>
-        <p><%= link_to 'Write an Article', new_article_path %></p>
-        <p><%= link_to 'Request an Article', new_article_request_path %></p>
-        <p><%= link_to 'Answer a Request', article_requests_path %></p>
+        <% if user_signed_in? && current_user.completed == false %>
+          <p><a href="<%= profile_path %>">Write an Article</a></p>
+          <p><a href="<%= profile_path %>">Request Articles</a></p>
+          <p><a href="<%= profile_path %>">Answer Requests</a></p>
+        <% else %>
+          <p><%= link_to 'Write an Article', new_article_path %></p>
+          <p><%= link_to 'Request Articles', new_article_request_path %></p>
+          <p><%= link_to 'Answer Requests', article_requests_path %></p>
+        <% end %>
       </div>
     </div>
   </div>
@@ -68,7 +71,15 @@
     <% if user_signed_in? %>
       $("#menu-item"+id+"-links").toggleClass("hidden")
     <% else %>
-      window.location = "<%= new_user_session_path %>"
+      if (parseInt(id) === 1) {
+        window.location = "<%= questions_path %>" 
+      } else if (parseInt(id) === 2) {
+        window.location = "<%= contests_path %>" 
+      } else if (parseInt(id) === 3) {
+        window.location = "<%= causes_path %>" 
+      } else {
+        window.location = "<%= articles_path %>" 
+      }
     <% end %>
   })
 </script>

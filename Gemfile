@@ -51,6 +51,7 @@ end
 
 #custom used
 gem 'devise'
+gem 'rmagick'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'ckeditor'
@@ -59,8 +60,10 @@ gem 'social-share-button'
 gem "font-awesome-rails"
 gem 'search_cop'
 
-# Caching
+# advanced gems
 gem 'resque'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
 
 gem 'omniauth'
 gem 'omniauth-facebook'

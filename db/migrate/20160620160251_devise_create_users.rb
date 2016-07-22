@@ -2,8 +2,10 @@ class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
       # Main fields
+      t.string :profile_pic
       t.string :name,               null: false, default: ""
       t.boolean :is_admin,          default: false
+      t.boolean :completed,         default: false
 
       # Personal info
       t.text :education,            default: []
@@ -21,7 +23,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :causes_followed,        default: []
       
       # Other fields
-      t.boolean :read,                default: false
+      t.boolean :read,                default: true
       t.integer :profile_views,       default: 0
 
       ## Database authenticatable
