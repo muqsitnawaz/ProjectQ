@@ -160,7 +160,7 @@ a:hover {
 }
 /*main page*/
 .left-bar{
-  border-right: 1px solid #383838;
+  border-right: 1px solid #bdc3c7;
   padding-left: 5px;
   margin-left: 20px;
 }
@@ -171,7 +171,7 @@ a:hover {
 }
 
 .suggestions {
-  border-left: 1px solid #383838;
+  border-left: 1px solid #bdc3c7;
   margin-left: 30px;
   padding-left: 0.8em;
 }

@@ -19,12 +19,13 @@ ActiveRecord::Schema.define(version: 20160717055417) do
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id"
     t.integer  "user_id"
-    t.string   "answer",                  null: false
+    t.string   "answer",                      null: false
     t.string   "image"
+    t.boolean  "anonymous",   default: false
     t.integer  "upvotes",     default: 0
     t.integer  "downvotes",   default: 0
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
@@ -58,8 +59,9 @@ ActiveRecord::Schema.define(version: 20160717055417) do
     t.integer  "user_id"
     t.integer  "cause_id"
     t.string   "comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "anonymous",  default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "cause_comments", ["cause_id"], name: "index_cause_comments_on_cause_id", using: :btree
@@ -68,9 +70,10 @@ ActiveRecord::Schema.define(version: 20160717055417) do
   create_table "cause_replies", force: :cascade do |t|
     t.integer  "cause_comment_id"
     t.integer  "user_id"
-    t.string   "reply",            null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.string   "reply",                            null: false
+    t.boolean  "anonymous",        default: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "cause_replies", ["cause_comment_id"], name: "index_cause_replies_on_cause_comment_id", using: :btree
@@ -83,6 +86,7 @@ ActiveRecord::Schema.define(version: 20160717055417) do
     t.string   "detail"
     t.string   "whymatters"
     t.string   "image"
+    t.boolean  "anonymous",    default: false
     t.text     "followers",    default: "--- []\n"
     t.integer  "num_agree",    default: 0
     t.integer  "num_disagree", default: 0
@@ -155,6 +159,7 @@ ActiveRecord::Schema.define(version: 20160717055417) do
     t.string   "content",                         null: false
     t.string   "detail",                          null: false
     t.string   "image"
+    t.boolean  "anonymous",  default: false
     t.integer  "views",      default: 0
     t.text     "topics",     default: "--- []\n"
     t.text     "followers",  default: "--- []\n"
@@ -167,9 +172,10 @@ ActiveRecord::Schema.define(version: 20160717055417) do
   create_table "replies", force: :cascade do |t|
     t.integer  "answer_id"
     t.integer  "user_id"
-    t.string   "reply",      null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "reply",                      null: false
+    t.boolean  "anonymous",  default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "replies", ["answer_id"], name: "index_replies_on_answer_id", using: :btree

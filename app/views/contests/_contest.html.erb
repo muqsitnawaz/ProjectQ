@@ -57,14 +57,18 @@
     </div>
 
     <!-- Showing bottom buttons only to user -->
-    <% if user_signed_in? && !contest.winner_chosen %>
+    <% if !contest.winner_chosen %>
       <div class="row">
         <div class="col-xs-9">
           <% if is_admin %>
             <button class="btn btn-default"><%= link_to 'Participants', contest_path(:id => contest.id) %> | <%= contest.contest_answers.length %></button>
             <button id="endC<%= contest.id %>" class="btn btn-default">End Now</button>
           <% else %>
-            <button id="answerC<%= contest.id %>" class="btn btn-default">Participate | <%= contest.contest_answers.length %></button>
+            <% if user_signed_in? %>
+              <button id="answerC<%= contest.id %>" class="btn btn-default">Participate | <%= contest.contest_answers.length %></button>
+            <% else %>
+              <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Participate | <%= contest.contest_answers.length %></div>
+            <% end %>
           <% end %>
         </div>
         <div class="col-xs-3" style="margin-top: 0.8em;">

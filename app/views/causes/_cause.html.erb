@@ -42,7 +42,7 @@
         <br/>
       <% end %>
   
-      <div class="question-details">
+      <div class="question-details" style="margin-top: -1.5em;">
         <p id="cause_detail<%= cause.id %>"><%= cause.detail %></p>
       </div>
   
@@ -63,6 +63,11 @@
             <% end %>
             <button id="agree_<%= cause.id %>" class="btn btn-default">Agree | <%= cause.num_agree %></button>
             <button id="disagree_<%= cause.id %>" class="btn btn-default">Disagree | <%= cause.num_disagree %></button>
+          <% else %>
+            <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Comment | <%= cause_comments.length %></div>
+            <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Follow</div>
+            <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Agree | <%= cause.num_agree %></div>
+            <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Disagree | <%= cause.num_disagree %></div>
           <% end %>
         </div>
         <!-- Bottom right buttons -->

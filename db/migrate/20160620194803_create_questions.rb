@@ -5,6 +5,7 @@ class CreateQuestions < ActiveRecord::Migration
       t.string :content,      null: false
       t.string :detail,       null: false
       t.string :image
+      t.boolean :anonymous,   default: false
       t.integer :views,       default: 0
       t.text :topics,	        default: []
       t.text :followers,      default: []
@@ -17,6 +18,7 @@ class CreateQuestions < ActiveRecord::Migration
       t.belongs_to :user, index:true
       t.string :answer,              null: false
       t.string :image
+      t.boolean :anonymous,   default: false
       t.integer :upvotes,     default: 0
       t.integer :downvotes,   default: 0
 
@@ -27,6 +29,7 @@ class CreateQuestions < ActiveRecord::Migration
       t.belongs_to :answer, index:true
       t.belongs_to :user, index:true
       t.string :reply,               null: false
+      t.boolean :anonymous,   default: false
 
       t.timestamps null: false
     end

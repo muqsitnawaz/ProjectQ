@@ -11,7 +11,7 @@ class CausesController < ApplicationController
     
     if @cause.save
       flash[:notice] = 'cause created'
-      redirect_to causes_path(:id => @cause.id)
+      redirect_to cause_path(:id => @cause.id)
     else
       flash[:notice] = 'cause creation failed'
       redirect_to root_path
