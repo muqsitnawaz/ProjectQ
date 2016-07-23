@@ -145,6 +145,7 @@
                       </div>
                     </div>
                       <ul class="list-inline pull-right">
+                          <p><strong>Anonymous</strong> <%= f.check_box :anonymous %></p>
                           <li><%= f.submit "Post",class:'btn btn-squared btn-ask1'%></li>
                       </ul>
                   </div>
@@ -185,6 +186,7 @@
               <%= f.hidden_field :cause_id %>
             </div>
             <center>
+              <p><strong>Anonymous</strong> <%= f.check_box :anonymous %></p>
               <%= f.submit "Post", class:'btn btn-ask1'%>
             </center>
           <% end %>
@@ -220,6 +222,7 @@
           </div>
           <div class="row">
             <center>
+              <p><strong>Anonymous</strong> <%= f.check_box :anonymous %></p>
               <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
             </center>
           </div>

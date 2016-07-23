@@ -56,6 +56,6 @@ class CauseRepliesController < ApplicationController
   end
 
 def cause_reply_params
-    params.require(:cause_reply).permit(:cause_comment_id, :user_id, :reply)
+    params.require(:cause_reply).permit(:cause_comment_id, :user_id, :reply, :anonymous)
   end
 end

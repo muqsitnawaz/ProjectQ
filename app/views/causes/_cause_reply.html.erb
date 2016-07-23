@@ -1,18 +1,22 @@
 <div style="padding: 5px;">
   <div class="row">
     <div class="col-xs-2">
-      <% if cause_reply.user.profile_pic.length != 0 %>
+      <% if cause_reply.user.profile_pic.length != 0 && cause_reply.anonymous == false %>
         <%= image_tag cause_reply.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
       <% else %>
         <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
       <% end %>
     </div>
     <div class="col-xs-7" style="margin-left: -40px;">
-      <%= link_to cause_reply.user.name, public_profile_path(:id => cause_reply.user.id) %>
+      <% if cause_reply.anonymous == false %>
+        <%= link_to cause_reply.user.name, public_profile_path(:id => cause_reply.user.id) %>
+      <% else %>
+        <p>Anonymous</p>
+      <% end %>
     </div>
     <div class="col-xs-3" style="margin-left: 40px;">
       <% if cause_reply.user == current_user %>
-        <edit id="edit_cause_reply<%= cause_reply.id %>" class="icon-text">edit</a>
+        <a id="edit_cause_reply<%= cause_reply.id %>" class="icon-text">edit</a>
         <%= link_to 'delete', cause_replies_path(:id => cause_reply.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
       <% end %>
     </div>

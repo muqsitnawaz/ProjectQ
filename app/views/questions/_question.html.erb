@@ -35,7 +35,11 @@
       <!-- Question's owner name -->
       <div class="row">
         <div class="col-xs-12">
-          <p>Posted by <%= link_to question.user.name, public_profile_path(:id => question.user.id) %>,<i> <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</i></p>
+          <% if question.anonymous == false %>
+            <p>Posted by <%= link_to question.user.name, public_profile_path(:id => question.user.id) %>,<i> <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</i></p>
+          <% else %>
+            <p>Posted by Anonymous</p>
+          <% end %>
         </div>
       </div>
       <br/>

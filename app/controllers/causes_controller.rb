@@ -167,6 +167,6 @@ class CausesController < ApplicationController
 
 private
   def cause_params
-    params.require(:cause).permit(:user_id, :cause_type, :intro, :detail, :whymatters, :image)
+    params.require(:cause).permit(:user_id, :cause_type, :intro, :detail, :whymatters, :anonymous, :image)
   end
 end

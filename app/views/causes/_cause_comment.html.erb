@@ -1,15 +1,18 @@
 <div style="padding: 5px;">
   <div class="row">
     <div class="col-xs-2">
-      <% if cause_comment.user.profile_pic.length != 0 %>
+      <% if cause_comment.user.profile_pic.length != 0 && cause_comment.anonymous == false %>
         <%= image_tag cause_comment.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
       <% else %>
         <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
       <% end %>
     </div>
     <div class="col-xs-8" style="margin-left: -50px;">
-      <%= link_to cause_comment.user.name, public_profile_path(:id => cause_comment.user.id) %>
-      <p class="text-muted"><small>301 views</small></p>
+      <% if cause_comment.anonymous == false %>
+        <%= link_to cause_comment.user.name, public_profile_path(:id => cause_comment.user.id) %>
+      <% else %>
+        <p>Anonymous</p>
+      <% end %>
     </div>
     <div class="col-xs-2" style="margin-left: 50px;">
       <% if cause_comment.user == current_user %>

@@ -1,14 +1,18 @@
 <div style="padding: 5px;">
   <div class="row">
     <div class="col-xs-2">
-      <% if reply.user.profile_pic.length != 0 %>
+      <% if reply.user.profile_pic.length != 0 && reply.anonymous == false %>
         <%= image_tag reply.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
       <% else %>
         <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
       <% end %>
     </div>
     <div class="col-xs-7" style="margin-left: -40px;">
-      <%= link_to reply.user.name, public_profile_path(:id => reply.user.id) %>
+      <% if reply.anonymous == false %>
+        <%= link_to reply.user.name, public_profile_path(:id => reply.user.id) %>
+      <% else %>
+        <p>Anonymous</p>
+      <% end %>
     </div>
     <div class="col-xs-3" style="margin-left: 40px;">
       <% if reply.user == current_user %>

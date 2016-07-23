@@ -32,7 +32,11 @@
       <!-- Cause's owner name -->
       <div class="row">
         <div class="col-xs-12">
-          <p>Started by <%= link_to cause.user.name, public_profile_path(:id => cause.user.id) %>,<i> <%= (Time.now.to_date - cause.created_at.to_date).to_i %> day(s) ago</i></p>
+          <% if cause.anonymous == false %>
+            <p>Started by <%= link_to cause.user.name, public_profile_path(:id => cause.user.id) %>,<i> <%= (Time.now.to_date - cause.created_at.to_date).to_i %> day(s) ago</i></p>
+          <% else %>
+            <p>Started by Anonymous</p>
+          <% end %>
         </div>
       </div><br/>
   

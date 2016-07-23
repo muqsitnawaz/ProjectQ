@@ -86,6 +86,6 @@ class AnswersController < ApplicationController
 
 private
   def answer_params
-    params.require(:answer).permit(:question_id, :user_id, :answer, :image)
+    params.require(:answer).permit(:question_id, :user_id, :answer, :image, :anonymous)
   end
 end

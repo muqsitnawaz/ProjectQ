@@ -56,6 +56,6 @@ class CauseCommentsController < ApplicationController
   end
 
 def cause_comment_params
-    params.require(:cause_comment).permit(:cause_id, :user_id, :comment)
+    params.require(:cause_comment).permit(:cause_id, :user_id, :comment, :anonymous)
   end
 end
