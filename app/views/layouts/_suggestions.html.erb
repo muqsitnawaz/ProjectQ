@@ -1,18 +1,51 @@
 <div class="suggestions">
-  <div class="heading-7">Trending</div>
-  <hr class='profile-hr'>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="heading-7">New question</div>
+      <hr class='profile-hr'>
+      
+      <input id="inpage-question-content" class="form-control" placeholder="What do you want to ask?"></input><br>
+      <center><div class="btn btn-ask1" id="inpage-question-post">Post</div></center>
+    </div>
+    
+    <div class="col-xs-12">
+      <div class="heading-7">Trending</div>
+      <hr class='profile-hr'>
+      
+      <% @questions = Question.order('created_at DESC').limit(10).sort_by {|q| -q.answers.count} %>
+      
+      <% @questions.each do |question| %>
+        <p><a><%= link_to question.content, question_path(:id => question.id), class: 'icon-text' %></a></p>
+      <% end %>
+    </div>
+    
+    
+    <% if user_signed_in? %>
+      <div class="col-xs-12">
+        <div class="heading-7">Update Interests</div>
+        <hr class='profile-hr'>
+        
+        <p>
+          <% current_user.interests.sort.each do |interest| %>
+             <%= link_to interest.titleize, questions_path(:topic => interest) %> .
+          <% end %>
+        </p>
+        
+        <%= form_tag("/add_interest", method: "post") do %>
+          <p><%= select_tag :interest, options_for_select(get_all_interests.sort!), class: "form-control" %></p>
   
-  <% if user_signed_in? %>
-    <% @questions = Question.order('created_at DESC').limit(10).sort_by {|q| -q.answers.count} %>
-    
-    <% @questions.each do |question| %>
-      <p><a><%= link_to question.content, question_path(:id => question.id), class: 'icon-text' %></a></p>
+          <center>
+            <%= submit_tag 'Update', class: "btn btn-ask1" %>
+          </center>
+        <% end %>
+      </div>
     <% end %>
-  <% else %>
-    <% @questions = Question.order('created_at DESC').limit(10).sort_by {|q| -q.answers.count} %>
-    
-    <% @questions.each do |question| %>
-      <p><a><%= link_to question.content, question_path(:id => question.id), class: 'icon-text' %></a></p>
-    <% end %>
-  <% end %>
+  </div>
 </div>
+
+<script>
+  $("#inpage-question-post").click(function () {
+    $("#question_content").val($("#inpage-question-content").val())
+    $("#myModal").modal('show')
+  })
+</script>

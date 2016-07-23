@@ -50,7 +50,16 @@
 
       <!-- Notifications -->
       <%= link_to notifications_path, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-bullhorn" style="<%= current_user.read == false ? 'color: green;' : '' %>"></i>
+        <% if current_user.read == true %>
+          <i class="glyphicon glyphicon-bullhorn"></i>
+        <% else %>
+          <i class="glyphicon glyphicon-bullhorn"></i>
+            <div style="margin-bottom: 1em; margin-left: 0.5em;">
+              <div style="width: 20px; height: 20px; background-color: #F5F5F5; border-radius: 10px;">
+                <span style="color: red;">1</span>
+              </div>
+            </div>
+        <% end %>
       <% end %>
 
       <!-- Edit/Preview profile -->
