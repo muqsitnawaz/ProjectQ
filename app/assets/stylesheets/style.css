@@ -196,6 +196,12 @@ a:hover {
   color: black;
   cursor: pointer;
 }
+.icon-text-reply {
+  color: black;
+  cursor: pointer;
+  background-color: #2865a1;
+  border: 1px solid #245a90 ;
+}
 
 .icon-text:hover {
   color: black;
@@ -249,6 +255,7 @@ div[id^="menu-item"] > p > a:hover {
   color:#383838;
 }
 #answers{
+  
   font-size: 14px;
   font-family: sans-serif;
   color:#383838;

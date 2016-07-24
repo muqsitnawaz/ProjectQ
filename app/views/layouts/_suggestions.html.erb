@@ -4,8 +4,12 @@
       <div class="heading-7">New question</div>
       <hr class='profile-hr'>
       
-      <input id="inpage-question-content" class="form-control" placeholder="What do you want to ask?"></input><br>
-      <center><div class="btn btn-ask1" id="inpage-question-post">Post</div></center>
+      <input id="inpage-question-content" class="form-control" placeholder="Have a Question?"></input><br>
+      <% if user_signed_in? %>
+        <center><div class="btn btn-ask1" id="inpage-question-post">Post</div></center>
+      <% else %>
+        <center><div class="btn btn-ask1" data-toggle="modal" data-target="#signInModal">Post</div></center>
+      <% end %>
     </div>
     
     <div class="col-xs-12">
