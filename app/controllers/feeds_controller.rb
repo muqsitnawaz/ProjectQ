@@ -2,13 +2,14 @@ class FeedsController < ApplicationController
 	before_filter :authenticate_user!, except: [ :index, :public_profile ]
 
   def index
-    if user_signed_in?
+    if user_signed_in? && (!current_user.interests.empty? || !current_user.knows_about.empty?)
       @questions = Question.all.order('created_at DESC')
+      topics = (current_user.interests << current_user.knows_about).flatten!
       matches = []
 
       @questions.each do |question|
-        current_user.interests.each do |interest|
-          if question.topics.include? interest
+        topics.each do |topic|
+          if question.topics.include? topic
             matches << question
           end
         end

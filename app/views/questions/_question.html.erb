@@ -78,7 +78,7 @@
     <% end %>
 
     <% if !answers.empty? %>
-      <div class="col-xs-12" style="margin-top: 1em; margin-bottom: -2em;">
+      <div class="col-xs-12" style="margin-bottom: -1.5em; <%= full == true ? 'margin-top: -1em;' : '' %>">
         <!-- Rendering answers -->
         <% if full == true %>
           <hr>
