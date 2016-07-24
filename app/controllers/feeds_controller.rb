@@ -4,7 +4,8 @@ class FeedsController < ApplicationController
   def index
     if user_signed_in? && (!current_user.interests.empty? || !current_user.knows_about.empty?)
       @questions = Question.all.order('created_at DESC')
-      topics = (current_user.interests << current_user.knows_about).flatten!
+      topics = current_user.interests.clone
+      (topics << current_user.knows_about).flatten!
       matches = []
 
       @questions.each do |question|
@@ -65,20 +66,26 @@ class FeedsController < ApplicationController
   # Helper methods
   def add_know_about
   	@user = User.find_by_id(current_user.id)
-  	if !@user.knows_about.include? params[:know_about]
-  		@user.knows_about << params[:know_about]
-  	end
+  	@user.knows_about = params[:new_topics]
   	@user.save
-  	redirect_to profile_path
+  	
+  	if request.xhr?
+      render :json => {
+        :status => "success"
+      }
+    end
   end
   
   def add_interest
   	@user = User.find_by_id(current_user.id)
-  	if !@user.interests.include? params[:interest]
-  		@user.interests << params[:interest]
-  	end
+  	@user.interests = params[:new_interests]
   	@user.save
-  	redirect_to profile_path
+  	
+  	if request.xhr?
+      render :json => {
+        :status => "success"
+      }
+    end
   end
 
   def add_education

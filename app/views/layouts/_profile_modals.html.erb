@@ -1,0 +1,137 @@
+<!-- Modal for updating interests -->
+<div class="modal bnr-modal fade" id="addInterestsModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Add Interests</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <div class="row">
+              <div id="userInterests" class="col-xs-12">
+                <% get_all_interests.sort.each do |interest| %>
+                  <% if current_user.interests.include? interest %>
+                    <input type="checkbox" value="<%= interest %>" checked> <%= interest.titleize %>
+                  <% else %>
+                    <input type="checkbox" value="<%= interest %>"> <%= interest.titleize %>
+                  <% end %>
+                <% end %>
+                
+                <br><br>
+                <center><button id="submitInterests" class="btn btn-ask1">Update Interests</button></center>
+              </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for updating topics -->
+<div class="modal bnr-modal fade" id="addTopicsModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Add Topics</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+          <div class="row">
+              <div id="userTopics" class="col-xs-12">
+                <% get_all_interests.sort.each do |interest| %>
+                  <% if current_user.knows_about.include? interest %>
+                    <input type="checkbox" value="<%= interest %>" checked> <%= interest.titleize %>
+                  <% else %>
+                    <input type="checkbox" value="<%= interest %>"> <%= interest.titleize %>
+                  <% end %>
+                <% end %>
+                
+                <br><br>
+                <center><button id="submitTopics" class="btn btn-ask1">Update Topics</button></center>
+              </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#submitInterests").click(function() {
+    const new_interests = []
+    
+    $("#userInterests").children('input').each(function () {
+      if ($(this).is(":checked")) {
+        new_interests.push($(this).val())
+      }
+    })
+    
+    // Sending ajax request to update interests
+    $.ajax({
+      url: "/add_interest",
+      type: "POST",
+      data: { new_interests: new_interests },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        $('#addInterestsModal').modal('hide')
+  
+        if (data.status.localeCompare("success") == 0) {
+          alert("updated")
+          location.reload()
+        } else {
+          alert("failed to update")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    })
+  })
+  
+  $("#submitTopics").click(function() {
+    const new_topics = []
+    
+    $("#userTopics").children('input').each(function () {
+      if ($(this).is(":checked")) {
+        new_topics.push($(this).val())
+      }
+    })
+    
+    // Sending ajax request to update topics
+    $.ajax({
+      url: "/add_know_about",
+      type: "POST",
+      data: { new_topics: new_topics },
+      dataType: "json",
+      complete: function() {},
+      success: function(data, textStatus, xhr) {
+        $('#addTopicsModal').modal('hide')
+  
+        if (data.status.localeCompare("success") == 0) {
+          alert("updated")
+          location.reload()
+        } else {
+          alert("failed to update")
+        }
+      },
+      error: function() {
+        alert("error")
+      }
+    })
+  })
+</script>

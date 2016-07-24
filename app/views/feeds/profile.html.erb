@@ -32,15 +32,7 @@
         <% end %>
         </p>
 
-        <%= form_tag("/add_know_about", method: "post") do %>
-          <p>
-            <%= select_tag :know_about, options_for_select(get_all_interests.sort!), class: "form-control" %>
-          </p>
-
-          <center>
-            <%= submit_tag '+', class: "btn-round" %>
-          </center>
-        <% end %>
+        <center><button class="btn-round" data-toggle="modal" data-target="#addTopicsModal">+</button></center>
       </div>
       
       <div class="col-xs-12 main-border" style="margin-bottom: 2em; padding-bottom: 1em;">
@@ -54,15 +46,7 @@
         <% end %>
         </p>
 
-        <%= form_tag("/add_interest", method: "post") do %>
-          <p>
-            <%= select_tag :interest, options_for_select(get_all_interests.sort!), class: "form-control" %>
-          </p>
-
-          <center>
-            <%= submit_tag '+', class: "btn-round" %>
-          </center>
-        <% end %>
+        <center><button class="btn-round" data-toggle="modal" data-target="#addInterestsModal">+</button></center>
       </div>
       
       <div class="col-xs-12 main-border" style="padding-bottom: 1em;">
