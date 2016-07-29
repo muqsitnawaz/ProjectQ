@@ -39,7 +39,15 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+  
+  # Other gems
+  gem 'capistrano',         require: false
+  gem 'capistrano-rvm',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma',   require: false
 end
+
 group :development, :test do # <<<< :development, not devlopment
   gem 'sqlite3'
 end
@@ -62,8 +70,7 @@ gem 'search_cop'
 
 # advanced gems
 gem 'resque'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
+gem 'puma'
 
 gem 'omniauth'
 gem 'omniauth-facebook'
