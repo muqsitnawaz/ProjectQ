@@ -18,15 +18,15 @@
     <!-- Question's header -->
     <div class="row">
       <!-- Question's content -->
-      <div class="col-xs-10 question-content" >
+      <div class="col-xs-9 question-content" >
         <%= link_to question.content, question_path(:id => question.id) %>
       </div>
 
       <!-- Question edit and delete buttons -->
-      <div class="col-xs-2">
+      <div class="col-xs-3">
         <% if user_signed_in? && question.user == current_user %>
-          <a id="edit_question<%= question.id %>" class="icon-text">edit</a>
-          <%= link_to 'delete', question_path(:id => question.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
+          <a id="edit_question<%= question.id %>" class="btn btn-default">edit</a>
+          <%= link_to 'delete', question_path(:id => question.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
         <% end %>
       </div>
     </div>
@@ -42,16 +42,15 @@
           <% end %>
         </div>
       </div>
-      <br/>
-  
-      <div class="question-details" style="margin-top: -1.5em;">
-        <p id="question_detail<%= question.id %>"><%= question.detail %></p>
-      </div>
       
       <% if !question.image.nil? && question.image.length != 0 %>
         <img src="<%= question.image %>" class="img img-responsive">
         <br/>
-      <% end %>
+      <% end %><br>
+  
+      <div class="question-details" style="margin-top: -1.5em;">
+        <p id="question_detail<%= question.id %>"><%= question.detail %></p>
+      </div>
   
       <!-- Bottom buttons -->
       <div class="row">

@@ -185,7 +185,7 @@ $("[id^=upvote]").click(function() {
 
 // Downvoting an answer
 $("[id^=downvote]").click(function() {
-  answer_id = this.id.substring(6, this.id.length)
+  answer_id = this.id.substring(8, this.id.length)
 
   // Sending ajax request to downvote an answer
   $.ajax({

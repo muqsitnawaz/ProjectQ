@@ -9,15 +9,15 @@
       <input type="text" id="cause_intro<%= cause.id %>" value="<%= cause.intro %>" hidden>
 
       <!-- Cause's content -->
-      <div class="col-xs-10 question-content" >
+      <div class="col-xs-9 question-content" >
         <%= link_to cause.intro, cause_path(:id => cause.id) %>
       </div>
 
       <!-- Cause edit and delete buttons -->
-      <div class="col-xs-2">
+      <div class="col-xs-3">
         <% if cause.user == current_user %>
-          <a id="edit_causeC<%= cause.id %>" class="icon-text">edit</a>
-          <%= link_to 'delete', causes_path(:id => cause.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
+          <a id="edit_causeC<%= cause.id %>" class="btn btn-default">edit</a>
+          <%= link_to 'delete', causes_path(:id => cause.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
         <% end %>
       </div>
     </div>

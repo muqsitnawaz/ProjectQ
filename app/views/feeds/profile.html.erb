@@ -7,11 +7,11 @@
       <p><small class="text-muted">You need to complete your profile before posting</small></p>
       
       <%= form_tag("/mark_as_complete", method: "post") do %>
-        <%= submit_tag 'Complete Profile', class: "btn btn-default" %>
+        <%= submit_tag 'Complete Profile', class: "btn btn-primary" %>
       <% end %>
     <% else %>
       <br>
-      <p>Your profile is complete</p>
+      <p style="color: blue;">Your profile is complete</p>
     <% end %>
     </center>
   </div>

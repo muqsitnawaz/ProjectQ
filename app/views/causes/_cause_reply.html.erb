@@ -16,8 +16,8 @@
     </div>
     <div class="col-xs-3" style="margin-left: 40px;">
       <% if cause_reply.user == current_user %>
-        <a id="edit_cause_reply<%= cause_reply.id %>" class="icon-text">edit</a>
-        <%= link_to 'delete', cause_replies_path(:id => cause_reply.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
+        <a id="edit_cause_reply<%= cause_reply.id %>" class="btn btn-default">edit</a>
+        <%= link_to 'delete', cause_replies_path(:id => cause_reply.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
       <% end %>
     </div>
   </div>

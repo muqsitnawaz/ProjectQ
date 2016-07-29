@@ -196,17 +196,18 @@ a:hover {
   color: black;
   cursor: pointer;
 }
-.icon-text-reply {
-  color: black;
-  cursor: pointer;
-  background-color: #2865a1;
-  border: 1px solid #245a90 ;
-}
 
 .icon-text:hover {
   color: black;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.icon-text-reply {
+  color: black;
+  cursor: pointer;
+  background-color: #2865a1;
+  border: 1px solid #245a90 ;
 }
 
 div[id^="menu-item"] > p > a {
@@ -231,7 +232,6 @@ div[id^="menu-item"] > p > a:hover {
 
 .icons.glyphicon {
   font-size: 40px;
-  border: 1px solid #383838;
   color: #C6C6C6;
 }
 

@@ -7,17 +7,17 @@
         <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
       <% end %>
     </div>
-    <div class="col-xs-8" style="margin-left: -50px;">
+    <div class="col-xs-7" style="margin-left: -50px;">
       <% if cause_comment.anonymous == false %>
         <%= link_to cause_comment.user.name, public_profile_path(:id => cause_comment.user.id) %>
       <% else %>
         <p>Anonymous</p>
       <% end %>
     </div>
-    <div class="col-xs-2" style="margin-left: 50px;">
+    <div class="col-xs-3" style="margin-left: 50px;">
       <% if cause_comment.user == current_user %>
-        <a id="edit_cause_commentC<%= cause_comment.id %>" class="icon-text">edit</a>
-        <%= link_to 'delete', cause_comments_path(:id => cause_comment.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
+        <a id="edit_cause_commentC<%= cause_comment.id %>" class="btn btn-default">edit</a>
+        <%= link_to 'delete', cause_comments_path(:id => cause_comment.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
       <% end %>
     </div>
   </div>

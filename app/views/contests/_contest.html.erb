@@ -21,7 +21,7 @@
       </div>
 
       <!-- Contest's content -->
-      <div class="col-xs-10 question-content" >
+      <div class="col-xs-9 question-content" >
         <% if is_admin %>
           <%= link_to contest.content, contest_path(:id => contest.id) %>,
         <% else %>
@@ -32,10 +32,10 @@
       </div>
 
       <!-- Contest edit and delete buttons -->
-      <div class="col-xs-2">
+      <div class="col-xs-3">
         <% if is_admin %>
-          <a id="edit_contest<%= contest.id %>" class="icon-text">edit</a>
-          <%= link_to 'delete', contests_path(:id => contest.id), class: 'icon-text', method: :delete, data: { confirm: 'Are you sure?'} %>
+          <a id="edit_contest<%= contest.id %>" class="btn btn-default">edit</a>
+          <%= link_to 'delete', contests_path(:id => contest.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
         <% end %>
       </div>
     </div>
