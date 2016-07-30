@@ -31,7 +31,7 @@ test:
 production:
   adapter: postgresql
   database: projectq_production
-  host: 138.68.3.74
+  host: localhost
   username: muqsitnawaz
   password: B.D.c00p3r
   pool: 5
