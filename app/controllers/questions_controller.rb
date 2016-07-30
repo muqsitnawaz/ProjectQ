@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   
   def index
     if params[:topic].nil?
-      if user_signed_in?
+      if user_signed_in? && !params[:type].nil?
         if params[:type] == 'asked'
           @questions = Question.where(:user_id => current_user.id).order('created_at DESC')
         elsif params[:type] == 'answered'
