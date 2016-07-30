@@ -45,7 +45,6 @@ group :development do
   gem 'capistrano-rvm',     require: false
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
-  gem 'capistrano3-puma',   require: false
 end
 
 group :development, :test do # <<<< :development, not devlopment
@@ -70,7 +69,8 @@ gem 'search_cop'
 
 # advanced gems
 gem 'resque'
-gem 'puma'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
 
 gem 'omniauth'
 gem 'omniauth-facebook'
