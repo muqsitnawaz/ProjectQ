@@ -14,7 +14,7 @@ class CausesController < ApplicationController
       redirect_to cause_path(:id => @cause.id)
     else
       flash[:notice] = 'cause creation failed'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
   
@@ -28,7 +28,7 @@ class CausesController < ApplicationController
         @causes = Cause.where(:id => current_user.causes_disagreed)
       else
         flash[:notice] = 'invalid request'
-        redirect_to root_path
+        redirect_to questions_path
       end
     else
       @causes = Cause.all.order('created_at DESC')
@@ -41,7 +41,7 @@ class CausesController < ApplicationController
     
     if @cause.nil?
       flash[:notice] = 'cause not found'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 

@@ -42,7 +42,7 @@ class FeedsController < ApplicationController
     
     if @user.nil?
       flash[:notice] = 'user not found'
-      redirect_to root_path
+      redirect_to questions_path
     else
       if @option.nil?
         @items = Question.where(:id => Answer.where(:user_id => @user.id).map {|a| a.question_id})

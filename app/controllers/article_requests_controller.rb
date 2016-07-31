@@ -17,7 +17,7 @@ class ArticleRequestsController < ApplicationController
       flash[:notice] = 'article request created'
     else
       flash[:notice] = 'article request creation failed'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 
@@ -27,7 +27,7 @@ class ArticleRequestsController < ApplicationController
 
     if @article_request.nil?
       flash[:notice] = 'article request not found'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 
@@ -41,7 +41,7 @@ class ArticleRequestsController < ApplicationController
       flash[:notice] = 'not sufficient permission'
     end
 
-    redirect_to root_path
+    redirect_to questions_path
   end
 
 private

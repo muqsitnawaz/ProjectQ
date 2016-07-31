@@ -19,7 +19,7 @@ class AnswersController < ApplicationController
       redirect_to question_path(:id => params[:answer][:question_id])
     else
       flash[:notice] = 'answer creation failed'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 

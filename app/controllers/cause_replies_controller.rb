@@ -16,7 +16,7 @@ class CauseRepliesController < ApplicationController
       redirect_to cause_path(:id => @cause_reply.cause_comment.cause_id)
     else
       flash[:notice] = "cause reply creation failed"
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 

@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
     
     if @question.nil?
       flash[:notice] = 'question not found'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
   
@@ -51,7 +51,7 @@ class QuestionsController < ApplicationController
       redirect_to question_path(:id => @question.id)
     else
       flash[:notice] = 'question creation failed'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 

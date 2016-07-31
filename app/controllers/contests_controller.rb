@@ -11,7 +11,7 @@ class ContestsController < ApplicationController
         @contests = Contest.where(:status => 'close').order('created_at DESC')
       else
         flash[:notice] = 'invalid request'
-        redirect_to root_path
+        redirect_to questions_path
       end
     elsif user_signed_in?       # Check for users
       if params[:type] == 'open'
@@ -24,7 +24,7 @@ class ContestsController < ApplicationController
         @contests = Contest.where(:id => ContestAnswer.where(:user_id => current_user.id).map {|a| a.contest_id}).order('created_at DESC')
       else
         flash[:notice] = 'invalid request'
-        redirect_to root_path
+        redirect_to questions_path
       end
     else                        # Otherwise
       @contests = Contest.all.order('created_at DESC')
@@ -38,11 +38,11 @@ class ContestsController < ApplicationController
       
       if @contest.nil?
         flash[:notice] = 'contest not found'
-        redirect_to root_path
+        redirect_to questions_path
       end
     else
       flash[:notice] = 'not sufficient permission'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 
@@ -55,11 +55,11 @@ class ContestsController < ApplicationController
         redirect_to contest_path(:id => @contest.id)
       else
         flash[:notice] = "contest couldn't be created"
-        redirect_to root_path
+        redirect_to questions_path
       end
     else
       flash[:notice] = 'not sufficient permission'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 
@@ -99,7 +99,7 @@ class ContestsController < ApplicationController
       end
     end
 
-    redirect_to root_path
+    redirect_to questions_path
   end
 protected
   def contest_params

@@ -24,7 +24,7 @@ class ArticlesController < ApplicationController
       flash[:notice] = 'article created'
     else
       flash[:notice] = 'article creation failed'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 
@@ -37,7 +37,7 @@ class ArticlesController < ApplicationController
 
     if @article.nil?
       flash[:notice] = 'article not found'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 
@@ -46,7 +46,7 @@ class ArticlesController < ApplicationController
 
     if @article.nil?
       flash[:notice] = 'article not found'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 
@@ -90,7 +90,7 @@ class ArticlesController < ApplicationController
       redirect_to article_path(:id => @article.id)
     else
       flash[:notice] = 'article creation failed'
-      redirect_to root_path
+      redirect_to questions_path
     end
     
     # Generating notifcation

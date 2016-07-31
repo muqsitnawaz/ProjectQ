@@ -16,7 +16,7 @@ class ContestAnswersController < ApplicationController
       redirect_to contests_path(:type => :open)
     else
       flash[:notice] = "answer creation failed"
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 

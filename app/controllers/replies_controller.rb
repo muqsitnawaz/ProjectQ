@@ -13,7 +13,7 @@ class RepliesController < ApplicationController
       redirect_to question_path(:id => @reply.answer.question_id)
     else
       flash[:notice] = 'reply creation failed'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 
