@@ -3,6 +3,12 @@ a:hover {
   color:#AAAAAA;
 }
 
+#logo, #logo:hover, #logo:visited {
+  font-family: sans-serif;
+  color: #383838;
+  text-decoration: none;
+}
+
 
 /* Make the badge float in the top right corner of the button */
 
