@@ -173,6 +173,15 @@ class ApplicationController < ActionController::Base
     'Zoology'
     ]
   end
+  
+# Devise paths
+def after_sign_in_path_for(resource)
+  questions_path
+end
+
+def after_sign_out_path_for(resource)
+  questions_path
+end
 
 protected
   def configure_permitted_parameters

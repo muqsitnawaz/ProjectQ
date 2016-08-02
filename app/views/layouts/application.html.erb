@@ -12,11 +12,6 @@
   <% else %>
     <%= render 'layouts/navbar1'%>
   <% end %>
-
-  
-  <% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
-  <% end %>
 </head>
 <body style="background-color: #F5F5F5;">
   <%= yield %>
