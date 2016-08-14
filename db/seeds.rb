@@ -34,4 +34,4 @@ users_params = [
 users_params.each do |user_params|
   user = User.create(user_params)
   user.save
-end
+endAdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')

@@ -1,0 +1,80 @@
+<div class="container main-wall">
+    <div class="row">
+    <!-- Leftbar  -->
+        <div class="col-xs-2">
+          <%= render 'layouts/leftbar'%>
+        </div>
+        <!--middle content for creation-->
+        <div class = "col-xs-7">
+            <div class="row">
+                <div class = "col-xs-offset-1 col-xs-10">
+                  <h2>Start your Cause</h2>
+                  <div class="cause-simple-text">
+                      Gather public support to influence someone critical to your campaign's success.
+                  </div>
+                </div>
+            </div>
+            <% @cause = Cause.new %>
+            <%= form_for @cause,:url =>{:controller=>"causes",:action=>"create"} do |f| %>
+            
+            <div class="row" style="padding-top:1em;">
+                <div class="col-xs-offset-1 col-xs-10">
+                    <div class="field">
+                      <%= f.text_field :intro, autofocus: true,class: 'form-control',placeholder: 'What is your Cause Goal?'  %><br/>
+                    </div>        
+                </div>
+            </div>
+            <div class="row" style="padding-top:1em;">
+                <div class="col-xs-offset-1 col-xs-10">
+                    <div class="field">
+                      <%= f.text_area :whymatters, autofocus: true,class: 'form-control',placeholder: 'What your cause is important?'%><br/>
+                    </div>
+                </div>
+            </div>
+            <!--for the categories-->
+            <div class="row" style="padding-top:1em;">
+                <div class="col-xs-offset-1 col-xs-10">
+                    <div class="field">
+                      <%= f.select :cause_type, options_for_select(get_all_cause_types), autofocus: true, class: 'form-control' %><br/><br/>
+                    </div>        
+                </div>
+            </div>
+            
+            <div class="row" style="padding-top:1em;">
+                <div class="col-xs-offset-1 col-xs-10">
+                    <div class="field">
+                        <%= f.text_area :detail, autofocus: true,class: 'form-control',placeholder: 'Explain to the People'%><br/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row" style="padding-top:1em;">
+                <div class="col-xs-offset-1 col-xs-4">
+                    <div class="field">
+                       <%= f.check_box :dont_pledge %>Ask People to Sign Petition
+                    </div>
+                </div>
+                <div class="col-xs-offset-1 col-xs-4">
+                    <div class="field">
+                       <%= f.check_box :pledge %>Pledge to Something
+                    </div>
+                </div>
+            </div>
+            <!--for the last button-->
+            <div class="row" style="padding-top:1em;margin-top:1em;">
+                <div class="col-xs-offset-1 col-xs-4">
+                    <%= f.submit "Proceed to People Help",class:'btn btn-ask1'%>
+                </div>
+            </div>
+            <%end%>
+        </div>
+        <div class="col-xs-3">
+          <%= render 'layouts/suggestions'%>
+        </div>
+    </div>
+</div>
+<!--for javascript-->
+<script>
+    if ($('#cause_pledge').is('checked'))
+        $("#cause_petition").attr("disabled", true);
+</script>

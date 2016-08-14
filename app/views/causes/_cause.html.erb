@@ -16,7 +16,8 @@
       <!-- Cause edit and delete buttons -->
       <div class="col-xs-3">
         <% if cause.user == current_user %>
-          <a id="edit_causeC<%= cause.id %>" class="btn btn-default">edit</a>
+          <!--<a id="edit_causeC<% cause.id %>" class="btn btn-default">edit</a>-->
+          <%= link_to 'edit', {:controller => 'causes', :action => 'pledge_view',:cause_id => cause.id}, class:'btn btn-default' %>
           <%= link_to 'delete', causes_path(:id => cause.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
         <% end %>
       </div>
@@ -24,7 +25,12 @@
     
     <% if full == false %>
       <div class="question-details" style="margin-bottom:-1em;">
-        <p id="cause_detail<%= cause.id %>"><%= cause.detail %></p>
+          <!--to show petition and pledge text on index page-->
+          <%if !cause.petitionTo.nil?%>
+            <p style="font-family:helvetica; font-size:14px;color:#1e824c;border-right:1px dashed #b2b2b2"><strong>Sign the petition to <%=cause.petitionTo%></strong>
+            <strong>Sign the petition to <%=cause.petitionTo%></strong>
+            </p><span>
+          <%end%>
       </div>
     <% end %>
 

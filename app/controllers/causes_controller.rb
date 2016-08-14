@@ -11,7 +11,13 @@ class CausesController < ApplicationController
     
     if @cause.save
       flash[:notice] = 'cause created'
-      redirect_to cause_path(:id => @cause.id)
+      # redirect to the respective page on basis of pledge or dont
+     if params[:cause][:dont_pledge] == true || params[:cause][:dont_pledge] == "1"
+        redirect_to(controller: 'causes',action: 'petition', id: @cause.id)
+      else
+        redirect_to(controller: 'causes',action: 'pledge', id: @cause.id)
+      end
+      # redirect_to cause_path(:id => @cause.id)
     else
       flash[:notice] = 'cause creation failed'
       redirect_to questions_path
@@ -164,9 +170,106 @@ class CausesController < ApplicationController
       end
     end
   end
+  
+  def petition
+    flash[:success] = "Welcome to the Sample App!"
+    @cause = Cause.find_by_id(params[:id])
+  end
+  
+  def petition_update
+    @cause = Cause.find_by_id(params[:cause_id])
+    if !@cause.nil?
+      @cause.petitiondate = params[:cause][:petitiondate]
+      @cause.petitionTo = params[:cause][:petitionTo]
+      @cause.petition_signs = params[:cause][:petition_signs]
+      @cause.petition_help = params[:cause][:petition_help]
+      if @cause.save
+        redirect_to(controller: 'causes',action: 'pledge_view', cause_id: @cause.id)
+      else
+        redirect_to articles_path
+      end
+    end
+  end
+  
+  def pledge
+    @cause = Cause.find_by_id(params[:id])
+  end
 
+  def pledge_update
+    @cause = Cause.find_by_id(params[:cause_id])
+    if !@cause.nil?
+      @cause.pledgeDate = params[:cause][:pledgeDate]
+      @cause.pledgeTo = params[:cause][:pledgeTo]
+      @cause.pledgeStep = params[:cause][:pledgeStep]
+      @cause.totalpeople = params[:cause][:totalpeople]
+      @cause.howhelp = params[:cause][:howhelp]
+      if @cause.save
+        redirect_to(controller: 'causes',action: 'pledge_view', cause_id: @cause.id)
+      else
+        redirect_to articles_path
+      end
+    end
+  end
+  
+  def petition_view
+    @cause = Cause.find_by_id(params[:cause_id])
+  end
+  
+  def pledge_view
+    @cause = Cause.find_by_id(params[:cause_id])
+  end
+  
+  #to upadte the pledge
+  
+  def edit_pledge
+    @cause = Cause.find_by_id(params[:cause_id])
+  end
+  def update_pledge
+    @cause = Cause.find_by_id(params[:cause_id])
+    if !@cause.nil?
+      @cause.pledgeDate = params[:cause][:pledgeDate]
+      @cause.pledgeTo = params[:cause][:pledgeTo]
+      @cause.pledgeStep = params[:cause][:pledgeStep]
+      @cause.totalpeople = params[:cause][:totalpeople]
+      @cause.howhelp = params[:cause][:howhelp]
+      if @cause.save
+        redirect_to(controller: 'causes',action: 'pledge_view', cause_id: @cause.id)
+      end
+    end
+  end
+  # edit petition
+  def edit_petition
+    @cause = Cause.find_by_id(params[:cause_id])
+  end
+  
+  def update_petition
+    @cause = Cause.find_by_id(params[:cause_id])
+    if !@cause.nil?
+      @cause.petitiondate = params[:cause][:petitiondate]
+      @cause.petitionTo = params[:cause][:petitionTo]
+      @cause.petition_signs = params[:cause][:petition_signs]
+      @cause.petition_help = params[:cause][:petition_help]
+      if @cause.save
+        redirect_to(controller: 'causes',action: 'pledge_view', cause_id: @cause.id)
+      end
+    end
+  end  
+  
+  def image_upload
+    @cause = Cause.find_by_id(params[:cause_id])
+    if !@cause.nil?
+      @cause.image = params[:cause][:image]
+      if @cause.save
+        redirect_to cause_completed_path(cause_id: @cause.id)
+      end
+    end
+  end
+  
+  def completed_cause
+    @cause = Cause.find_by_id(params[:cause_id])
+  end
 private
   def cause_params
-    params.require(:cause).permit(:user_id, :cause_type, :intro, :detail, :whymatters, :anonymous, :image)
+    params.require(:cause).permit(:user_id, :cause_type, :intro, :detail, :whymatters, :anonymous, :image,:pledgeDate,:pledgeStep,:pledgeTo,:howhelp,:totalpeople,:pledge,:dont_pledge)
   end
 end

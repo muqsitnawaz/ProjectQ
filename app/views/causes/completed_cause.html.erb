@@ -1,0 +1,55 @@
+<div class = "container">
+    <div class="row"style="height:250px;width:100%">
+        <!--div fpr the image-->
+       <div class="col-xs-12">
+            <div class="form-group">
+                <%= image_tag @cause.image, :class => 'img cause-image' %>
+                <h4 style="color:#1e824c;font-weight:bold;margin-left:0em;padding-top:1em;font-size:21px;"><%="You" + " want to " + "#{@cause.intro}" %></h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!--for pledge-->
+        <div class = "col-xs-6" style="height:240px;border-right:1px solid #c6c6c6">
+            <%if !@cause.pledgeTo.nil?%>
+                <div class="panel panel-default apanel1">
+            	    <div class="panel-heading">
+                        <center></center><h3 class="panel-title"><%= "Pledge Details"%></h3></center>
+                        <span class="pull-right"><%= link_to "Edit", causes_edit_petition_path,:cause_id => @cause.id,class: 'btn btn-default'%></span>
+                    </div>
+                    <!--details of the cause pledge-->
+                    <div class="panel-body">
+                        <div class="text">Pledge To:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.pledgeTo%></strong></span></div><br/>
+                        <div class="text">Total Pledges:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.total_pledges%></strong></span></div><br/>
+                        <div class="text">Pledges Required:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.totalpeople%></strong></span></div><br/>
+                        <div class="text">Cause Ends:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.pledgeDate.strftime("%b %d, %Y")%></strong></span></div>
+                    </div>    
+                </div>
+            <%else%>
+                <%=link_to "Add Pledge",{:controller => 'causes', :action => 'pledge',:id => @cause.id}, class: 'btn btn-cause'%>
+        <%end%>
+        </div>
+        
+        <!--for petition-->
+        <div class = "col-xs-6">
+            <%if !@cause.petitionTo.nil?%>
+                <div class="panel panel-default apanel1">
+            	    <div class="panel-heading">
+                        <center></center><h3 class="panel-title"><%= "Petition Details"%></h3></center>
+                        <span class="pull-right"><%= link_to "Edit", causes_edit_pledge_path,:cause_id => @cause.id,class: 'btn btn-default'%></span>
+                    </div>
+                    <!--details of the cause pledge-->
+                    <div class="panel-body">
+                        <div class="text">Petition To:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.petitionTo%></strong></span></div><br/>
+                        <div class="text">Total Signs:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.total_signs%></strong></span></div><br/>
+                        <div class="text">Signs Required:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.petition_signs%></strong></span></div><br/>
+                        <div class="text">Cause Ends:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.petitiondate.strftime("%b %d, %Y")%></strong></span></div>
+                    </div>    
+                </div>
+            <%else%>
+                <%=link_to "Add Petition",{:controller => 'causes', :action => 'petition',:id => @cause.id}, class: 'btn btn-cause'%>
+        </div>
+        <%end%>        
+    </div>
+    
+</div>

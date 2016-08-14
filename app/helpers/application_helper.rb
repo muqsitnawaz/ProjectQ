@@ -37,6 +37,7 @@ module ApplicationHelper
   # Cause helper methods
   def get_all_cause_types
     [
+      'Select a Category',
       'Raise funds',
       'Spread awareness about something',
       'Protest against something',

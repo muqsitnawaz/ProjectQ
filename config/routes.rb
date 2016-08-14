@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   mount Ckeditor::Engine => '/ckeditor'
   
   devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
@@ -47,7 +49,24 @@ Rails.application.routes.draw do
   post '/agree' => 'causes#agree'
   post '/disagree' => 'causes#disagree'
   post '/follow_cause' => 'causes#follow'
-
+  
+  get '/causes/petition/:id' => 'causes#petition'
+  get '/causes/pledge/:id' => 'causes#pledge'
+  patch '/pledge', to: 'causes#pledge_update', as: 'causes/pledge/update'
+  patch '/petition', to: 'causes#petition_update', as: 'causes/petition/update'
+  patch 'causes/update_pledge/:cause_id', to: 'causes#update_pledge', as: 'causes_update_pledge'
+  patch 'causes/update_petition/:cause_id', to: 'causes#update_petition', as: 'causes_update_petition'
+  patch 'causes/update_image/:cause_id', to: 'causes#image_upload', as: 'causes_image_upload'
+  # to edit the pledge
+  get 'causes/edit_pledge/:cause_id' => 'causes#edit_pledge', as: "causes_edit_pledge"
+  # edit petition
+  get 'causes/edit_petition/:cause_id' => 'causes#edit_petition', as: "causes_edit_petition"
+  #for causes image
+  get 'causes/final_view/:cause_id' => 'causes#completed_cause', as: "cause_completed"
+  # to view the cause pledged
+  get 'view_cause_pledged/:cause_id' => 'causes#pledge_view'
+  get 'view_cause_petition/:cause_id' => 'causes#petition_view'
+  
   # Causes comments paths
   resource :cause_comments
   post '/update_cause_comment' => 'cause_comments#update'

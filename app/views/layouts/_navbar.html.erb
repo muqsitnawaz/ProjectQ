@@ -18,7 +18,7 @@
     </div>
 
     <!-- Glyphicons - right side -->
-    <div class="col-md-3 col-md-offset-1 button-group-nav">
+    <div class="col-md-4 col-md-offset-1 button-group-nav">
       <br/>
       <!-- Newsfeed -->
       <%= link_to questions_path, class: "btn btn-nav" do %>
@@ -41,7 +41,7 @@
               <% if is_admin? %>
                 <li><a href="" data-toggle="modal" data-target="#contestModal">Start a Contest</a></li>
               <% end %>
-              <li><a href="" data-toggle="modal" data-target="#causeModal">Start a Cause</a></li>
+              <li><a href="<%= new_cause_path %>">Start a Cause</a></li>
               <li><a href="<%= new_article_path %>">Write an Article</a></li>
             <% end %>
         </ul>
@@ -69,13 +69,14 @@
         <ul class="dropdown-menu">
           <li><a href="<%= profile_path %>">Edit</a></li>
           <li><a href="<%= public_profile_path(:id => current_user.id) %>">Preview</a></li>
+          <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: ""%></li>
         </ul>
       </div>
 
       <!-- Logout -->
-      <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-off"></i>
-      <% end %>
+      
+        <!--<i class="glyphicon glyphicon-off"></i>-->
+    
     </div>
   </div>
 </div>

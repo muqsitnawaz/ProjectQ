@@ -5,8 +5,8 @@
     <p class="text-muted">
       In
       <i>
-        <% question.topics.each do |topic| %>
-          <%= link_to topic, questions_path(:topic => topic) %>
+        <% question.topics[0..2].sort.each do |topic| %>
+          <%= link_to topic.titleize, questions_path(:topic => topic) %>
         <% end %>
       </i>
       - <%= question.updated_at.strftime('%-d %B, %Y') %>

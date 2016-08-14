@@ -13,26 +13,26 @@
 
 development:
   adapter: postgresql
-  database: projectq_development
+  database: lixerr
   host: <%= ENV['IP'] %>
-  username: muqsitnawaz
-  password: B.D.c00p3r
+  username: hamza
+  password: hamzaaltaf
   pool: 5
   timeout: 5000
 test:
   adapter: postgresql
-  database: projectq_test
+  database: lixerr
   host: <%= ENV['IP'] %>
-  username: muqsitnawaz
-  password: B.D.c00p3r
+  username: hamza
+  password: hamzaaltaf
   pool: 5
   timeout: 5000
 
 production:
   adapter: postgresql
-  database: projectq_production
-  host: localhost
-  username: muqsitnawaz
-  password: B.D.c00p3r
+  database: lixerr
+  host: <%= ENV['IP'] %>
+  username: hamza
+  password: hamzaaltaf
   pool: 5
   timeout: 5000

@@ -17,7 +17,7 @@ class Cause < ActiveRecord::Base
 
   # Validations
   validates_associated :user
-  validates :intro, presence: true, uniqueness: true, length: { minimum: 5 }
-  validates :detail, presence: true, uniqueness: true, length: { minimum: 5 }
-  validates :whymatters, presence: true, uniqueness: true, length: { minimum: 5 }
+  validates :intro, presence: true
+  validates :detail, presence: true
+  validates :whymatters, presence: true
 end
