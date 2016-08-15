@@ -1,12 +1,12 @@
 // Answering a question
-$("[id^=answerQ]").click(function() {
-  question_id = this.id.substring(7, this.id.length)
-  console.log('id: '+question_id)
+// $("[id^=answerQ]").click(function() {
+//   question_id = this.id.substring(7, this.id.length)
+//   console.log('id: '+question_id)
 
-  $("#question-header").html($("#question_content"+question_id).val())
-  $("#answer_question_id").val(question_id)
-  $('#answerModal').modal('show');
-})
+//   $("#question-header").html($("#question_content"+question_id).val())
+//   $("#answer_question_id").val(question_id)
+//   $('#answerModal').modal('show');
+// })
 
 // Replying an answer
 $("[id^=replyA]").click(function() {

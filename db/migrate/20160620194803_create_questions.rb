@@ -16,8 +16,7 @@ class CreateQuestions < ActiveRecord::Migration
     create_table :answers do |t|
       t.belongs_to :question, index:true
       t.belongs_to :user, index:true
-      t.string :answer,              null: false
-      t.string :image
+      t.string :content,              null: false
       t.boolean :anonymous,   default: false
       t.integer :upvotes,     default: 0
       t.integer :downvotes,   default: 0

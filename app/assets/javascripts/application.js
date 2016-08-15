@@ -16,4 +16,5 @@
 //= require bootstrap-sprockets
 //= require social-share-button
 //= require ckeditor/init
+//= require bootstrap-wysihtml5
 //= require_tree .

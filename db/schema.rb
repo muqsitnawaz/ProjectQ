@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160813221534) do
+ActiveRecord::Schema.define(version: 20160815003322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,8 +52,7 @@ ActiveRecord::Schema.define(version: 20160813221534) do
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id"
     t.integer  "user_id"
-    t.string   "answer",                      null: false
-    t.string   "image"
+    t.string   "content",                     null: false
     t.boolean  "anonymous",   default: false
     t.integer  "upvotes",     default: 0
     t.integer  "downvotes",   default: 0
@@ -87,6 +86,20 @@ ActiveRecord::Schema.define(version: 20160813221534) do
   end
 
   add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
+
+  create_table "bootsy_image_galleries", force: :cascade do |t|
+    t.integer  "bootsy_resource_id"
+    t.string   "bootsy_resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "bootsy_images", force: :cascade do |t|
+    t.string   "image_file"
+    t.integer  "image_gallery_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cause_comments", force: :cascade do |t|
     t.integer  "user_id"

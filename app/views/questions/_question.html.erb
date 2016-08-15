@@ -58,7 +58,7 @@
           <% if user_signed_in? %>
             <!-- Bottom left buttons -->
             <button id="answerQ<%= question.id %>" class="btn btn-default">Answer | <%= question.answers.length %></button>
-       
+             
             <% if !current_user.following.include? question.id %>
               <button id="follow<%= question.id %>" class="btn btn-default">Follow</button>
             <% else %>
@@ -75,6 +75,22 @@
         </div>
       </div>
     <% end %>
+    
+    <div id="answerContent<%= question.id %>" class="row hidden">
+      <div class="col-xs-12">
+        <% @answer = Answer.new %>
+        <%= form_for @answer, :url => {:controller =>"answers", :action => "create"}  do |f| %>
+          <%= f.cktext_area :content, class: 'form-control' %><br>
+          <%= f.hidden_field :question_id, value: question.id %>
+      </div>
+      <div class="col-xs-4 col-xs-offset-8">
+        <div>
+          <strong>Anonymous</strong> <%= f.check_box :anonymous %>
+          <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
+        </div>
+        <% end %>
+      </div>
+    </div>
 
     <% if !answers.empty? %>
       <div class="col-xs-12" style="margin-bottom: -1.5em; <%= full == true ? 'margin-top: -1em;' : '' %>">
@@ -98,3 +114,14 @@
 </div>
 
 <hr class="question-hr">
+
+<% if full == true %>
+  <script>
+    $("[id^=answerQ]").click(function() {
+      question_id = this.id.substring(7, this.id.length)
+      console.log('id: '+question_id)
+      
+      $("#answerContent"+question_id).toggleClass("hidden")
+  })
+  </script>
+<% end %>

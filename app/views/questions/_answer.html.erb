@@ -26,35 +26,25 @@
     <!-- Showing answer and username -->
     <div class="col-xs-12" style="font-size: 16px;">
       <!-- to make read more link -->
-      <% if answer.answer.length > 250 %>
+      <% if answer.content.length > 250 %>
         <div>
-          <p id="answer<%= answer.id %>" class="truncated-answer" style="display:inline;"><%= truncate(answer.answer, length: 250) %></p>
+          <p id="answer<%= answer.id %>" class="truncated-answer" style="display:inline;"><%= truncate(answer.content.html_safe, length: 250) %></p>
         </div>
         <%= link_to 'Read more', '', id: "read-more-#{answer.id}" %>
         
         <script>
           $('#read-more-<%= answer.id %>').on('click', function(e) {
             e.preventDefault()
-            $(".truncated-answer").html('<%= escape_javascript answer.answer %>')
+            $(".truncated-answer").html('<%= escape_javascript answer.content %>')
           })
         </script>
       <% else %>
-        <p id="answer<%= answer.id %>"><%= answer.answer %></p>
+        <p id="answer<%= answer.id %>"><%= answer.content.html_safe %></p>
       <% end %>
       
       <p class="text-muted"><small>Updated at <%= answer.updated_at.strftime('%-d %B, %Y') %></small></p>
     </div>
   </div>
-
-  <% if answer.image.length != 0 %>
-    <!-- Displaying answer's image -->
-    <div class="row">
-      <div class="col-xs-12">
-        <img src="<%= answer.image %>" class="img img-responsive">
-        <br>
-      </div>
-    </div>
-  <% end %>
 
   <!-- Upvote, downvote and reply buttons -->
   <% if user_signed_in? %>
