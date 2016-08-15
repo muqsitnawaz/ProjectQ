@@ -25,7 +25,9 @@
   <div class="row" style="margin-top: 0.5em;">
     <!-- Showing answer and username -->
     <div class="col-xs-12">
-      <p id="reply<%= reply.id %>"><%= reply.reply %></p>
+      <div id="reply<%= reply.id %>">
+        <%= reply.content.html_safe %>
+      </div>
     </div>
   </div>
 </div>

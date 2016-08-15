@@ -1,22 +1,3 @@
-// Answering a question
-// $("[id^=answerQ]").click(function() {
-//   question_id = this.id.substring(7, this.id.length)
-//   console.log('id: '+question_id)
-
-//   $("#question-header").html($("#question_content"+question_id).val())
-//   $("#answer_question_id").val(question_id)
-//   $('#answerModal').modal('show');
-// })
-
-// Replying an answer
-$("[id^=replyA]").click(function() {
-  answer_id = this.id.substring(6, this.id.length)
-  console.log('id: '+answer_id)
-
-  $("#reply_answer_id").val(answer_id)
-  $('#replyModal').modal('show');
-});
-
 // Showing relpies
 $("[id^=showReplies]").click(function() {
   answer_id = this.id.substring(11, this.id.length)
@@ -68,13 +49,21 @@ $("#new_question_submit").click(function() {
 // Editing an answer
 $("[id^=edit_answerQ]").click(function() {
   answer_id = this.id.substring(12, this.id.length)
-  $("#new_answer_answer").val($('#answer'+answer_id).text())
   $('#editAnswerModal').modal('show');
+
+  // Initiliasing ckeditro for the first time
+  if ($("#new_answer_answer").val() == "null") {
+    CKEDITOR.replace('new_answer_answer')
+    $("#new_answer_answer").val("defined")
+  }
+  
+  // Replacing contnet in ckeditor
+	CKEDITOR.instances.new_answer_answer.setData($('#answer'+answer_id).html())
 })
 
 // Updating an answer
 $("#new_answer_submit").click(function() {
-  const answer = $("#new_answer_answer").val()
+  const answer = CKEDITOR.instances.new_answer_answer.getData()
   console.log('new answer ' + answer)
 
   // Sending ajax request to follow the question
@@ -100,11 +89,20 @@ $("#new_answer_submit").click(function() {
   })
 })
 
-// Editing a reply
 $("[id^=edit_reply]").click(function() {
   reply_id = this.id.substring(10, this.id.length)
-  $("#new_reply_reply").val($('#reply'+reply_id).text())
-  $('#editReplyModal').modal('show');
+  $('#editReplyModal').modal('show')
+
+  // Initiliasing ckeditro for the first time
+  if ($("#new_reply_reply").val() == "null") {
+    CKEDITOR.replace('new_reply_reply')
+    $("#new_reply_reply").val("defined")
+  }
+  
+  // Replacing contnet in ckeditor
+  console.log(reply_id)
+  console.log($('#reply'+reply_id))
+	CKEDITOR.instances.new_reply_reply.setData($('#reply'+reply_id).html())
 })
 
 // Updating a reply

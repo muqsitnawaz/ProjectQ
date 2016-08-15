@@ -27,7 +27,7 @@ class CreateQuestions < ActiveRecord::Migration
     create_table :replies do |t|
       t.belongs_to :answer, index:true
       t.belongs_to :user, index:true
-      t.string :reply,               null: false
+      t.string :content,               null: false
       t.boolean :anonymous,   default: false
 
       t.timestamps null: false

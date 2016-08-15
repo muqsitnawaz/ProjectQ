@@ -27,7 +27,7 @@ class AnswersController < ApplicationController
     @answer = Answer.find_by_id(params[:answer_id])
 
     if !@answer.nil?
-      @answer.answer = params[:answer]
+      @answer.content = params[:answer]
       @answer.save
 
       if request.xhr?

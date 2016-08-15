@@ -21,7 +21,7 @@ class RepliesController < ApplicationController
     @reply = Reply.find_by_id(params[:reply_id])
 
     if !@reply.nil?
-      @reply.reply = params[:reply]
+      @reply.content = params[:reply]
       @reply.save
 
       if request.xhr?
@@ -54,6 +54,6 @@ class RepliesController < ApplicationController
 
 private
   def reply_params
-    params.require(:reply).permit(:answer_id, :user_id, :reply, :anonymous)
+    params.require(:reply).permit(:answer_id, :user_id, :content, :anonymous)
   end
 end

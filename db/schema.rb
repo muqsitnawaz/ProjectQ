@@ -235,7 +235,7 @@ ActiveRecord::Schema.define(version: 20160815003322) do
   create_table "replies", force: :cascade do |t|
     t.integer  "answer_id"
     t.integer  "user_id"
-    t.string   "reply",                      null: false
+    t.string   "content",                    null: false
     t.boolean  "anonymous",  default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
