@@ -24,7 +24,7 @@ class CauseRepliesController < ApplicationController
     @cause_reply = CauseReply.find_by_id(params[:cause_reply_id])
 
     if !@cause_reply.nil?
-      @cause_reply.reply = params[:cause_reply_reply]
+      @cause_reply.content = params[:cause_reply_reply]
       @cause_reply.save
 
       if request.xhr?
@@ -56,6 +56,6 @@ class CauseRepliesController < ApplicationController
   end
 
 def cause_reply_params
-    params.require(:cause_reply).permit(:cause_comment_id, :user_id, :reply, :anonymous)
+    params.require(:cause_reply).permit(:cause_comment_id, :user_id, :content, :anonymous)
   end
 end

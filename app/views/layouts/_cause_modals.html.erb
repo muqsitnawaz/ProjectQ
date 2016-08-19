@@ -159,43 +159,6 @@
   </div>
 </div>
 
-<!-- Modal for posting cause reply -->
-<div class="modal bnr-modal fade" id="causeReplyModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="row">
-          <div class="col-xs-10">
-            <h4>Reply</h4>
-          </div>
-          <div class="col-xs-2">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          </div>
-        </div>
-      </div>
-      <section>
-        <div class="modal-body modal-spa">
-          <!-- create a new question using this modal -->
-          <% @cause_reply = CauseReply.new %>
-          <%= form_for @cause_reply, :url => { :controller =>"cause_replies", :action =>"create"}  do |f| %>
-          <div class="form-group">
-            <p><strong>Your reply</strong></p>
-            <%= f.text_area :content, rows: 3, class: 'form-control' %><br>
-            <%= f.hidden_field :cause_comment_id %>
-          </div>
-          <div class="row">
-            <center>
-              <p><strong>Anonymous</strong> <%= f.check_box :anonymous %></p>
-              <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
-            </center>
-          </div>
-          <%end%>
-        </div>
-      </section>
-    </div>
-  </div>
-</div>
-
 <!-- Editing cause modal -->
 <div class="modal bnr-modal fade" id="editCauseModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -233,8 +196,6 @@
   </div>
 </div>
 
-
-
 <!-- Editing cause comment modal -->
 <div class="modal bnr-modal fade" id="editCauseCommentModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -253,7 +214,7 @@
         <div class="modal-body modal-spa">
           <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
             <p><strong>Your comment</strong></p>
-            <input id="new_cause_comment_comment" type="text" class="form-control"><br>
+            <textarea id="new_cause_comment_comment">null</textarea><br>
 
             <center>
               <input id="new_cause_comment_submit" type="submit" value="Update" class="btn btn-ask1" />
@@ -265,7 +226,7 @@
   </div>
 </div>
 
-<!-- Modal for updating a cause reply -->
+<!-- Editing cause reply modal -->
 <div class="modal bnr-modal fade" id="editCauseReplyModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -283,7 +244,7 @@
         <div class="modal-body modal-spa">
           <form enctype="multipart/form-data" onsubmit="event.preventDefault();">
             <p><strong>Your reply</strong></p>
-            <input id="new_cause_reply_reply" class="form-control" /><br>
+            <textarea id="new_cause_reply_reply">null</textarea><br>
 
             <center>
               <input id="new_cause_reply_submit" type="submit" value="Update" class="btn btn-squared btn-ask1" />

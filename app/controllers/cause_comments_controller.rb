@@ -16,7 +16,7 @@ class CauseCommentsController < ApplicationController
       redirect_to cause_path(:id => @cause_comment.cause_id)
     else
       flash[:notice] = "cause comment creation failed"
-      redirect_to questions_path
+      redirect_to causes_path
     end
   end
 
@@ -24,7 +24,7 @@ class CauseCommentsController < ApplicationController
     @cause_comment = CauseComment.find_by_id(params[:cause_comment_id])
 
     if !@cause_comment.nil?
-      @cause_comment.comment = params[:cause_comment_comment]
+      @cause_comment.content = params[:cause_comment_comment]
       @cause_comment.save
 
       if request.xhr?
@@ -55,7 +55,8 @@ class CauseCommentsController < ApplicationController
     redirect_to cause_path(:id => cause_id)
   end
 
-def cause_comment_params
-    params.require(:cause_comment).permit(:cause_id, :user_id, :comment, :anonymous)
+private
+  def cause_comment_params
+    params.require(:cause_comment).permit(:cause_id, :user_id, :content, :anonymous)
   end
 end

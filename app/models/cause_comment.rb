@@ -7,5 +7,5 @@ class CauseComment < ActiveRecord::Base
   # Validations
   validates_associated :user
   validates_associated :cause
-  validates :comment, presence: true, uniqueness: true, length: { minimum: 5 }
+  validates :content, presence: true, uniqueness: true, length: { minimum: 5 }
 end

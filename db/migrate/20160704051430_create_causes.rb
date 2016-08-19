@@ -19,7 +19,7 @@ class CreateCauses < ActiveRecord::Migration
       
       t.string :petitionTo
       
-      t.boolean :dontPledge
+      t.boolean :dont_pledge
       t.integer :total_pledges, default: 0
       t.integer :total_signs, default: 0
       

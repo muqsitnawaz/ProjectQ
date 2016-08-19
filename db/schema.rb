@@ -126,7 +126,7 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.string   "pledgeStep"
     t.datetime "pledgeDate"
     t.string   "petitionTo"
-    t.boolean  "dontPledge"
+    t.boolean  "dont_pledge"
     t.integer  "total_pledges",  default: 0
     t.integer  "total_signs",    default: 0
     t.string   "petition_help"

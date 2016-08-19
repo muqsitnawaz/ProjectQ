@@ -87,6 +87,7 @@
       </div>
     <% end %>
     
+    <!-- In page comment poster -->
     <div id="causeCommentContent<%= cause.id %>" class="row hidden">
       <div class="col-xs-12">
         <% @cause_comment = CauseComment.new %>
@@ -125,7 +126,7 @@
 <% if full == true %>
   <script>
     $("[id^=commentC]").click(function() {
-      cause_id = this.id.substring(7, this.id.length)
+      cause_id = this.id.substring(8, this.id.length)
       console.log('id: '+cause_id)
       
       $("#causeCommentContent"+cause_id).toggleClass("hidden")
