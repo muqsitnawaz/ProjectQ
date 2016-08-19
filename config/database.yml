@@ -31,8 +31,8 @@ test:
 production:
   adapter: postgresql
   database: lixerr
-  host: <%= ENV['IP'] %>
-  username: hamza
-  password: hamzaaltaf
+  host: localhost
+  username: muqsitnawaz
+  password: B.D.c00p3r
   pool: 5
   timeout: 5000
