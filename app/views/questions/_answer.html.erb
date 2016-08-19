@@ -17,7 +17,7 @@
     <div class="col-xs-3" style="margin-left: 50px;">
       <% if answer.user == current_user %>
         <a id="edit_answerQ<%= answer.id %>" class="btn btn-default">edit</a>
-        <%= link_to 'delete', answer_path(:id => answer.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
+        <%= link_to 'delete', answers_path(:id => answer.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
       <% end %>
     </div>
   </div>
@@ -36,8 +36,21 @@
   <% if user_signed_in? %>
     <div class="row">
       <div class="col-xs-12">
-        <button id="upvote<%= answer.id %>" class="btn btn-default">Upvote | <%= answer.upvotes %></button>
-        <button id="downvote<%= answer.id %>" class="btn btn-default">Downvote</button>
+        <!-- Upvote button -->
+        <% if current_user.answers_upvote.include? answer.id %>
+          <button class="btn btn-default"><span style="color: blue;">Upvoted</span> | <%= answer.upvotes %></button>
+        <% else %>  
+          <button id="upvote<%= answer.id %>" class="btn btn-default">Upvote | <%= answer.upvotes %></button>
+        <% end %>
+        
+        <!-- Downvote button -->
+        <% if current_user.answers_downvote.include? answer.id %>
+          <button class="btn btn-default"><span style="color: blue;">Downvote</span></button>
+        <% else %>  
+          <button id="downvote<%= answer.id %>" class="btn btn-default">Downvote</button>
+        <% end %>
+        
+        <!-- Reply buttons -->
         <button id="replyA<%= answer.id %>" class="btn btn-default">Reply</button>
         <button id="showReplies<%= answer.id %>" class="btn btn-default">Replies | <%= answer.replies.count %></button>
       </div>

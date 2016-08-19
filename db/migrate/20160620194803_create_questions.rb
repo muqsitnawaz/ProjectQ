@@ -4,7 +4,6 @@ class CreateQuestions < ActiveRecord::Migration
       t.belongs_to :user, index:true
       t.string :content,      null: false
       t.string :detail,       null: false
-      t.string :image
       t.boolean :anonymous,   default: false
       t.integer :views,       default: 0
       t.text :topics,	        default: []

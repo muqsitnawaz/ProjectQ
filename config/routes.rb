@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   get '/search' => 'questions#search'
 
   # Answers paths
-  resources :answers
+  resource :answers
   post '/update_answer' => 'answers#update'
   post '/upvote' => 'answers#upvote'
   post '/downvote' => 'answers#downvote'

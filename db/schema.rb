@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815003322) do
+ActiveRecord::Schema.define(version: 20160811081618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,24 +87,10 @@ ActiveRecord::Schema.define(version: 20160815003322) do
 
   add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
-  create_table "bootsy_image_galleries", force: :cascade do |t|
-    t.integer  "bootsy_resource_id"
-    t.string   "bootsy_resource_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "bootsy_images", force: :cascade do |t|
-    t.string   "image_file"
-    t.integer  "image_gallery_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "cause_comments", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "cause_id"
-    t.string   "comment"
+    t.string   "content",                    null: false
     t.boolean  "anonymous",  default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
@@ -116,7 +102,7 @@ ActiveRecord::Schema.define(version: 20160815003322) do
   create_table "cause_replies", force: :cascade do |t|
     t.integer  "cause_comment_id"
     t.integer  "user_id"
-    t.string   "reply",                            null: false
+    t.string   "content",                          null: false
     t.boolean  "anonymous",        default: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
@@ -132,29 +118,26 @@ ActiveRecord::Schema.define(version: 20160815003322) do
     t.string   "detail"
     t.string   "whymatters"
     t.string   "image"
+    t.string   "category"
+    t.string   "howhelp"
+    t.string   "totalpeople"
+    t.boolean  "pledge"
+    t.string   "pledgeTo"
+    t.string   "pledgeStep"
+    t.datetime "pledgeDate"
+    t.string   "petitionTo"
+    t.boolean  "dontPledge"
+    t.integer  "total_pledges",  default: 0
+    t.integer  "total_signs",    default: 0
+    t.string   "petition_help"
+    t.datetime "petitiondate"
+    t.integer  "petition_signs", default: 0
     t.boolean  "anonymous",      default: false
     t.text     "followers",      default: "--- []\n"
     t.integer  "num_agree",      default: 0
     t.integer  "num_disagree",   default: 0
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "category"
-    t.string   "howhelp"
-    t.string   "totalpeople"
-    t.string   "pledgeTo"
-    t.string   "pledgeStep"
-    t.datetime "pledgeDate"
-    t.string   "petitionTo"
-    t.boolean  "petition"
-    t.boolean  "pledge"
-    t.boolean  "pet"
-    t.boolean  "dont_pledge"
-    t.integer  "total_pledges"
-    t.integer  "total_signs"
-    t.string   "petition_help"
-    t.datetime "petitiondate"
-    t.string   "petitionhelp"
-    t.integer  "petition_signs"
   end
 
   add_index "causes", ["user_id"], name: "index_causes_on_user_id", using: :btree
@@ -221,7 +204,6 @@ ActiveRecord::Schema.define(version: 20160815003322) do
     t.integer  "user_id"
     t.string   "content",                         null: false
     t.string   "detail",                          null: false
-    t.string   "image"
     t.boolean  "anonymous",  default: false
     t.integer  "views",      default: 0
     t.text     "topics",     default: "--- []\n"
@@ -254,6 +236,8 @@ ActiveRecord::Schema.define(version: 20160815003322) do
     t.text     "knows_about",            default: "--- []\n"
     t.text     "employments",            default: "--- []\n"
     t.string   "location",               default: ""
+    t.text     "answers_upvote",         default: "--- []\n"
+    t.text     "answers_downvote",       default: "--- []\n"
     t.text     "following",              default: "--- []\n"
     t.text     "causes_agreed",          default: "--- []\n"
     t.text     "causes_disagreed",       default: "--- []\n"

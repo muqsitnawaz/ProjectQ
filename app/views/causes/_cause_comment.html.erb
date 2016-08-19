@@ -24,21 +24,9 @@
   
   <div class="row">
     <div class="col-xs-10">
-      <% if cause_comment.comment.length > 250 %>
-        <div>
-          <p id="cause_comment_comment<%= cause_comment.id %>" class="truncated-comment" style="display:inline;"><%= truncate(cause_comment.comment, length: 250) %></p>  
-        </div>
-        <%= link_to 'Read more', '', id: "read-more-#{cause_comment.id}" %>
-        
-        <script>
-          $('#read-more-<%= cause_comment.id %>').on('click', function(e) {
-            e.preventDefault()
-            $(".truncated-comment").html('<%= escape_javascript cause_comment.comment %>')
-          })
-        </script>
-      <% else %>
-        <p id="cause_comment_comment<%= cause_comment.id %>"><%= cause_comment.comment %></p>
-      <% end %>
+      <div id="cause_comment_comment<%= cause_comment.id %>">
+        <%= cause_comment.content.html_safe %>
+      </div>
       
       <p class="text-muted"><small>Updated at <%= cause_comment.updated_at.strftime('%-d %B, %Y') %></small></p>
     </div>

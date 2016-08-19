@@ -42,14 +42,11 @@
           <% end %>
         </div>
       </div>
-      
-      <% if !question.image.nil? && question.image.length != 0 %>
-        <img src="<%= question.image %>" class="img img-responsive">
-        <br/>
-      <% end %><br>
   
       <div class="question-details" style="margin-top: -1.5em;">
-        <p id="question_detail<%= question.id %>"><%= question.detail %></p>
+        <div id="question_detail<%= question.id %>">
+          <%= question.detail.html_safe %>
+        </div>
       </div>
   
       <!-- Bottom buttons -->

@@ -29,21 +29,15 @@
       <div class="dropdown" style="display: inline;">
         <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-pencil"></i>
         <span class="caret"></span></button>
+        
         <% if user_signed_in? %>
           <ul class="dropdown-menu">
-            <% if current_user.completed == false %>
-              <li><a href="<%= profile_path %>">Ask a Question</a></li>
-              <li><a href="<%= profile_path %>">Start a Contest</a></li>
-              <li><a href="<%= profile_path %>">Start a Cause</a></li>
-              <li><a href="<%= profile_path %>">Write and Article</a></li>
-            <% else %>
-              <li><a href="" data-toggle="modal" data-target="#myModal">Ask a Question</a></li>
-              <% if is_admin? %>
-                <li><a href="" data-toggle="modal" data-target="#contestModal">Start a Contest</a></li>
-              <% end %>
-              <li><a href="<%= new_cause_path %>">Start a Cause</a></li>
-              <li><a href="<%= new_article_path %>">Write an Article</a></li>
+            <li><a href="" data-toggle="modal" data-target="#myModal">Ask a Question</a></li>
+            <% if is_admin? %>
+              <li><a href="" data-toggle="modal" data-target="#contestModal">Start a Contest</a></li>
             <% end %>
+            <li><a href="<%= new_cause_path %>">Start a Cause</a></li>
+            <li><a href="<%= new_article_path %>">Write an Article</a></li>
         </ul>
         <% end %>
       </div>

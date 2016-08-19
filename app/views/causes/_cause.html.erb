@@ -86,6 +86,22 @@
         </div>
       </div>
     <% end %>
+    
+    <div id="causeCommentContent<%= cause.id %>" class="row hidden">
+      <div class="col-xs-12">
+        <% @cause_comment = CauseComment.new %>
+        <%= form_for @cause_comment, :url => { :controller =>"cause_comments", :action =>"create"}  do |f| %>
+          <%= f.cktext_area :content, class: 'form-control' %><br>
+          <%= f.hidden_field :cause_id, value: cause.id %>
+      </div>
+      <div class="col-xs-4 col-xs-offset-8">
+        <div>
+          <strong>Anonymous</strong> <%= f.check_box :anonymous %>
+          <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
+        </div>
+        <% end %>
+      </div>
+    </div>
 
     <div class="col-xs-12" style="margin-top: 1em;">
       <% if !cause_comments.empty? %>
@@ -105,3 +121,14 @@
 </div>
 
 <hr class="question-hr">
+
+<% if full == true %>
+  <script>
+    $("[id^=commentC]").click(function() {
+      cause_id = this.id.substring(7, this.id.length)
+      console.log('id: '+cause_id)
+      
+      $("#causeCommentContent"+cause_id).toggleClass("hidden")
+  })
+  </script>
+<% end %>

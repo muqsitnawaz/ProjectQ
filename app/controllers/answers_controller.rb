@@ -63,6 +63,10 @@ class AnswersController < ApplicationController
     @answer = Answer.find_by_id(params[:answer_id].to_i)
     @answer.upvotes += 1
     @answer.save
+    
+    # Adding to user
+    current_user.answers_upvote << @answer.id
+    current_user.save
 
     if request.xhr?
       render :json => {
@@ -76,6 +80,10 @@ class AnswersController < ApplicationController
     @answer = Answer.find_by_id(params[:answer_id].to_i)
     @answer.downvotes += 1
     @answer.save
+    
+    # Adding to user
+    current_user.answers_downvote << @answer.id
+    current_user.save
 
     if request.xhr?
       render :json => {

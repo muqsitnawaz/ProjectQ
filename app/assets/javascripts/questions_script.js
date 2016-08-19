@@ -9,9 +9,22 @@ $("[id^=showReplies]").click(function() {
 // Editing a question
 $("[id^=edit_question]").click(function() {
   question_id = this.id.substring(13, this.id.length)
+  $('#editQuestionModal').modal('show')
+  
+  // Initiliasing ckeditro for the first time
+  if ($("#new_question_detail").val() == "null") {
+    CKEDITOR.replace('new_question_detail')
+    $("#new_question_detail").val("defined")
+  }
+  
+  // // Replacing contnet in ckeditor
+  // $("#new_question_content").val($('#question_content'+question_id).val())
+  // $("#new_question_detail").val($('#question_detail'+question_id).text())
+  // $('#editQuestionModal').modal('show');
+  
+  // Replacing content in ckeditor
   $("#new_question_content").val($('#question_content'+question_id).val())
-  $("#new_question_detail").val($('#question_detail'+question_id).text())
-  $('#editQuestionModal').modal('show');
+	CKEDITOR.instances.new_question_detail.setData($('#question_detail'+question_id).html())
 })
 
 // Updating a question
@@ -64,7 +77,6 @@ $("[id^=edit_answerQ]").click(function() {
 // Updating an answer
 $("#new_answer_submit").click(function() {
   const answer = CKEDITOR.instances.new_answer_answer.getData()
-  console.log('new answer ' + answer)
 
   // Sending ajax request to follow the question
   $.ajax({
@@ -100,8 +112,6 @@ $("[id^=edit_reply]").click(function() {
   }
   
   // Replacing contnet in ckeditor
-  console.log(reply_id)
-  console.log($('#reply'+reply_id))
 	CKEDITOR.instances.new_reply_reply.setData($('#reply'+reply_id).html())
 })
 
@@ -145,6 +155,7 @@ $("[id^=follow]").click(function() {
     complete: function() {},
     success: function(data, textStatus, xhr) {
       alert("followed")
+      location.reload()
     },
     error: function() {
       alert("error")
@@ -169,11 +180,7 @@ $("[id^=upvote]").click(function() {
     complete: function() {},
     success: function(data, textStatus, xhr) {
       alert("upvoted")
-
-      // Updating upvote button UI to show new vote
-      var upvotes = $('#upvote'+answer_id).text()
-      upvotes = parseInt(upvotes.substring(9, upvotes.length))
-      $('#upvote'+answer_id).html('Upvote | '+(upvotes+1))
+      location.reload()
     },
     error: function() {
       alert("error")
@@ -194,6 +201,7 @@ $("[id^=downvote]").click(function() {
     complete: function() {},
     success: function(data, textStatus, xhr) {
       alert("downvoted")
+      location.reload()
     },
     error: function() {
       alert("error")

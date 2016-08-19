@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
 
   # Questions
   serialize :following
+  
+  # Answers
+  serialize :answers_upvote
+  serialize :answers_downvote
 
   # Causes
   serialize :causes_agreed

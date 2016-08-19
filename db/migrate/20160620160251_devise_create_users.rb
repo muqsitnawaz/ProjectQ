@@ -13,6 +13,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :knows_about,          default: []
       t.text :employments,          default: []
       t.string :location,           default: ""
+      
+      t.text :answers_upvote,               default: []
+      t.text :answers_downvote,             default: []
 
       # List of questions a user is following
       t.text :following,            default: []

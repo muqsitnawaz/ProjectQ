@@ -25,7 +25,9 @@
   <div class="row" style="margin-top: 0.5em;">
     <!-- Showing reply and username -->
     <div class="col-xs-12">
-      <p id="cause_reply<%= cause_reply.id %>"><%= cause_reply.reply %></p>
+      <div id="cause_reply<%= cause_reply.id %>">
+        <%= cause_reply.content.html_safe %>
+      </div>
     </div>
   </div>
 </div>
