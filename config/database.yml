@@ -15,16 +15,16 @@ development:
   adapter: postgresql
   database: lixerr
   host: <%= ENV['IP'] %>
-  username: hamza
-  password: hamzaaltaf
+  username: muqsitnawaz
+  password: B.D.c00p3r
   pool: 5
   timeout: 5000
 test:
   adapter: postgresql
   database: lixerr
   host: <%= ENV['IP'] %>
-  username: hamza
-  password: hamzaaltaf
+  username: muqsitnawaz
+  password: B.D.c00p3r
   pool: 5
   timeout: 5000
 
