@@ -8,6 +8,9 @@
         <% question.topics[0..2].sort.each do |topic| %>
           <%= link_to topic.titleize, questions_path(:topic => topic) %>
         <% end %>
+        <% if question.topics.length > 3 %>
+          and <%= question.topics.length - 3 %> more
+        <% end %>
       </i>
       - <%= question.updated_at.strftime('%-d %B, %Y') %>
     </p>
