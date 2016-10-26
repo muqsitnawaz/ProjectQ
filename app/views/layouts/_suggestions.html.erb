@@ -11,7 +11,13 @@
         <center><div class="btn btn-ask1" data-toggle="modal" data-target="#signInModal">Post</div></center>
       <% end %>
     </div>
-    
+    <!--to delete-->
+    <div class="file-form" style="display:none">
+    <%= form_tag import_questions_path, multipart: true do %>
+      <%= file_field_tag :file %>
+      <%= submit_tag "Import" %>
+    <% end %>
+    <!---->
     <div class="col-xs-12">
       <div class="heading-7">Trending</div>
       <hr class='profile-hr'>

@@ -52,7 +52,7 @@ group :development, :test do # <<<< :development, not devlopment
 end
 
 group :production do
-  gem 'pg'
+  # gem 'pg'
   gem 'rails_12factor'
 end
 
@@ -66,7 +66,7 @@ gem 'autoprefixer-rails'
 gem 'social-share-button'
 gem "font-awesome-rails"
 gem 'search_cop'
-
+gem 'roo'
 # advanced gems
 gem 'resque'
 gem 'actionpack-page_caching'
