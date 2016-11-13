@@ -1,36 +1,32 @@
-<div class="container main-wall">
-  <div class="row">
-    <!-- Leftbar  -->
-    <div class="col-xs-2">
-      <%= render 'layouts/leftbar'%>
-    </div>
-
-    <!-- New article area -->
-    <div class="col-xs-7">
-      <h2>Edit your Article</h2><br>
-
-      <%= form_for @article  do |f| %>
-        <%= f.hidden_field :id %>
-
-        <p><strong>Topics</strong></p>
-        <%= f.select :topics, options_for_select(get_all_interests.sort!), {}, {:multiple => true, :size => 3 } %>
-
-        <p><strong>Heading</strong></p>
-        <%= f.text_field :heading, autofocus: true, class: 'form-control',placeholder: 'A heading for your article' %> <br>
-
-        <p><strong>Introduction (Optional)</strong></p>
-        <%= f.text_area :intro, class: 'form-control', placeholder: 'An introduction of your article' %><br>
-
-        <p><strong>Content</strong></p>
-        <%= f.cktext_area :content, class: 'form-control', placeholder: 'Start writing here...' %><br>
-
-        <%= f.submit "Update", class:'btn btn-default' %>
-      <% end %>
-    </div>
-
-    <!-- Suggestions -->
-    <div class="col-xs-3">
-      <%= render 'layouts/suggestions'%>
+<div class="background-div">
+  <div class="container">
+    <ul class="nav nav-tabs cause-block" style="padding-top:-1.3em;padding-left:1.5em;">
+      <li ><%= link_to 'Read Articles', articles_path %></li>
+      <li ><%= link_to 'Write an Article', new_article_path %></li>
+      <li class="active"><%= link_to 'Request Articles', new_article_request_path %></li>
+      <li><%= link_to 'Answer Requests', article_requests_path %></li>
+    </ul>
+    <div class="row">
+      <div class="col-md-8 cause-block">
+        <%= form_for @article  do |f| %>
+          <%= f.hidden_field :id %>
+  
+          <p><strong>Topics</strong></p>
+          <%= f.select :topics, options_for_select(get_all_interests.sort!), {}, {:multiple => true, :size => 3 } %>
+  
+          <p><strong>Heading</strong></p>
+          <%= f.text_field :heading, autofocus: true, class: 'form-control',placeholder: 'A heading for your article' %> <br>
+  
+          <p><strong>Introduction (Optional)</strong></p>
+          <%= f.text_area :intro, class: 'form-control', placeholder: 'An introduction of your article' %><br>
+  
+          <p><strong>Content</strong></p>
+          <%= f.cktext_area :content, class: 'form-control', placeholder: 'Start writing here...' %><br>
+  
+          <%= f.submit "Update", class:'btn btn-default' %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
+  

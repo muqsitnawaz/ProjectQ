@@ -1,42 +1,47 @@
-<div style="padding: 5px;">
-  <% if !@article_request.nil? %>
-    <div class="row">
-      <div class="col-xs-12">
-        <p>Written in response to <%= link_to @article_request.heading, article_request_path(:id => @article_request.id) %></p>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="row">
-    <div class="col-xs-10">
-      <p>In
-        <% article.topics.each do |topic| %>
-          <%= link_to topic, articles_path(:topic => topic) %>
+<div class="box box-widget cause-block">
+  <div class="box-header with-border">
+    <div class="user-block">
+        <% if article.user.profile_pic.length != 0 %>
+          <%= image_tag atricle.user.profile_pic.thumb, class: 'img-circle',height: '128px', width:'128px' %>
+        <% else %>
+          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
         <% end %>
-      </p>
-    </div>
-
-    <div class="col-xs-2">
-      <% if article.user == current_user %>
-        <%= link_to '<i class="glyphicon glyphicon-edit" style="color: green;"></i>'.html_safe, edit_article_path(:id => article.id) %>
-        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, article_path(:id => article.id), method: :delete, data: { confirm: 'Are you sure?'} %>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="question-content">
-        <%= link_to article.heading, article_path(:id => article.id) %>
+      <span class="username">
+          <%= link_to article.user.name, public_profile_path(:id => article.user.id) %>
+          <% article.topics[0..2].sort.each do |topic| %>
+            <span class=""><%= link_to topic.titleize, articles_path(:topic => topic),class:'label label-dark' %></span>
+          <% end %>
+          <% if article.topics.length > 3 %>
+            and <%= article.topics.length - 3 %> more
+          <% end %>
+      </span>
+      <span class="description">Wrote - <%= (Time.now.to_date - article.created_at.to_date).to_i %> day(s) ago</span>
+    </div> <!-- /.user-block -->
+    <% if user_signed_in? && article.user == current_user %>
+      <div class="box-tools">
+        <%= link_to edit_article_path(:id => article.id), class: 'btn btn-box-tool', title:'Edit Article' do  %>
+          <i class="fa fa-pencil"></i>
+        <%end%>
+        <%= link_to article_path(:id => article.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+          <i class="fa fa-times"></i>
+        <%end%>
+      </div> <!-- /.box-tools -->
+    <%end%>
+  </div> <!-- /.box-header -->
+  <div class="box-body">
+    <h3> <%= link_to article.heading, article_path(:id => article.id) %></h3>
+    <%= image_tag 'photo2.png', class: 'img-responsive pad'%>
+    <p>
+      <div id="question_detail">
+        <%= article.intro %>
       </div>
-      <p>By <%= link_to article.user.name, public_profile_path(:id => article.user.id) %>, <%= article.created_at.strftime('%-d %B, %Y') %></p>
-
-      <p><i><%= article.intro %></i></p>
-
+    </p>
       <% if full == true %>
-        <p><%= article.content.html_safe %></p>
-      <% end %>
+        <p>
+          <div id="question_detail">
+            <%= article.content.html_safe %>
+          </div>  
+        </p>
+      <%end%>
     </div>
   </div>
-</div>
-<hr>

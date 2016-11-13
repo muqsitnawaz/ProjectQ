@@ -1,5 +1,7 @@
-<div class = "container">
-    <div class="row"style="height:250px;width:100%;background-color:#4c4c4c;">
+<div class="background-div">
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12 cause-block" style="height:250px;width:100%;background-color:#4c4c4c;">
         <!--div fpr the image-->
             <!--set an image by default-->
         <%= form_for @cause,:url =>{:controller=>"causes",:action=>"image_upload",:id => @cause.id} do |f| %>
@@ -18,8 +20,11 @@
             <%if !@cause.pledgeTo.nil?%>
                 <div class="panel panel-default apanel1">
             	    <div class="panel-heading">
-                        <center></center><h3 class="panel-title"><%= "Pledge Details"%></h3></center>
-                        <span class="pull-right"><%= link_to "Edit", causes_edit_petition_path,:cause_id => @cause.id,class: 'btn btn-default'%></span>
+                        <h3 class="panel-title"><%= "Pledge Details"%></h3></center>
+                        <span class="pull-right" style="margin-top:-1.4em;"><%= link_to causes_edit_petition_path(:cause_id => @cause.id),class:'btn btn-box-tool',title:"Edit Cause" do%>
+                            <i class="fa fa-pencil"></i>
+                            <%end%>
+                        </span>
                     </div>
                     <!--details of the cause pledge-->
                     <div class="panel-body">
@@ -39,8 +44,12 @@
             <%if !@cause.petitionTo.nil?%>
                 <div class="panel panel-default apanel1">
             	    <div class="panel-heading">
-                        <center></center><h3 class="panel-title"><%= "Petition Details"%></h3></center>
-                        <span class="pull-right"><%= link_to "Edit", causes_edit_pledge_path,:cause_id => @cause.id,class: 'btn btn-default'%></span>
+                        <h3 class="panel-title"><%= "Petition Details"%></h3>
+                        <span class="pull-right" style="margin-top:-1.4em;">
+                            <%= link_to causes_edit_pledge_path(:cause_id => @cause.id),class:'btn btn-box-tool',title:"Edit Cause" do%>
+                            <i class="fa fa-pencil"></i>
+                            <%end%>
+                        </span>
                     </div>
                     <!--details of the cause pledge-->
                     <div class="panel-body">
@@ -56,4 +65,6 @@
         <%end%>        
     </div>
     
+</div>
+</div>
 </div>

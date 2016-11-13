@@ -1,21 +1,32 @@
 class QuestionsController < ApplicationController
-  before_filter :authenticate_user!, except: [:index, :show, :search ]
+ # before_filter :authenticate_user!, except: [:index, :show, :search ]
   
   def index
+    # if params[:topic].nil?
+    #   if user_signed_in? && !params[:type].nil?
+    #     if params[:type] == 'asked'
+    #       @questions = Question.where(:user_id => current_user.id).order('created_at DESC')
+    #     elsif params[:type] == 'answered'
+    #       @questions = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id}).order('created_at DESC')
+    #     elsif params[:type] == 'following'
+    #       @questions = Question.where(:id => current_user.following).order('created_at DESC')
+    #       @questionasked = Question.where(:user_id => current_user.id).order('created_at DESC')
+    #       @questionans = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id}).order('created_at DESC')
+    #     end
+    #   else
+    #     @questions = Question.all.order('created_at DESC')
+    #   end
+    # else
+    #   @questions = Question.all.order('created_at DESC').reject {|q| !q.topics.include? params[:topic]}
+    # end
     if params[:topic].nil?
-      if user_signed_in? && !params[:type].nil?
-        if params[:type] == 'asked'
-          @questions = Question.where(:user_id => current_user.id).order('created_at DESC')
-        elsif params[:type] == 'answered'
-          @questions = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id}).order('created_at DESC')
-        elsif params[:type] == 'following'
-          @questions = Question.where(:id => current_user.following).order('created_at DESC')
-        end
+      if user_signed_in?
+        @questions = Question.where(:id => current_user.following).order('created_at DESC').page(params[:question_followed]).per(1)
+        @questionasked = Question.where(:user_id => current_user.id).order('created_at DESC').page(params[:question_asked]).per(1)
+        @questionans = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id}).order('created_at DESC').page(params[:question_ans]).per(1)
       else
-        @questions = Question.all.order('created_at DESC')
+        @questions = Question.all.order('created_at DESC').page(params[:page]).per(1)
       end
-    else
-      @questions = Question.all.order('created_at DESC').reject {|q| !q.topics.include? params[:topic]}
     end
   end
   
@@ -117,7 +128,12 @@ class QuestionsController < ApplicationController
       }
     end
   end
-
+#import questions temp
+  def import
+    if (Question.import(params[:file]))
+    redirect_to root_path, notice: " imported."
+  end
+  end
 private
   def question_params
     params.require(:question).permit(:user_id, :content, :detail, :anonymous, :topics => [])

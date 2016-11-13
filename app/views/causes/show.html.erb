@@ -1,23 +1,37 @@
-<div class="container main-wall">
-  <div class="row">
-    <!-- Leftbar  -->
-    <div class="col-xs-2">
-      <%= render 'layouts/leftbar'%>
-    </div>
 
-    <!-- Contests area -->
-    <div class="col-xs-7">
-      <div class="contests-area">
+<%=  render 'signed_modal'%>
+<%= javascript_include_tag "causes_script", "data-turbolinks-track" => true  %>
+
+<div class="background-div">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 question-detail">
         <%= render 'cause', :cause => @cause, :cause_comments => @cause.cause_comments, :full => true %>
       </div>
-    </div>
-
-    <!-- Suggestions -->
-    <div class="col-xs-3">
-      <%= render 'layouts/suggestions'%>
+      <div class="col-md-3 col-xs-offset-1 side-bar cause-block" style="margin-top:2em;">
+        <h3>Sign this Cause</h3>
+        <hr>
+        <% @user = User.new%>
+        <%= form_for @user,:url => {:controller => 'causes', :action => 'sign_without_signin'},:html => {id: 'new_sign'}, remote: true do |f| %>
+          <%= f.text_field :name, class:'form-control', placeholder: 'Enter your Name'%><br>
+          <%= f.email_field :email, class:'form-control', placeholder: 'Enter your email'%>
+          <div class="row">
+            <%= f.submit "Sign Petition", class:'btn btn-cause sign'%>  
+          </div>
+          
+        <%end%>
+        <br><br>
+      </div>
     </div>
   </div>
 </div>
-
-
-<%= javascript_include_tag "causes_script", "data-turbolinks-track" => true  %>
+<script>
+$('#new_sign').on('ajax:success', function(){
+  $('#signedModal').modal('show');
+})
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+</script>

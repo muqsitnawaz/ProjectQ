@@ -1,18 +1,12 @@
-<div class="container main-wall">
-  <div class="row">
-    <!-- Leftbar  -->
-    <div class="col-xs-2">
-      <%= render 'layouts/leftbar'%>
-    </div>
-
-    <!-- New article area -->
-    <div class="col-xs-7">
-      <%= render 'article', :article => @article, :full => true %>
-    </div>
-
-    <!-- Suggestions -->
-    <div class="col-xs-3">
-      <%= render 'layouts/suggestions'%>
+<div class="background-div">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 question-detail">
+        <%= render 'article', :article => @article, :full => true %>
+      </div>
+      <div class="col-md-4 side-bar">
+        <%= render 'layouts/sidebar'%>
+      </div>
     </div>
   </div>
 </div>

@@ -1,12 +1,8 @@
-<div class="container main-wall">
-  <div class="row">
-    <!-- Leftbar  -->
-    <div class="col-xs-2">
-      <%= render 'layouts/leftbar'%>
-    </div>
-
+<div class="background-div">
+    <div class="container">
+      <div class="row" style="padding-top: 3em;">
+        <div class="col-md-8">
     <!-- Questions area -->
-    <div class="col-xs-7">
       <div class="question-area">
         <% @items.each do |item| %>
           <% if item.class.name == "Question" %>
@@ -23,10 +19,9 @@
     </div>
 
     <!-- Suggestions -->
-    <div class="col-xs-3">
-      <%= render 'layouts/suggestions'%>
-    </div>
+    
   </div>
+</div>
 </div>
 
 <%= javascript_include_tag "questions_script", "data-turbolinks-track" => true  %>

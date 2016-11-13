@@ -64,9 +64,13 @@ Rails.application.routes.draw do
   #for causes image
   get 'causes/final_view/:cause_id' => 'causes#completed_cause', as: "cause_completed"
   # to view the cause pledged
-  get 'view_cause_pledged/:cause_id' => 'causes#pledge_view'
+  get 'view_cause_pledged/:cause_id' => 'causes#pledge_view', as: 'pledge_edit'
   get 'view_cause_petition/:cause_id' => 'causes#petition_view'
+  delete 'causes/:id' => 'causes#destroy',:as => 'delete_cause'
+  delete 'contests/:id' => 'contests#destroy',:as => 'delete_contest'
   
+  #cause sign
+  post 'sign_cause/:id' => 'causes#sign_without_signin', :as => 'sign_cause'
   # Causes comments paths
   resource :cause_comments
   post '/update_cause_comment' => 'cause_comments#update'

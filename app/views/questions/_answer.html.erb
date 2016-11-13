@@ -1,63 +1,65 @@
-<div style="margin-bottom: 2em; padding: 5px;">
-  <div class="row">
-    <div class="col-xs-2">
-      <% if answer.user.profile_pic.length != 0 && answer.anonymous == false %>
-        <%= image_tag answer.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
+<div class="box-footer box-comments cause-block-1">
+  <div class="box-comment">
+    <!-- User image -->
+    <% if answer.user.profile_pic.length != 0 && answer.anonymous == false %>
+        <%= image_tag answer.user.profile_pic.thumb, class: 'img-circle img-sm', width: 128,height:128 %>
       <% else %>
-        <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
-      <% end %>
-    </div>
-    <div class="col-xs-7" style="margin-left: -50px;">
-      <% if answer.anonymous == false %>
-        <%= link_to answer.user.name, public_profile_path(:id => answer.user.id) %>
-      <% else %>
-        <p>Anonymous</p>
-      <% end %>
-    </div>
-    <div class="col-xs-3" style="margin-left: 50px;">
-      <% if answer.user == current_user %>
-        <a id="edit_answerQ<%= answer.id %>" class="btn btn-default">edit</a>
-        <%= link_to 'delete', answers_path(:id => answer.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
-      <% end %>
-    </div>
-  </div>
-  
-  <div class="row">
-    <!-- Showing answer and username -->
-    <div class="col-xs-12" style="font-size: 16px;">
-      <div id="answer<%= answer.id %>">
-        <%= answer.content.html_safe %>
-      </div>
-      <p class="text-muted"><small>Updated at <%= answer.updated_at.strftime('%-d %B, %Y') %></small></p>
-    </div>
-  </div>
-
-  <!-- Upvote, downvote and reply buttons -->
-  <% if user_signed_in? %>
-    <div class="row">
-      <div class="col-xs-12">
-        <!-- Upvote button -->
-        <% if current_user.answers_upvote.include? answer.id %>
-          <button class="btn btn-default"><span style="color: blue;">Upvoted</span> | <%= answer.upvotes %></button>
-        <% else %>  
-          <button id="upvote<%= answer.id %>" class="btn btn-default">Upvote | <%= answer.upvotes %></button>
+        <%= image_tag 'thumb.jpg',class: 'img-circle img-sm', width: 128,height:128 %>
+    <% end %>
+    
+    <div class="comment-text">
+      <span class="username">
+        <% if answer.anonymous == false %>
+          <%= link_to answer.user.name, public_profile_path(:id => answer.user.id) %>
+        <% else %>
+          <p>Anonymous</p>
         <% end %>
-        
-        <!-- Downvote button -->
-        <% if current_user.answers_downvote.include? answer.id %>
-          <button class="btn btn-default"><span style="color: blue;">Downvote</span></button>
-        <% else %>  
-          <button id="downvote<%= answer.id %>" class="btn btn-default">Downvote</button>
-        <% end %>
-        
-        <!-- Reply buttons -->
-        <button id="replyA<%= answer.id %>" class="btn btn-default">Reply</button>
-        <button id="showReplies<%= answer.id %>" class="btn btn-default">Replies | <%= answer.replies.count %></button>
-      </div>
+        <span class="text-muted pull-right">
+          <% if answer.user == current_user %>
+            <div class="box-tools">
+              <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_answerQ<%= answer.id %>">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <%= link_to answers_path(:id => answer.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+                <i class="fa fa-times"></i>
+              <%end%>
+            </div> <!-- .box-tools -->
+          <%end%>
+        </span>
+      </span>
+      <p>
+        <div id="answer<%= answer.id %>">
+          <%= answer.content.html_safe %>
+        </div>        
+      </p>
+      <% if user_signed_in? %>
+        <div class="row">
+          <div class="col-xs-12">
+            <!-- Upvote button -->
+            <% if current_user.answers_upvote.include? answer.id %>
+              <button class="btn btn-default btn-xs"><span style="color: blue;">Upvoted</span> | <%= answer.upvotes %></button>
+            <% else %>
+              <button id="upvote<%= answer.id %>" class="btn btn-default btn-xs">Upvote | <%= answer.upvotes %></button>
+            <% end %>
+    
+            <!-- Downvote button -->
+            <% if current_user.answers_downvote.include? answer.id %>
+              <button class="btn btn-default btn-xs"><span style="color: blue;">Downvote</span></button>
+            <% else %>
+              <button id="downvote<%= answer.id %>" class="btn btn-default btn-xs">Downvote</button>
+            <% end %>
+    
+            <!-- Reply buttons -->
+            <button id="replyA<%= answer.id %>" class="btn btn-default btn-xs">Reply</button>
+            <button id="showReplies<%= answer.id %>" class="btn btn-default btn-xs">Replies | <%= answer.replies.count %></button>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-  
-  <div id="replyContent<%= answer.id %>" class="row hidden">
+    <!-- comment-text -->
+  </div>
+  <!-- .box-comment -->
+    <div id="replyContent<%= answer.id %>" class="row hidden">
     <div class="col-xs-12">
       <% @reply = Reply.new %>
       <%= form_for @reply, :url => {:controller =>"replies", :action => "create"}  do |f| %>
@@ -85,6 +87,7 @@
   </div>
 </div>
 
+
 <script>
 $("[id^=replyA]").click(function() {
   answer_id = this.id.substring(6, this.id.length)
@@ -93,3 +96,4 @@ $("[id^=replyA]").click(function() {
   $("#replyContent"+answer_id).toggleClass("hidden")
 })
 </script>
+

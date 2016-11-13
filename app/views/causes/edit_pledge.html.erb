@@ -1,17 +1,10 @@
-<div class="container main-wall">
+<div class="background-div">
+  <div class="container">
     <div class="row">
-    <!-- Leftbar  -->
-        <div class="col-xs-2">
-          <%= render 'layouts/leftbar'%>
-        </div>
-        <!--middle content for creation-->
-        <div class = "col-xs-7">
+        <div class="col-md-8 cause-block">
             <div class="row">
                 <div class = "col-xs-offset-1 col-xs-10">
                   <h2>People can Help By</h2>
-                  <div class="cause-simple-text">
-                      People are powerful
-                  </div>
                 </div>
             </div>
             <%= form_for @cause,:url =>{:controller=>"causes",:action=>"update_pledge",:cause_id =>@cause.id} do |f| %>
@@ -60,8 +53,6 @@
         
         <%end%>
         
-      <div class="col-xs-3">
-          <%= render 'layouts/suggestions'%>
-        </div>  
     </div>
+</div>
 </div>

@@ -3,7 +3,7 @@ class CreateQuestions < ActiveRecord::Migration
     create_table :questions do |t|
       t.belongs_to :user, index:true
       t.string :content,      null: false
-      t.string :detail,       null: false
+      t.string :detail
       t.boolean :anonymous,   default: false
       t.integer :views,       default: 0
       t.text :topics,	        default: []

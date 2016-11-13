@@ -1,11 +1,13 @@
-<div class = "container">
-    <div class="row"style="height:250px;width:100%">
+<div class="container">
+    <div class="row"style="height:250px;">
         <!--div fpr the image-->
-       <div class="col-xs-12">
-            <div class="form-group">
-                <%= image_tag @cause.image, :class => 'img cause-image' %>
-                <h4 style="color:#1e824c;font-weight:bold;margin-left:0em;padding-top:1em;font-size:21px;"><%="You" + " want to " + "#{@cause.intro}" %></h4>
-            </div>
+       <div class="col-xs-12" style="margin-top:2em;">
+           <center>
+                <div class="form-group">
+                    <%= image_tag @cause.image, :class => 'img cause-image' %>
+                    <h4 style="color:#1e824c;font-weight:bold;margin-left:0em;padding-top:1em;font-size:21px;"><%="You" + " want to " + "#{@cause.intro}" %></h4>
+                </div>
+            </center>
         </div>
     </div>
     <div class="row">
@@ -27,7 +29,7 @@
                 </div>
             <%else%>
                 <%=link_to "Add Pledge",{:controller => 'causes', :action => 'pledge',:id => @cause.id}, class: 'btn btn-cause'%>
-        <%end%>
+            <%end%>
         </div>
         
         <!--for petition-->
@@ -51,5 +53,4 @@
         </div>
         <%end%>        
     </div>
-    
 </div>

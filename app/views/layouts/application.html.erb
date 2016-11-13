@@ -6,16 +6,26 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   
-  <% if user_signed_in? %>
-    <%= render 'layouts/navbar'%>
-  <% else %>
-    <%= render 'layouts/navbar1'%>
-  <% end %>
+  <%= render 'layouts/navbar'%>
 </head>
-<body style="background-color: #fff;">
+<body>
   <%= yield %>
-  <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>"><%= value %></div>
-  <% end %>
+  <script>
+  
+$(function() { 
+  //for bootstrap 3 use 'shown.bs.tab' instead of 'shown' in the next line
+  $('a[data-toggle="tab"]').on('click', function (e) {
+    //save the latest tab; use cookies if you like 'em better:
+    localStorage.setItem('lastTab', $(e.target).attr('href'));
+  });
+
+  //go to the latest tab, if it exists:
+  var lastTab = localStorage.getItem('lastTab');
+
+  if (lastTab) {
+      $('a[href="'+lastTab+'"]').click();
+  }
+});
+</script>
 </body>
 </html>

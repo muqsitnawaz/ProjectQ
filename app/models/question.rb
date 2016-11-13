@@ -13,25 +13,31 @@ class Question < ActiveRecord::Base
   serialize :followers
 
   # Validations
-  validates_associated :user
-  validates :content, presence: true, length: { minimum: 5, maximum: 50 }
-  validates :detail, presence: true, length: { minimum: 5 }
+  #validates_associated :user
+  #validates :content, presence: true, length: { minimum: 5, maximum: 50 }
+  #validates :detail, presence: true, length: { minimum: 5 }
 #to delete
  MAPPING = {
     "content" => "content"
   }
-  
-def self.import(file,c)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
-    (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      # Convert the keys from the csv to match the database column names
-      row.keys.each { |k| row[ MAPPING[k] ] = row.delete(k) if MAPPING[k] }
-      # Remove company and phone number fields as these aren't in the database:
-      row.inspect
-      question = Question.create()
-    end
+
+  def self.import(file)
+      spreadsheet = open_spreadsheet(file)
+      header = spreadsheet.row(1)
+      (2..spreadsheet.last_row).each do |i|
+        row = Hash[[header, spreadsheet.row(i)].transpose]
+        # Convert the keys from the csv to match the database column names
+        row.keys.each { |k| row[ MAPPING[k] ] = row.delete(k) if MAPPING[k] }
+        # Remove company and phone number fields as these aren't in the database:
+        puts 'inspection'
+        puts row.inspect
+        if !row.values[0].nil?
+          row.update(row){|key,v1| "What are the best places to visit in "+v1}
+        puts row.values[0]
+          question = Question.create(row)
+          question.save
+        end
+      end
   end
   
   #helper method for import
@@ -43,6 +49,4 @@ def self.import(file,c)
       else raise "Unknown file type: #{file.original_filename}"
     end
   end
-    
-
 end

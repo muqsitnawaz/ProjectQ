@@ -1,24 +1,83 @@
-<div class="container main-wall">
-  <div class="row">
-    <!-- Leftbar  -->
-    <div class="col-xs-2">
-      <%= render 'layouts/leftbar'%>
+<%if user_signed_in?%>
+<div class="background-div">
+  <div class="container">
+    <div class="nav-tabs-custom cause-block" >
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#menu1" data-toggle="tab">Following</a></li>
+        <li><a href="#menu2" data-toggle="tab">Agreed</a></li>
+        <li><a href="#menu3" data-toggle="tab">Disagreed</a></li>
+        <li><a href="#menu4" data-toggle="tab">Created</a></li>
+      </ul>
     </div>
-
-    <!-- Contests area -->
-    <div class="col-xs-7">
-      <div class="contests-area">
-        <% @causes.each do |cause| %>
-          <%= render 'cause', :cause => cause, :cause_comments => cause.cause_comments, :full => false %>
-        <% end %>
+      <div class="tab-content">
+        <div id="menu1" class="tab-pane fade in active">
+          <div class="row">
+            <div class="col-md-8">
+              <% @causes.each do |cause| %>
+                <%= render 'cause', :cause => cause, :cause_comments => cause.cause_comments, :full => false %>
+              <% end %>
+               <!--/.box -->
+            </div>
+          </div>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+          <!-- for the contests -->
+          <div class="row">
+            <div class="col-md-8">
+              <% if !@causesagreed.nil?%>
+                <% @causesagreed.each do |cause| %>
+                  <%= render 'cause', :cause => cause, :cause_comments => cause.cause_comments, :full => false %>
+                <% end %>
+              <%end%>
+               <!--/.box -->
+            </div>
+          </div>
+        </div>
+        <div id="menu3" class="tab-pane fade">
+          <!--for causes  -->
+          <!-- user block -->
+          <div class="row">
+            <div class="col-md-8">
+              <% if !@causesdisagreed.nil?%>
+                <% @causesdisagreed.each do |cause| %>
+                  <%= render 'cause', :cause => cause, :cause_comments => cause.cause_comments, :full => false %>
+                <% end %>
+              <%end%>
+               <!--/.box -->
+            </div>
+          </div>
+        </div>
+        
+        <div id="menu4" class="tab-pane fade">
+          <!--for causes  -->
+          <!-- user block -->
+          <div class="row">
+            <div class="col-md-8">
+              <% if !@causecreated.nil?%>
+                <% @causecreated.each do |cause| %>
+                  <%= render 'cause', :cause => cause, :cause_comments => cause.cause_comments, :full => false %>
+                <% end %>
+              <%end%>
+               <!--/.box -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- Suggestions -->
-    <div class="col-xs-3">
-      <%= render 'layouts/suggestions'%>
-    </div>
-  </div>
 </div>
+<%else%>
+  <div class="background-div">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <% @causes.each do |cause| %>
+                <%= render 'cause', :cause => cause, :cause_comments => cause.cause_comments, :full => false %>
+              <% end %>
+         <!--/.box -->
+          </div>
+        </div>
+      </div>
+    </div>
+<%end%>
 
-<%= javascript_include_tag "causes_script", "data-turbolinks-track" => true  %>
+

@@ -1,3 +1,4 @@
+console.log('lacunch')
 // Showing relpies
 $("[id^=showCauseReplies]").click(function() {
   cause_comment_id = this.id.substring(16, this.id.length)
@@ -165,6 +166,7 @@ $("[id^=agree_]").click(function() {
 
 // Disaggree to Cause
 $("[id^=disagree_]").click(function() {
+  console.log('coming in disagree')
   const cause_id = this.id.substring(9,this.id.length)
   console.log('cause_id '+cause_id)
   

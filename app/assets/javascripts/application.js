@@ -13,8 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require bootstrap-sprockets
+//= require bootstrap
 //= require social-share-button
 //= require ckeditor/init
 //= require bootstrap-wysihtml5
 //= require_tree .
+
+// $(document).on('page:update', function(){
+//       console.log('page updated');
+//       if ($('.ckeditor')[0]) {
+//           CKEDITOR.replace($('.ckeditor').attr('id'));
+//       }
+//   });

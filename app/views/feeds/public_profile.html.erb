@@ -1,91 +1,144 @@
-<div class="container" style="padding-top: 3em;">
+<style>
+  .background-div{
+    background-color:#fff;  
+  }
+</style>
+<div class="container">
   <div class="row">
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-md-3">
+              <!-- Profile Image -->
+              <div class="box box-primary">
+                <div class="box-body box-profile">
+                  <% if @user.profile_pic.length != 0 %>
+                    <%= image_tag @user.profile_pic.thumb, class: 'profile-user-img img-responsive img-circle', height: '150px' %>
+                  <% else %>
+                    <%= image_tag 'thumb.jpg', class: 'profile-user-img img-responsive img-circle', height: '150px' %>
+                  <% end %>
+                  <h3 class="profile-username text-center"><%= @user.name %></h3>
     
-    <!--Left side: Profile and feeds-->
-    <div class="col-xs-9">
-      
-      <div class="row">
-        <div class="col-xs-3">
-          <% if @user.profile_pic.length != 0 %>
-            <%= image_tag @user.profile_pic.thumb, class: 'img img-responsive img-smround', height: '150px' %>
-          <% else %>
-            <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', height: '150px' %>
-          <% end %>
-        </div>
-        
-        <div class="col-xs-9">
-          <h2><%= @user.name %></h2>
-          
-          <p>Life is the infinite interaction between variables within life itself; 
-          and I am trying to learn about it everyday</p>
-          
-          <div class="btn btn-default">Follow | 2</div>
-        </div>
-      </div>
-      <hr>
-      
-      <div class="row">
-        <div class="col-xs-3">
-          <h4>Feeds</h4>
-          <hr class="profile-hr">
-          
-          <ul class='links-list'>
-            <li><%= link_to 'Answers', public_profile_path(:id => @user.id) %></li>
-            <li><%= link_to 'Questions', public_profile_path(:id => @user.id, :option => 'questions')  %></li>
-            <li><%= link_to 'Contests', public_profile_path(:id => @user.id, :option => 'contests')  %></li>
-            <li><%= link_to 'Causes', public_profile_path(:id => @user.id, :option => 'causes')  %></li>
-            <li><%= link_to 'Articles', public_profile_path(:id => @user.id, :option => 'articles')  %></li>
-          </ul>
-        </div>
-        
-        <div class="col-xs-9">
-          <% if @option == 'questions' || @option.nil? %>
-            <% @items.each do |item| %>
-              <%= render 'questions/question', :question => item, :answers => item.answers.order('created_at DESC'), :full => false %>
-            <% end %>
-          <% elsif @option == 'contests' %>
-            <% @items.each do |item| %>
-              <%= render 'contests/contest', :contest => item, :contest_answers => item.contest_answers, :is_admin => is_admin?, :full => false %>
-            <% end %>
-          <% elsif @option == 'causes' %>
-            <% @items.each do |item| %>
-              <%= render 'causes/cause', :cause => item, :cause_comments => item.cause_comments, :full => false %>
-            <% end %>
-          <% elsif @option == 'articles' %>
-            <% @items.each do |item| %>
-              <%= render 'articles/article', :article => item, :full => false %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
+                  <p class="text-muted text-center">
+                    <% @user.employments.each do |emp| %>
+                      <p><%= emp[:position] %> at <%= emp[:organization] %> from <%= emp[:start] %> to <%= emp[:end] %></p>
+                    <% end %>
+                  </p>
     
-    <!--Right side: About info-->
-    <div class="col-xs-3">
-      <h4>Views on <%= @user.name %></h4><hr class='profile-hr'>
-      <p class='text-muted'><%= @user.profile_views %> profile views</p>
-      
-      <!-- About user: education and employment -->
-      <h4 style="margin-top:1em;">About User</h4><hr class='profile-hr'>
-      <% @user.employments.each do |emp| %>
-        <p>Worked as <%= emp[:position] %> at <%= emp[:organization] %> from <%= emp[:start] %> to <%= emp[:end] %></p>
-      <% end %>
-      <% @user.education.each do |edu| %>
-        <p><%= edu[:degree] %> in <%= edu[:subject] %> from <%= edu[:school] %></p>
-      <% end %>
-      <% if !@user.location.empty? %>
-        <p>Lives in <%= @user.location %></p>
-      <% end %>
-      
-      <h4 style="margin-top:1em;">Knows About</h4><hr class='profile-hr'>
-
-      <% @user.interests.reject { |i| i.empty? }.each do |interest| %>
-        <p class='text-bold' style="margin-bottom: 0;"><%= interest %></p>
-        <p style="color:grey; margin-top: 0;"><small><%= link_to 'Answers', questions_path(:topic => interest) %></small></p>
-      <% end %>
-    </div>
+                  <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                      <b>Questions Asked</b> <a class="pull-right">1,322</a>
+                    </li>
+                    <li class="list-group-item">
+                      <b>Answers Written</b> <a class="pull-right">543</a>
+                    </li>
+                    <li class="list-group-item">
+                      <b>Causes Started</b> <a class="pull-right">13,287</a>
+                    </li>
+                  </ul>
+    
+                  <a href="#" class="btn btn-cause btn-block" style="margin-left:-0.3em"><b>Follow</b></a>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+    
+              <!-- About Me Box -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">About Me</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+    
+                  <p class="text-muted">
+                   <% @user.education.each do |edu| %>
+                    <p><%= edu[:degree] %> in <%= edu[:subject] %> from <%= edu[:school] %></p>
+                  <% end %>
+                  </p>
+    
+                  <hr>
+    
+                  <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+    
+                  <p class="text-muted"><% if !@user.location.empty? %>
+                    <p>Lives in <%= @user.location %></p>
+                    <% end %>
+                  </p>
+    
+                  <hr>
+    
+                  <strong><i class="fa fa-pencil margin-r-5"></i>Intersts</strong>
+                  <p>
+                    <% @user.interests.reject { |i| i.empty? }.each do |interest| %>
+                      <span class="label label-danger"><%= interest %></span>
+                    <%end%>
+                  </p>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+              <div class="nav-tabs-custom" style="margin-top:2em;">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#questions" data-toggle="tab">Questions</a></li>
+                  <li><a href="#contests" data-toggle="tab">Contests</a></li>
+                  <li><a href="#causes" data-toggle="tab">Causes</a></li>
+                  <li><a data-toggle="tab" href="#articles" >Articles</a></li>
+                </ul>
+              </div>
+                <div class="tab-content">
+                  <div class="active tab-pane" id="questions">
+                    <!-- Post -->
+                    <% if @option == 'questions' || @option.nil? %>
+                      <% @items.each do |item| %>
+                      <%= render 'questions/question', :question => item, :answers => item.answers.order('created_at DESC'), :full => false %>
+                    <% end %>
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="contests">
+                    <!-- The timeline -->
+                    <% elsif @option == 'contests' %>
+                      <% @items.each do |item| %>
+                      <%= render 'contests/contest', :contest => item, :contest_answers => item.contest_answers, :is_admin => is_admin?, :full => false %>
+                    <% end %>
+                  </div>
+                  <!-- /.tab-pane -->
+    
+                  <div class="tab-pane" id="causes">
+                    <% elsif @option == 'causes' %>
+                      <% @items.each do |item| %>
+                      <%= render 'causes/cause', :cause => item, :cause_comments => item.cause_comments, :full => false %>
+                    <% end %>
+                  </div>
+                  
+                  <div class="tab-pane" id="articles">
+                    <% elsif @option == 'articles' %>
+                      <% @items.each do |item| %>
+                        <%= render 'articles/article', :article => item, :full => false %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div>
+              <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+    
+        </section>
+    <!-- /.content -->
   </div>
 </div>
+
+
 
 <%= javascript_include_tag "questions_script", "data-turbolinks-track" => true  %>
 <%= javascript_include_tag "contests_script", "data-turbolinks-track" => true  %>

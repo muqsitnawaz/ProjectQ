@@ -48,11 +48,11 @@ group :development do
 end
 
 group :development, :test do # <<<< :development, not devlopment
-  gem 'sqlite3'
+  gem 'pg'
 end
 
 group :production do
-  # gem 'pg'
+  gem 'pg'
   gem 'rails_12factor'
 end
 
@@ -78,3 +78,4 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
 gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'bootstrap-wysihtml5-rails', github: 'nerian/bootstrap-wysihtml5-rails'
+gem 'kaminari'

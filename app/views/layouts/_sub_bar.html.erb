@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row" style="margin-top:0em;background-color:#fff;border-top:1px solid #95a5a6;padding-left:21em;">
+      <center>
+        <div class="nav-tabs-custom cause-block" >
+            <ul class="nav nav-tabs other-tabs" style="padding-top:-1.3em;padding-left:1.5em;">
+              <li class="active"><a href="<%= questions_path(:type => :following) %>">Questions</a></li>
+              <li><a href="<%= contests_path(:type => :open) %>">Contests</a></li>
+              <li><a href="<%= causes_path(:type => :followed) %>">Causes</a></li>
+              <li><%= link_to 'Read Articles', articles_path %></li>
+            </ul>
+        </div>
+      </center>
+    </div>
+</div>

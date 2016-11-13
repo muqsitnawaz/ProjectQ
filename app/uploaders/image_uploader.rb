@@ -5,7 +5,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
-
+  include CarrierWave::MiniMagick
+  process :resize_to_fit => [1400, 300]
   # Choose what kind of storage to use for this uploader:
   storage :file
   # storage :fog
@@ -32,9 +33,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process :resize_to_fit => [50, 50]
-  # end
+  version :thumb do
+    process :resize_to_fit => [250, 350]
+  end
+  
+  version :main do 
+    process :resize_to_fit => [1254,836]
+  end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
@@ -47,5 +52,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
- 
+  # version :resized do
+  #   # returns an image with a maximum width of 100px 
+  #   # while maintaining the aspect ratio
+  #   # 10000 is used to tell CW that the height is free 
+  #   # and so that it will hit the 100 px width first
+  #   process :resize_to_fit => [100, 10000]
+  # end
 end

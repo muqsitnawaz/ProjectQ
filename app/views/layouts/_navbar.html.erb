@@ -1,80 +1,92 @@
-<div class="nav-bar">
-  <div class="row">
-    <div class="col-md-2 col-md-offset-1 project-name">
-      <a id="logo" href="<%= questions_path %>">LIXERR</a>
-    </div>
-    <div class="col-md-4">
-      <br/>
-      <div>
-        <%= form_tag("/search", method: "get") do %>
-          <div class="input-group">
-            <%= text_field_tag(:query, "", :class=>"form-control", :placeholder=>"Search") %>
-            <span class="input-group-btn">
-              <%= submit_tag("Search", :class=>"btn btn-secondary", :name=>"submit") %>
-            </span>
+<div class="background-div">
+  <div class="container" >
+    <div class="row">
+      <div class="nav-bar">
+        <div class="row">
+          <div class="col-xs-2 col-xs-offset-0 project-name">
+            <a style="padding-top:2em;" href="<%= questions_path %>">LIXERR</a>
           </div>
-        <% end %>
-      </div>
-    </div>
-
-    <!-- Glyphicons - right side -->
-    <div class="col-md-4 col-md-offset-1 button-group-nav">
-      <br/>
-      <!-- Newsfeed -->
-      <%= link_to questions_path, class: "btn btn-nav" do %>
-        <i class="glyphicon glyphicon-list-alt"></i>
-      <% end %>
-
-      <!-- Create something option -->
-      <div class="dropdown" style="display: inline;">
-        <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-pencil"></i>
-        <span class="caret"></span></button>
-        
-        <% if user_signed_in? %>
-          <ul class="dropdown-menu">
-            <li><a href="" data-toggle="modal" data-target="#myModal">Ask a Question</a></li>
-            <% if is_admin? %>
-              <li><a href="" data-toggle="modal" data-target="#contestModal">Start a Contest</a></li>
-            <% end %>
-            <li><a href="<%= new_cause_path %>">Start a Cause</a></li>
-            <li><a href="<%= new_article_path %>">Write an Article</a></li>
-        </ul>
-        <% end %>
-      </div>
-
-      <!-- Notifications -->
-      <%= link_to notifications_path, class: "btn btn-nav" do %>
-        <% if current_user.read == true %>
-          <i class="glyphicon glyphicon-bullhorn"></i>
-        <% else %>
-          <i class="glyphicon glyphicon-bullhorn"></i>
-            <div style="margin-bottom: 1em; margin-left: 0.5em;">
-              <div style="width: 20px; height: 20px; background-color: #F5F5F5; border-radius: 10px;">
-                <span style="color: red;">1</span>
-              </div>
+          <div class="col-md-4 col-md-offset-1">
+            <br/>
+            <div>
+              <%= form_tag("/search", method: "get") do %>
+                <div class="input-group">
+                  <%= text_field_tag(:query, "", :class=>"form-control", :placeholder=>"Search") %>
+                  <span class="input-group-btn">
+                    <%= submit_tag("Search", :class=>"btn btn-secondary", :name=>"submit") %>
+                  </span>
+                </div>
+              <% end %>
             </div>
-        <% end %>
-      <% end %>
-
-      <!-- Edit/Preview profile -->
-      <div class="dropdown" style="display: inline;">
-        <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>
-        <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-          <li><a href="<%= profile_path %>">Edit</a></li>
-          <li><a href="<%= public_profile_path(:id => current_user.id) %>">Preview</a></li>
-          <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: ""%></li>
-        </ul>
-      </div>
-
-      <!-- Logout -->
+          </div>
       
-        <!--<i class="glyphicon glyphicon-off"></i>-->
-    
+          <!-- Glyphicons - right side -->
+          <% if user_signed_in?%>
+          <div class="col-md-5 button-group-nav pull-right" style="padding-left:1em;">
+            <br/>
+            <!-- Newsfeed -->
+            <%= link_to questions_path, class: "btn btn-nav" do %>
+              <i class="glyphicon glyphicon-list-alt"> Feed</i>
+            <% end %>
+      
+            <!-- Create something option -->
+            <div class="dropdown" style="display: inline;">
+              <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-pencil"> Write</i>
+              <span class="caret"></span></button>
+              
+              <% if user_signed_in? %>
+                <ul class="dropdown-menu">
+                  <li><a href="" data-toggle="modal" data-target="#myModal">Ask a Question</a></li>
+                  <% if is_admin? %>
+                    <li><a href="" data-toggle="modal" data-target="#contestModal">Start a Contest</a></li>
+                  <% end %>
+                  <li><a href="<%= new_cause_path %>">Start a Cause</a></li>
+                  <li><a href="<%= new_article_path %>">Write an Article</a></li>
+              </ul>
+              <% end %>
+            </div>
+      
+            <!-- Notifications -->
+            <%= link_to notifications_path, class: "btn btn-nav" do %>
+              <% if current_user.read == true %>
+                <i class="glyphicon glyphicon-bullhorn"> Notifications</i>
+              <% else %>
+                <i class="glyphicon glyphicon-bullhorn"> Notifications</i>
+                  <div style="margin-bottom: 1em; margin-left: 0.5em;">
+                    <div style="width: 20px; height: 20px; background-color: #F5F5F5; border-radius: 10px;">
+                      <span style="color: red;">1</span>
+                    </div>
+                  </div>
+              <% end %>
+            <% end %>
+      
+            <!-- Edit/Preview profile -->
+            <div class="dropdown" style="display: inline;">
+              <button class="btn btn-nav dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-user"> Profile</i>
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="<%= profile_path %>">Edit</a></li>
+                <li><a href="<%= public_profile_path(:id => current_user.id) %>">Preview</a></li>
+                <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: ""%></li>
+              </ul>
+            </div>
+          </div>
+          <%else%>
+          <div class="col-md-3 col-md-offset-2 button-group-nav"><br/>
+            <div class="btn btn-ask1" data-toggle="modal" data-target="#signUpModal">Sign Up</div>
+            <div class="btn btn-ask1" data-toggle="modal" data-target="#signInModal">Sign In</div>
+          </div>
+          <%end%>
+        </div>
+      </div>
+      <!--here-->
+      <%if request.path.start_with?('/profile')%>
+      <%else%>
+        <%= render 'layouts/sub_bar'%>
+  <%end%>
     </div>
   </div>
 </div>
-
 <!-- Rendering modals for posting and editing -->
 <% if user_signed_in? %>
   <%= render 'layouts/question_modals' %>
@@ -82,5 +94,5 @@
   <%= render 'layouts/cause_modals' %>
   <%= render 'layouts/profile_modals' %>
 <% else %>
-  <%= render 'layouts/signup' %>
+  <%= render 'layouts/user_modals' %>
 <%end%>

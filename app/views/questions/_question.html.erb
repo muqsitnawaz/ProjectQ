@@ -1,128 +1,126 @@
-<!-- Template for rendering a question -->
-<div class="row question" style="margin-top: 0.5em;">
-  <div class="col-xs-12">
-    <!-- Question's topics -->
-    <p class="text-muted">
-      In
-      <i>
-        <% question.topics[0..2].sort.each do |topic| %>
-          <%= link_to topic.titleize, questions_path(:topic => topic) %>
+<div class="box box-widget cause-block">
+  <div class="box-header with-border">
+    <div class="user-block">
+      <% if user_signed_in?%>
+        <% if current_user.profile_pic.length != 0 %>
+          <%= image_tag current_user.profile_pic.thumb, class: 'img-circle',height: '128px', width:'128px' %>
+        <% else %>
+          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
         <% end %>
-        <% if question.topics.length > 3 %>
-          and <%= question.topics.length - 3 %> more
+        <%else%>
+          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
+      <%end%>
+      <span class="username">
+        <% if question.anonymous == false %>
+          <%= link_to question.user.name, public_profile_path(:id => question.user.id) %>
+          <% question.topics[0..2].sort.each do |topic| %>
+            <span class=""><%= link_to topic.titleize, questions_path(:topic => topic),class:'label label-dark' %></span>
+          <% end %>
+          <% if question.topics.length > 3 %>
+            and <%= question.topics.length - 3 %> more
+          <% end %>
+        <% else %>
+          <p>Posted by Anonymous</p>
         <% end %>
-      </i>
-      - <%= question.updated_at.strftime('%-d %B, %Y') %>
+      </span>
+      <span class="description">Shared publicly - <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</span>
+    </div> <!-- /.user-block -->
+    <% if user_signed_in? && question.user == current_user %>
+      <div class="box-tools">
+        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_question<%= question.id %>">
+          <i class="fa fa-pencil"></i>
+        </button>
+        <%= link_to question_path(:id => question.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+          <i class="fa fa-times"></i>
+        <%end%>
+      </div> <!-- /.box-tools -->
+    <%end%>
+  </div> <!-- /.box-header -->
+  <div class="box-body">
+    <h3> <%= link_to question.content, question_path(:id => question.id),data: {no_turbolink: true } %></h3>
+    <%= image_tag 'photo2.png', class: 'img-responsive pad'%>
+    <p>
+      <div id="question_detail<%= question.id %>">
+        <%= question.detail.html_safe %>
+      </div>
     </p>
-
-    <!-- Hidden field for question content -->
-    <input type="text" id="question_content<%= question.id %>" value="<%= question.content %>" hidden>
-
-    <!-- Question's header -->
-    <div class="row">
-      <!-- Question's content -->
-      <div class="col-xs-9 question-content" >
-        <%= link_to question.content, question_path(:id => question.id) %>
-      </div>
-
-      <!-- Question edit and delete buttons -->
-      <div class="col-xs-3">
-        <% if user_signed_in? && question.user == current_user %>
-          <a id="edit_question<%= question.id %>" class="btn btn-default">edit</a>
-          <%= link_to 'delete', question_path(:id => question.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
-        <% end %>
-      </div>
-    </div>
-
-    <% if full == true %>
-      <!-- Question's owner name -->
-      <div class="row">
-        <div class="col-xs-12">
-          <% if question.anonymous == false %>
-            <p>Posted by <%= link_to question.user.name, public_profile_path(:id => question.user.id) %>,<i> <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</i></p>
-          <% else %>
-            <p>Posted by Anonymous</p>
-          <% end %>
-        </div>
-      </div>
-  
-      <div class="question-details" style="margin-top: -1.5em;">
-        <div id="question_detail<%= question.id %>">
-          <%= question.detail.html_safe %>
-        </div>
-      </div>
-  
-      <!-- Bottom buttons -->
-      <div class="row">
-        <div class="col-xs-9">
-          <% if user_signed_in? %>
-            <!-- Bottom left buttons -->
-            <button id="answerQ<%= question.id %>" class="btn btn-default">Answer | <%= question.answers.length %></button>
-             
-            <% if !current_user.following.include? question.id %>
-              <button id="follow<%= question.id %>" class="btn btn-default">Follow</button>
-            <% else %>
-              <button class="btn btn-default following" style="color: blue;">Following</button>
-            <% end %>
-          <% else %>
-            <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Answer | <%= question.answers.length %></div>
-            <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Follow</div>
-          <% end %>
-        </div>
-        <!-- Bottom right buttons -->
-        <div class="col-xs-3" style="margin-top: 0.8em;">
-          <%= social_share_button_tag(question.content) %>
-        </div>
-      </div>
+    <% if user_signed_in? %>
+      <button id="answerQ<%= question.id %>" class="btn btn-default btn-xs">Answers | <%= question.answers.length %></button>
+      <% if !current_user.following.include? question.id %>
+        <button id="follow<%= question.id %>" class="btn btn-default btn-xs"><i class="fa fa-share"></i>Follow</button>
+      <% else %>
+        <button class="btn btn-default following" style="color: blue;">Following</button>
+      <% end %>
+    <% else %>
+      <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-share"></i>Answer | <%= question.answers.length %></button>
+      <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal">Follow</button>
     <% end %>
-    
-    <!--In place answer poster -->
-    <div id="answerContent<%= question.id %>" class="row hidden">
-      <div class="col-xs-12">
-        <% @answer = Answer.new %>
-        <%= form_for @answer, :url => {:controller =>"answers", :action => "create"}  do |f| %>
-          <%= f.cktext_area :content, class: 'form-control' %><br>
-          <%= f.hidden_field :question_id, value: question.id %>
-      </div>
-      <div class="col-xs-4 col-xs-offset-8">
-        <div>
-          <strong>Anonymous</strong> <%= f.check_box :anonymous %>
-          <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
-        </div>
+    <span class="pull-right text-muted"><%= social_share_button_tag(question.content) %></span>
+  </div>
+  <!-- /.box-body -->
+
+  <!-- /.box-footer -->
+  <div id="answerContent<%= question.id %>" class="row" style="display:none;">
+    <div class="box-footer">
+     <!--.img-push is used to add margin to elements next to floating images -->
+    <div class="img-push">
+      <% if user_signed_in?%>
+        <% if current_user.profile_pic.length != 0 %>
+          <%= image_tag current_user.profile_pic.thumb, class: 'img-circle img-sm',height: '128px', width:'128px' %>
+        <% else %>
+
+          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
+
         <% end %>
-      </div>
-    </div>
+
+        <%else%>
+
+          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
+
+      <%end%>
+        <div>
+          <% @answer = Answer.new %>
+          <%= form_for @answer, :url => {:controller =>"answers", :action => "create"}  do |f| %>
+            <%= f.cktext_area :content, class: 'form-control input-sm',placeholder:'Type your Answer here' %><br>
+            <%= f.hidden_field :question_id, value: question.id %>
+        </div>
+          <div>
+            <strong>Anonymous</strong> <%= f.check_box :anonymous %>
+            <%= f.submit "Post Answer", class:'btn btn-default'%>
+          </div>
+          <% end %>
+        </div>
+      </div>  <!--img push ended-->
+
+    </div> <!--/.box-footer -->
 
     <% if !answers.empty? %>
-      <div class="col-xs-12" style="margin-bottom: -1.5em; <%= full == true ? 'margin-top: -1em;' : '' %>">
+      <div class="col-xs-12" style="margin-bottom: -1.5em; <%= full == true ? 'margin-top: 1em;' : '1em' %>">
         <!-- Rendering answers -->
         <% if full == true %>
           <hr>
-        
+
           <% answers.each do |answer| %>
-            <%= render 'questions/answer', :answer => answer %>
+            <%= render 'questions/answer', :answer => answer %><br>
           <% end %>
         <% else %>
           <%= render 'questions/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0] %>
         <% end %>
       </div>
+
     <% else %>
       <% if full == false %>
-        <p class='text-muted'>Be the first to answer</p>
       <% end %>
     <% end %>
-  </div>
 </div>
-
 <hr class="question-hr">
 
-<% if full == true %>
+
   <script>
     $("[id^=answerQ]").click(function() {
       question_id = this.id.substring(7, this.id.length)
       console.log('id: '+question_id)
-      
-      $("#answerContent"+question_id).toggleClass("hidden")
+
+      $("#answerContent"+question_id).css("display", "block");
   })
   </script>
-<% end %>

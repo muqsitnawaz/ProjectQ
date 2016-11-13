@@ -3,7 +3,7 @@ require_relative './workers/causes/cause_agree_notif'
 require_relative './workers/causes/cause_disagree_notif'
 
 class CausesController < ApplicationController
-  before_filter :authenticate_user!, except: [ :index, :show ]
+  # before_filter :authenticate_user!, except: [ :index ]
   
   # Creating a cause
   def create
@@ -26,10 +26,14 @@ class CausesController < ApplicationController
   
   def index
     if !params[:type].nil?
-      if params[:type] == 'followed'
+      if params[:type] == 'followed' && user_signed_in?
+        puts 'ca,e jere'
+        @causecreated = Cause.where(:user_id => current_user.id)
         @causes = Cause.where(:id => current_user.causes_followed)
-      elsif params[:type] == 'agreed'
-        @causes = Cause.where(:id => current_user.causes_agreed)
+        @causesagreed = Cause.where(:id => current_user.causes_agreed)
+        @causesdisagreed = Cause.where(:id => current_user.causes_disagreed)
+      elsif params[:type] == 'followed' && !user_signed_in?
+        @causes = Cause.all.order('created_at DESC')
       elsif params[:type] == 'disagreed'
         @causes = Cause.where(:id => current_user.causes_disagreed)
       else
@@ -267,6 +271,25 @@ class CausesController < ApplicationController
   
   def completed_cause
     @cause = Cause.find_by_id(params[:cause_id])
+  end
+  
+  def sign_without_signin
+    puts 'came in'
+    @user = User.create(:name => params[:user][:name],:email =>params[:user][:email],:password => 'waqaswaqas',:password_confirmation => 'waqaswaqas')
+    puts @user.inspect
+    if @user.save
+      puts 'inside'
+      cause = Cause.find(params[:id])
+      cause.total_signs = cause.total_signs + 1
+      if cause.save
+        respond_to do |format|
+          format.html {}
+          format.js {}
+          format.json {}
+        end
+      end
+      
+    end
   end
 private
   def cause_params

@@ -1,25 +1,118 @@
-<div class="container main-wall">
-  <div class="row">
-    <!-- Leftbar  -->
-    <div class="col-xs-2">
-      <%= render 'layouts/leftbar'%>
-    </div>
-
-    <!-- Questions area -->
-    <div class="col-xs-7">
-      <div class="question-area">
-        <% @questions.each do |question| %>
+        <!-- for multi-tabbed nav -->
+<div class="container">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#menu1" data-toggle="tab">Questions</a></li>
+      <li><a href="#menu2" data-toggle="tab">Contests</a></li>
+      <li><a href="#menu3" data-toggle="tab">Causes</a></li>
+      <li><a data-toggle="tab" href="#menu4" >Articles</a></li>
+    </ul>
+  </div>
+    <div class="tab-content" >
+      <div id="menu1" class="tab-pane fade in active">
+        <div class="row">
+          <div class="col-md-8">
+            <% @questions.each do |question| %>
             <%= render 'questions/question', :question => question, :answers => question.answers, :full => false %>
-        <% end %>
+          <% end %>
+
+             <!--/.box -->
+          </div>
+        </div>
+      </div>
+      <div id="menu2" class="tab-pane fade">
+        <!-- for the contests -->
+      </div>
+      <div id="menu3" class="tab-pane fade">
+        <!--for causes  -->
+        <!-- user block -->
+        <div class="content-grids">
+          <div class="col-md-8 content-main cause-block">
+            <div class="box-header with-border">
+              <div class="user-block">
+                <img class="img-circle" src="img/user1-128x128.jpg" alt="User Image">
+                <span class="username"><a href="#">Jonathan Burke Jr.</a></span>
+                <span class="description">Shared publicly - 7:30 PM Today</span>
+              </div>
+              <!-- /.user-block -->
+            </div><br>
+            <div class="panel panel-default">
+              <div class="panel-heading cause-panel-heading">
+                <span class="pull-right">
+                  <div class="col-sm-2">
+                    <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i>See More</button>
+                  </div>
+                <span>
+              </div>
+              <!-- body-->
+              <div class="panel-body">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <figure class="pull-left">
+                        <img class="media-object img-rounded img-responsive"  src="http://placehold.it/350x250" alt="placehold.it/350x250" >
+                      </figure>
+                    </div>
+                    <div class="col-xs-8">
+                      <h4 class="list-group-item-heading cause-heading"><strong> List group heading Loren Ipsum bla bla</strong> </h4>
+                      <p class="list-group-item-text"> Qui diam libris ei, vidisse incorrupte at mel. His euismod salutandi dissentiunt eu. Habeo offendit ea mea. Nostro blandit sea ea, viris timeam molestiae an has. At nisl platonem eum.
+                           ius no elitr deserunt mediocrem. Mea facilisi torquatos ad.
+                      </p>
+                    </div>
+                  </div>
+              </div>
+              <!-- footer -->
+              <div class="panel-footer clearfix">
+                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
+                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Upvote</button>
+                <span class="pull-right">
+                </span>
+              </div><!--/panel-footer-->
+            </div>
+          </div>
+        </div>
+      </div>
+        <!--blogs  -->
+      <div id="menu4" class="tab-pane fade"><br>
+        <h5 class="head">in recent news</h5>
+
+        <div class="content-grids">
+          <div class="col-md-8 content-main cause-block">
+            <div class="box-header with-border">
+              <div class="user-block">
+                <img class="img-circle" src="img/user1-128x128.jpg" alt="User Image">
+                <span class="username"><a href="#">Jonathan Burke Jr.</a></span>
+                <span class="description">Shared publicly - 7:30 PM Today</span>
+              </div>
+              <!-- /.user-block -->
+
+              <!-- /.box-tools -->
+            </div>
+            <div class="content-grid">
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+                  <i class="fa fa-circle-o"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+              <!--  user info ended-->
+
+              <div class="content-grid-info" style="margin-top:-1em;">
+
+                <img src="img/post1.jpg" alt=""/>
+                <div class="post-info">
+                <h4><a href="single.html">Lorem ipsum dolor sit amet</a>  July 30, 2014 / 27 Comments</h4>
+                <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis.</p>
+                <a href="single.html"><span></span>READ MORE</a>
+                </div>
+              </div>
+
+            </div>
+           </div>
+      </div>
       </div>
     </div>
-
-    <!-- Suggestions -->
-    <div class="col-xs-3">
-      <%= render 'layouts/suggestions'%>
-    </div>
+     
   </div>
-</div>
-
 <!-- Rendering modals for posting and editing -->
 <%= javascript_include_tag "questions_script", "data-turbolinks-track" => true  %>

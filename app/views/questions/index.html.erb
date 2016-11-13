@@ -1,24 +1,72 @@
-<div class="container main-wall">
-  <div class="row">
-    <!-- Leftbar  -->
-    <div class="col-xs-2">
-      <%= render 'layouts/leftbar'%>
+<%if user_signed_in?%>
+<div class="background-div">
+  <div class="container">
+    <div class="nav-tabs-custom cause-block" >
+      <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#menu1" data-toggle="tab">Following</a></li>
+        <li><a href="#menu2" data-toggle="tab">Asked</a></li>
+        <li><a href="#menu3" data-toggle="tab">Answered</a></li>
+      </ul>
     </div>
-
-    <!-- Questions area -->
-    <div class="col-xs-7">
-      <div class="question-area">
-        <% @questions.each do |question| %>
-          <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
-        <% end %>
+      <div class="tab-content">
+        <div id="menu1" class="tab-pane fade in active">
+          <div class="row">
+            <div class="col-md-8">
+              <% @questions.each do |question| %>
+                <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
+              <% end %>
+      
+               <!--/.box -->
+            </div>
+          </div>
+          <%= paginate @questions, param_name: "question_followed"%>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+          <!-- for the contests -->
+          <div class="row">
+            <div class="col-md-8">
+              <% if !@questionasked.nil?%>
+                <% @questionasked.each do |question| %>
+                  <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
+                <% end %>
+               <!--/.box -->
+            </div>
+          </div>
+          <%= paginate @questionasked,param_name: "question_asked"%>
+          <%end%>
+        </div>
+        <div id="menu3" class="tab-pane fade">
+          <!--for causes  -->
+          <!-- user block -->
+          <div class="row">
+            <div class="col-md-8">
+              <% if !@questionans.nil?%>
+                <%  @questionans.each do |question| %>
+                  <%= render 'question', :question=> question, :answers => question.answers.order('created_at DESC'), :full => false %>
+                <% end %>
+               <!--/.box -->
+            </div>
+          </div>
+          <%= paginate @questionans, param_name: "question_ans"%>
+          <%end%>
+        </div>
       </div>
     </div>
-
-    <!-- Suggestions -->
-    <div class="col-xs-3">
-      <%= render 'layouts/suggestions'%>
+</div>
+<%else%>
+  <div class="background-div">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <% @questions.each do |question| %>
+            <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
+          <% end %>
+       <!--/.box -->
+        </div>
+      </div>
+      <%= paginate @questions%>
     </div>
   </div>
-</div>
+<%end%>
 
 <%= javascript_include_tag "questions_script", "data-turbolinks-track" => true  %>

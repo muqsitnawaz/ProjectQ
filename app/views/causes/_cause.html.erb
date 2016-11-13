@@ -1,94 +1,81 @@
-<!-- Template for rendering a cause -->
-<div class="row" style="margin-top: 0.5em;">
-  <div class="col-xs-12">
-    <p><i><%= cause.cause_type %></i></p>
-    
-    <!-- Cause's header -->
-    <div class="row">
-      <!-- Hidden field for cause intro -->
-      <input type="text" id="cause_intro<%= cause.id %>" value="<%= cause.intro %>" hidden>
-
-      <!-- Cause's content -->
-      <div class="col-xs-9 question-content" >
-        <%= link_to cause.intro, cause_path(:id => cause.id) %>
-      </div>
-
-      <!-- Cause edit and delete buttons -->
-      <div class="col-xs-3">
-        <% if cause.user == current_user %>
-          <!--<a id="edit_causeC<% cause.id %>" class="btn btn-default">edit</a>-->
-          <%= link_to 'edit', {:controller => 'causes', :action => 'pledge_view',:cause_id => cause.id}, class:'btn btn-default' %>
-          <%= link_to 'delete', causes_path(:id => cause.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
+<div class="box box-widget cause-block">
+  <div class="box-header with-border">
+    <div class="user-block">
+        <% if cause.user.profile_pic.length != 0 %>
+          <%= image_tag cause.user.profile_pic, class: 'img-circle',height: '128px', width:'128px' %>
+        <% else %>
+          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
         <% end %>
-      </div>
+      <span class="username">
+          <%= link_to cause.user.name, public_profile_path(:id => cause.user.id) %>
+            <span class="label label-dark"><%= cause.cause_type %></span>
+      </span>
+      <span class="description">Started Cause - <%= (Time.now.to_date - cause.created_at.to_date).to_i %> day(s) ago</span>
+    </div> <!-- /.user-block -->
+    <!-- /.user-block -->
+    <% if user_signed_in? && cause.user == current_user %>
+      <div class="box-tools">
+        <%= link_to  pledge_edit_path(:cause_id => cause.id),class:'btn btn-box-tool',title:"Edit Cause" do %>
+          <i class="fa fa-pencil"></i>
+        <%end%>
+        <%= link_to delete_cause_path(:id => cause.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+          <i class="fa fa-times"></i>
+        <%end%>
+      </div> <!-- /.box-tools -->
+    <%end%>
+  </div>
+   <div class="box-body">
+    <div class="headingcause"><%= link_to cause.intro, cause_path(:id => cause.id),data: {no_turbolink: true } %>
+      <span style="margin-left:2em">
+        <% if cause.pledgeTo.nil?%>
+        <%else%>
+          <span class="label label-danger"><%= cause.total_pledges%></span> 
+        <%end%>
+        <% if cause.petitionTo.nil?%>
+        <%else%>
+          <span class="label label-danger"><%= cause.total_signs%> signs</span><span class="description">required</span> 
+        <%end%>  
+      </span>
     </div>
-    
-    <% if full == false %>
-      <div class="question-details" style="margin-bottom:-1em;">
-          <!--to show petition and pledge text on index page-->
-          <%if !cause.petitionTo.nil?%>
-            <p style="font-family:helvetica; font-size:14px;color:#1e824c;border-right:1px dashed #b2b2b2"><strong>Sign the petition to <%=cause.petitionTo%></strong>
-            <strong>Sign the petition to <%=cause.petitionTo%></strong>
-            </p><span>
-          <%end%>
-      </div>
-    <% end %>
-
-    <% if full == true %>
-      <!-- Cause's owner name -->
-      <div class="row">
-        <div class="col-xs-12">
-          <% if cause.anonymous == false %>
-            <p>Started by <%= link_to cause.user.name, public_profile_path(:id => cause.user.id) %>,<i> <%= (Time.now.to_date - cause.created_at.to_date).to_i %> day(s) ago</i></p>
-          <% else %>
-            <p>Started by Anonymous</p>
-          <% end %>
-        </div>
-      </div><br/>
-  
-      <% if !cause.image.nil? && cause.image.length != 0 %>
-        <!-- Showing cause's image -->
-        <img src="<%= cause.image %>" class="img img-responsive">
-        <br/>
+    <%= image_tag cause.image.url(), class: 'img-responsive pad'%>
+    <p>
+     <% if cause.detail.length > 250 && full == false %>
+        <%= truncate(cause.detail, length: 250) %>
+        <%= link_to '...Read more', '', class: "read-more-#{cause.id}" %>
+        <script>
+          $('.read-more-<%= cause.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(this).parent().html('<%= escape_javascript cause.detail %>')
+          })
+        </script>
+      <% else %>
+        <%= cause.detail %>
+        <br>
+        <h3>Why it Matters?</h3>
+        <%= cause.whymatters%>
       <% end %>
-  
-      <div class="question-details" style="margin-top: -1.5em;">
-        <p id="cause_detail<%= cause.id %>"><%= cause.detail %></p>
-      </div>
-  
-      <div class="question-details">
-        <p style="font-weight: bold; font-style: normal;">Why it matters?</p>
-        <p id="cause_whymatters<%= cause.id %>"><%= cause.whymatters %></p>
-      </div>
-  
-      <!-- Rendering cause buttons -->
-      <div class="row">
-        <div class="col-xs-9">
-          <% if user_signed_in? %>
-            <button id="commentC<%= cause.id %>" class="btn btn-default">Comment | <%= cause_comments.length %></button>
-            <% if current_user.causes_followed.include? cause.id %>
-              <button class="btn btn-default" style="color:blue;">Following</button>
-            <% else %>
-              <button id="follow_cause<%= cause.id %>" class="btn btn-default">Follow</button>
-            <% end %>
-            <button id="agree_<%= cause.id %>" class="btn btn-default">Agree | <%= cause.num_agree %></button>
-            <button id="disagree_<%= cause.id %>" class="btn btn-default">Disagree | <%= cause.num_disagree %></button>
-          <% else %>
-            <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Comment | <%= cause_comments.length %></div>
-            <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Follow</div>
-            <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Agree | <%= cause.num_agree %></div>
-            <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Disagree | <%= cause.num_disagree %></div>
-          <% end %>
-        </div>
-        <!-- Bottom right buttons -->
-        <div class="col-xs-3" style="margin-top: 0.8em;">
-          <%= social_share_button_tag(cause.detail) %>
-        </div>
-      </div>
+    </p> 
+    <% if user_signed_in? %>
+      <button id="commentC<%= cause.id %>" class="btn btn-default">Comment | <%= cause_comments.length %></button>
+      <% if current_user.causes_followed.include? cause.id %>
+        <button class="btn btn-default" style="color:blue;">Following</button>
+      <% else %>
+        <button id="follow_cause<%= cause.id %>" class="btn btn-default">Follow</button>
+      <% end %>
+      <button id="agree_<%= cause.id %>" class="btn btn-default"><i class="fa fa-thumbs-o-up"></i>Agree | <%= cause.num_agree %></button>
+      <button id="disagree_<%= cause.id %>" class="btn btn-default"><i class="fa fa-thumbs-o-down"></i>Disagree | <%= cause.num_disagree %></button>
+    <% else %>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-comment"></i>Comment | <%= cause_comments.length %></div>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal">Follow</div>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-up"></i>Agree | <%= cause.num_agree %></div>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-down"></i>Disagree | <%= cause.num_disagree %></div>
+      <span class="pull-right">
+        <%= social_share_button_tag(cause.detail) %>
+      </span>
     <% end %>
-    
-    <!-- In page comment poster -->
-    <div id="causeCommentContent<%= cause.id %>" class="row hidden">
+  </div>
+  <% if full == true%>
+<div id="causeCommentContent<%= cause.id %>" class="row hidden">
       <div class="col-xs-12">
         <% @cause_comment = CauseComment.new %>
         <%= form_for @cause_comment, :url => { :controller =>"cause_comments", :action =>"create"}  do |f| %>
@@ -97,19 +84,19 @@
       </div>
       <div class="col-xs-4 col-xs-offset-8">
         <div>
-          <strong>Anonymous</strong> <%= f.check_box :anonymous %>
           <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
         </div>
         <% end %>
       </div>
     </div>
+<%end%>
 
     <div class="col-xs-12" style="margin-top: 1em;">
       <% if !cause_comments.empty? %>
         <!-- Rendering comments -->
         <% if full == true %>
           <hr>
-        
+
           <% cause_comments.each do |cause_comment| %>
             <%= render 'causes/cause_comment', :cause_comment => cause_comment %>
           <% end %>
@@ -118,18 +105,16 @@
         <% end %>
       <% end %>
     </div>
-  </div>
-</div>
-
-<hr class="question-hr">
-
 <% if full == true %>
   <script>
     $("[id^=commentC]").click(function() {
       cause_id = this.id.substring(8, this.id.length)
       console.log('id: '+cause_id)
-      
+
       $("#causeCommentContent"+cause_id).toggleClass("hidden")
   })
   </script>
 <% end %>
+<input type="text" id="cause_intro<%= cause.id %>" value="<%= cause.intro %>" hidden>
+</div>
+<%= javascript_include_tag "causes_script", "data-turbolinks-track" => true  %>

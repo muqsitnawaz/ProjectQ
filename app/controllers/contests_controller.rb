@@ -16,6 +16,9 @@ class ContestsController < ApplicationController
     elsif user_signed_in?       # Check for users
       if params[:type] == 'open'
         @contests = Contest.where(:status => 'open').order('created_at DESC')
+        @contestwon = Contest.where(:winner_id => current_user.id).order('created_at DESC')
+        @contestclosed = Contest.where(:status => 'close').order('created_at DESC')
+        @contestpart = Contest.where(:id => ContestAnswer.where(:user_id => current_user.id).map {|a| a.contest_id}).order('created_at DESC')
       elsif params[:type] == 'close'
         @contests = Contest.where(:status => 'close').order('created_at DESC')
       elsif params[:type] == 'won'

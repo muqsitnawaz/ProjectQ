@@ -1,65 +1,66 @@
-<div style="padding: 5px;">
-  <div class="row">
-    <div class="col-xs-2">
-      <% if cause_comment.user.profile_pic.length != 0 && cause_comment.anonymous == false %>
-        <%= image_tag cause_comment.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
+<div class="box-footer box-comments cause-block-1">
+  <div class="box-comment">
+    <!-- User image -->
+    <% if cause_comment.user.profile_pic.length != 0 && cause_comment.anonymous == false %>
+        <%= image_tag cause_comment.user.profile_pic.thumb, class: 'img-circle img-sm', width: 128,height:128 %>
       <% else %>
-        <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
+        <%= image_tag 'thumb.jpg',class: 'img-circle img-sm', width: 128,height:128 %>
+    <% end %>
+    
+    <div class="comment-text">
+      <span class="username">
+        <% if cause_comment.anonymous == false %>
+          <%= link_to cause_comment.user.name, public_profile_path(:id => cause_comment.user.id) %>
+        <% else %>
+          <p>Anonymous</p>
+        <% end %>
+        <span class="text-muted pull-right">
+          <% if cause_comment.user == current_user %>
+            <div class="box-tools">
+              <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_cause_commentC<%= cause_comment.id %>">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <%= link_to cause_comments_path(:id => cause_comment.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do %>
+                <i class="fa fa-times"></i>
+              <%end%>
+            </div> <!-- .box-tools -->
+          <%end%>
+        </span>
+      </span>
+      <p>
+        <div id="cause_comment_comment<%= cause_comment.id %>">
+          <%= cause_comment.content.html_safe %>
+        </div>       
+      </p>
+      <% if user_signed_in? %>
+        <div class="row">
+          <div class="col-xs-12">
+            <button id="replyC<%= cause_comment.id %>" class="btn btn-default">Reply</button>
+            <button id="showCauseReplies<%= cause_comment.id %>" class="btn btn-default">Replies | <%= cause_comment.cause_replies.count %></button>
+          </div>
+        </div>
       <% end %>
     </div>
-    <div class="col-xs-7" style="margin-left: -50px;">
-      <% if cause_comment.anonymous == false %>
-        <%= link_to cause_comment.user.name, public_profile_path(:id => cause_comment.user.id) %>
-      <% else %>
-        <p>Anonymous</p>
-      <% end %>
-    </div>
-    <div class="col-xs-3" style="margin-left: 50px;">
-      <% if cause_comment.user == current_user %>
-        <a id="edit_cause_commentC<%= cause_comment.id %>" class="btn btn-default">edit</a>
-        <%= link_to 'delete', cause_comments_path(:id => cause_comment.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
-      <% end %>
-    </div>
+    <!-- comment-text -->
   </div>
-  
-  <div class="row">
-    <div class="col-xs-10">
-      <div id="cause_comment_comment<%= cause_comment.id %>">
-        <%= cause_comment.content.html_safe %>
-      </div>
-      
-      <p class="text-muted"><small>Updated at <%= cause_comment.updated_at.strftime('%-d %B, %Y') %></small></p>
-    </div>
-  </div>
-  
-  <!-- Like, Reply -->
-  <% if user_signed_in? %>
-    <div class="row">
-      <div class="col-xs-12">
-        <button id="replyC<%= cause_comment.id %>" class="btn btn-default">Reply</button>
-        <button id="showCauseReplies<%= cause_comment.id %>" class="btn btn-default">Replies | <%= cause_comment.cause_replies.count %></button>
-      </div>
-    </div>
-  <% end %>
-  
-  <!-- In page reply poster -->
-  <div id="causeReplyContent<%= cause_comment.id %>" class="row hidden">
+  <!-- .box-comment -->
+   <div id="causeReplyContent<%= cause_comment.id %>" class="row hidden">
     <div class="col-xs-12">
       <% @cause_reply = CauseReply.new %>
       <%= form_for @cause_reply, :url => { :controller =>"cause_replies", :action =>"create"}  do |f| %>
-        <%= f.cktext_area :content, class: 'form-control' %><br>
+        <%= f.cktext_area :content, class: 'form-control',data: {no_turbolink: true } %><br>
         <%= f.hidden_field :cause_comment_id, value: cause_comment.id %>
     </div>
-    <div class="col-xs-4 col-xs-offset-8">
-      <div>
-        <strong>Anonymous</strong> <%= f.check_box :anonymous %>
-        <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
-      </div>
+    
+      <div class="col-xs-4 col-xs-offset-8">
+        <div>
+          <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
+        </div>
       <% end %>
     </div>
-  </div>
   
-  <!-- Hidden cause replies -->
+  </div>
+  <!-- Hidden replies -->
   <div class="row" style="">
     <div class="col-xs-11 col-xs-offset-1">
       <div id="causeReplies<%= cause_comment.id %>" class="hidden" style="margin-top: 1em; margin-bottom: -1em;">

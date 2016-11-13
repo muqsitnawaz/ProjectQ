@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20160811081618) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
     t.text     "body"
@@ -27,9 +24,9 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at"
   end
 
-  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
-  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
-  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace"
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -40,14 +37,12 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
 
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id"
@@ -60,8 +55,8 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",                  null: false
   end
 
-  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
-  add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id"
+  add_index "answers", ["user_id"], name: "index_answers_on_user_id"
 
   create_table "article_requests", force: :cascade do |t|
     t.integer  "user_id"
@@ -72,7 +67,7 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "article_requests", ["user_id"], name: "index_article_requests_on_user_id", using: :btree
+  add_index "article_requests", ["user_id"], name: "index_article_requests_on_user_id"
 
   create_table "articles", force: :cascade do |t|
     t.integer  "user_id"
@@ -85,7 +80,7 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",                              null: false
   end
 
-  add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
+  add_index "articles", ["user_id"], name: "index_articles_on_user_id"
 
   create_table "cause_comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -96,8 +91,8 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",                 null: false
   end
 
-  add_index "cause_comments", ["cause_id"], name: "index_cause_comments_on_cause_id", using: :btree
-  add_index "cause_comments", ["user_id"], name: "index_cause_comments_on_user_id", using: :btree
+  add_index "cause_comments", ["cause_id"], name: "index_cause_comments_on_cause_id"
+  add_index "cause_comments", ["user_id"], name: "index_cause_comments_on_user_id"
 
   create_table "cause_replies", force: :cascade do |t|
     t.integer  "cause_comment_id"
@@ -108,8 +103,8 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",                       null: false
   end
 
-  add_index "cause_replies", ["cause_comment_id"], name: "index_cause_replies_on_cause_comment_id", using: :btree
-  add_index "cause_replies", ["user_id"], name: "index_cause_replies_on_user_id", using: :btree
+  add_index "cause_replies", ["cause_comment_id"], name: "index_cause_replies_on_cause_comment_id"
+  add_index "cause_replies", ["user_id"], name: "index_cause_replies_on_user_id"
 
   create_table "causes", force: :cascade do |t|
     t.integer  "user_id"
@@ -140,7 +135,7 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",                          null: false
   end
 
-  add_index "causes", ["user_id"], name: "index_causes_on_user_id", using: :btree
+  add_index "causes", ["user_id"], name: "index_causes_on_user_id"
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -155,8 +150,8 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at"
   end
 
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable"
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type"
 
   create_table "contest_answers", force: :cascade do |t|
     t.integer  "contest_id"
@@ -168,8 +163,8 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",                 null: false
   end
 
-  add_index "contest_answers", ["contest_id"], name: "index_contest_answers_on_contest_id", using: :btree
-  add_index "contest_answers", ["user_id"], name: "index_contest_answers_on_user_id", using: :btree
+  add_index "contest_answers", ["contest_id"], name: "index_contest_answers_on_contest_id"
+  add_index "contest_answers", ["user_id"], name: "index_contest_answers_on_user_id"
 
   create_table "contests", force: :cascade do |t|
     t.integer  "user_id"
@@ -186,7 +181,7 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",                         null: false
   end
 
-  add_index "contests", ["user_id"], name: "index_contests_on_user_id", using: :btree
+  add_index "contests", ["user_id"], name: "index_contests_on_user_id"
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
@@ -198,12 +193,12 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",        null: false
   end
 
-  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
 
   create_table "questions", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "content",                         null: false
-    t.string   "detail",                          null: false
+    t.string   "detail"
     t.boolean  "anonymous",  default: false
     t.integer  "views",      default: 0
     t.text     "topics",     default: "--- []\n"
@@ -212,7 +207,7 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",                      null: false
   end
 
-  add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
+  add_index "questions", ["user_id"], name: "index_questions_on_user_id"
 
   create_table "replies", force: :cascade do |t|
     t.integer  "answer_id"
@@ -223,8 +218,8 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.datetime "updated_at",                 null: false
   end
 
-  add_index "replies", ["answer_id"], name: "index_replies_on_answer_id", using: :btree
-  add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
+  add_index "replies", ["answer_id"], name: "index_replies_on_answer_id"
+  add_index "replies", ["user_id"], name: "index_replies_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "profile_pic"
@@ -263,8 +258,8 @@ ActiveRecord::Schema.define(version: 20160811081618) do
     t.string   "uid"
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
