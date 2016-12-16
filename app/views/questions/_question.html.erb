@@ -1,30 +1,32 @@
 <div class="box box-widget cause-block">
   <div class="box-header with-border">
-    <div class="user-block">
-      <% if user_signed_in?%>
-        <% if current_user.profile_pic.length != 0 %>
-          <%= image_tag current_user.profile_pic.thumb, class: 'img-circle',height: '128px', width:'128px' %>
-        <% else %>
-          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
-        <% end %>
-        <%else%>
-          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
-      <%end%>
-      <span class="username">
-        <% if question.anonymous == false %>
-          <%= link_to question.user.name, public_profile_path(:id => question.user.id) %>
-          <% question.topics[0..2].sort.each do |topic| %>
-            <span class=""><%= link_to topic.titleize, questions_path(:topic => topic),class:'label label-dark' %></span>
+    <% if full == true %>
+      <div class="user-block">
+        <% if user_signed_in?%>
+          <% if current_user.profile_pic.length != 0 %>
+            <%= image_tag current_user.profile_pic.thumb, class: 'img-circle',height: '128px', width:'128px' %>
+          <% else %>
+            <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
           <% end %>
-          <% if question.topics.length > 3 %>
-            and <%= question.topics.length - 3 %> more
+          <%else%>
+            <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
+        <%end%>
+        <span class="username">
+          <% if question.anonymous == false %>
+            <%= link_to question.user.name, public_profile_path(:id => question.user.id) %>
+            <% question.topics[0..2].sort.each do |topic| %>
+              <span class=""><%= link_to topic.titleize, questions_path(:topic => topic),class:'label label-dark' %></span>
+            <% end %>
+            <% if question.topics.length > 3 %>
+              and <%= question.topics.length - 3 %> more
+            <% end %>
+          <% else %>
+            <p>Posted by Anonymous</p>
           <% end %>
-        <% else %>
-          <p>Posted by Anonymous</p>
-        <% end %>
-      </span>
-      <span class="description">Shared publicly - <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</span>
-    </div> <!-- /.user-block -->
+        </span>
+        <span class="description">Shared publicly - <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</span>
+      </div> <!-- /.user-block -->
+    <%end%>
     <% if user_signed_in? && question.user == current_user %>
       <div class="box-tools">
         <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_question<%= question.id %>">
@@ -35,13 +37,29 @@
         <%end%>
       </div> <!-- /.box-tools -->
     <%end%>
-  </div> <!-- /.box-header -->
-  <div class="box-body">
-    <h3> <%= link_to question.content, question_path(:id => question.id),data: {no_turbolink: true } %></h3>
-    <%= image_tag 'photo2.png', class: 'img-responsive pad'%>
+  </div> 
+  <div class="box-body" style="margin-top:-1.4em">
+    <h3> <%= link_to question.content.gsub(/\-/, " "), question_seo_path(:content => question.content),data: {no_turbolink: true } %></h3>
+    <%= image_tag '', class: 'img-responsive pad'%>
     <p>
       <div id="question_detail<%= question.id %>">
+        <% if !question.detail.nil? %>
+        <!---->
+        <% if question.detail.length > 250 && full == false %>
+        <%= truncate(question.detail.html_safe, length: 250) %>
+        <%= link_to '...Read more', '', class: "read-more-#{question.id}" %>
+        <script>
+          $('.read-more-<%= question.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(this).parent().html('<%= escape_javascript question.detail.html_safe %>')
+          })
+        </script>
+      <% else %>
         <%= question.detail.html_safe %>
+        <br>
+      <% end %>
+        <!---->
+        <%end%>
       </div>
     </p>
     <% if user_signed_in? %>
@@ -93,12 +111,11 @@
       </div>  <!--img push ended-->
 
     </div> <!--/.box-footer -->
-
+  </div>
     <% if !answers.empty? %>
-      <div class="col-xs-12" style="margin-bottom: -1.5em; <%= full == true ? 'margin-top: 1em;' : '1em' %>">
+      <div class="col-xs-12" style="margin-top: -20px; <%= full == true ? 'margin-top: 0em;' : '0em' %>">
         <!-- Rendering answers -->
         <% if full == true %>
-          <hr>
 
           <% answers.each do |answer| %>
             <%= render 'questions/answer', :answer => answer %><br>
@@ -107,15 +124,10 @@
           <%= render 'questions/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0] %>
         <% end %>
       </div>
-
     <% else %>
       <% if full == false %>
       <% end %>
     <% end %>
-</div>
-<hr class="question-hr">
-
-
   <script>
     $("[id^=answerQ]").click(function() {
       question_id = this.id.substring(7, this.id.length)

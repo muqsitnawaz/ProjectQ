@@ -2,7 +2,9 @@
   <div class="row">
     <%- resource_class.omniauth_providers.each do |provider| %>
       <div class="col-xs-4">
-        <%= link_to get_pretty_provider_name(OmniAuth::Utils.camelize(provider)).html_safe, omniauth_authorize_path(resource_name, provider) %>
+        <div class="social-buttons">
+          <%= link_to get_pretty_provider_name(OmniAuth::Utils.camelize(provider)).html_safe, omniauth_authorize_path(resource_name, provider) %>
+        </div>
       </div>
     <% end -%>
   </div>

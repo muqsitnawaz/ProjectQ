@@ -21,18 +21,23 @@ class QuestionsController < ApplicationController
     # end
     if params[:topic].nil?
       if user_signed_in?
-        @questions = Question.where(:id => current_user.following).order('created_at DESC').page(params[:question_followed]).per(1)
+        @decider = 1;
+        @questions = Question.all.order('created_at DESC').page(params[:page]).per(3) 
+        # Question.where(:id => current_user.following).order('created_at DESC').page(params[:question_followed]).per(1)
         @questionasked = Question.where(:user_id => current_user.id).order('created_at DESC').page(params[:question_asked]).per(1)
         @questionans = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id}).order('created_at DESC').page(params[:question_ans]).per(1)
       else
-        @questions = Question.all.order('created_at DESC').page(params[:page]).per(1)
+        @questions = Question.all.order('created_at DESC').page(params[:page]).per(3)
       end
+    else
+      @decider = 0
+      @questions = Question.all.order('created_at DESC').reject {|q| !q.topics.include? params[:topic]}
     end
   end
   
   def show
-    @question = Question.find_by_id(params[:id])
-    
+    puts params[:id]
+    @question = Question.find_by_content(params[:id])  #change it later
     if @question.nil?
       flash[:notice] = 'question not found'
       redirect_to questions_path
@@ -40,6 +45,7 @@ class QuestionsController < ApplicationController
   end
   
   def search
+    puts params[:query]
     @query = params[:query]
     
     @items = []
@@ -56,7 +62,7 @@ class QuestionsController < ApplicationController
   
   def create
     @question = current_user.questions.build(question_params)
-    
+    @question.content = @question.content.parameterize
     if @question.save
       flash[:notice] = 'question created'
       redirect_to question_path(:id => @question.id)

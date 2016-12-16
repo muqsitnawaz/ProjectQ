@@ -1,0 +1,48 @@
+<div class="modal bnr-modal fade" id="editQuestionModal1" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-xs-10">
+            <h4>Question</h4>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="modal-body modal-spa">
+            <input type="text" style="display:none" id="modal_question_id" >
+            <% question = Question.find()
+          <%= form_for question, :url =>{:controller => 'questions',:action => 'update', :id => question.id} do |f| %>
+              <div class="form-group">
+            <div class="row" style="padding-top:1em;">
+              <div class="col-xs-12">
+                <p><strong>Heading</strong></p>
+                <%= f.text_field :content, autofocus: true, class:'form-control'%> <br>
+              </div>
+              
+              <div class="col-xs-6">
+                <p><strong>Detail</strong></p>
+                <%= f.cktext_area :detail, cols: 20, rows: 3, class: 'question-detail form-control', placeholder: 'Please provide some detail' %>
+              </div>
+              
+              <div class="col-xs-6">
+                <p><strong>Category</strong></p>
+                <%= f.select :topics, options_for_select(get_all_interests.sort!), {}, {:multiple => true, :size => 3 } %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row" style="border-left: 1px solid #e7e7e7;">
+            <center>
+              <%= f.submit "Post",class:'btn btn-squared btn-ask1'%>
+            </center>
+          </div>
+          <%end%>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

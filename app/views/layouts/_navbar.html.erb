@@ -1,5 +1,5 @@
 <div class="background-div">
-  <div class="container" >
+  <div class="" >
     <div class="row">
       <div class="nav-bar">
         <div class="row">
@@ -73,16 +73,19 @@
           </div>
           <%else%>
           <div class="col-md-3 col-md-offset-2 button-group-nav"><br/>
-            <div class="btn btn-ask1" data-toggle="modal" data-target="#signUpModal">Sign Up</div>
+            
+            <!--<div class="btn btn-ask1" data-toggle="modal" data-target="#signUpModal">Sign Up</div>-->
             <div class="btn btn-ask1" data-toggle="modal" data-target="#signInModal">Sign In</div>
+            <%=link_to "Sign Up", new_user_registration_path, class:'btn btn-ask1'%>
           </div>
           <%end%>
         </div>
       </div>
       <!--here-->
-      <%if request.path.start_with?('/profile')%>
+      
+      <%if request.path.start_with?('/profile') || request.path.start_with?('/users/sign_up') %>
       <%else%>
-        <%= render 'layouts/sub_bar'%>
+        
   <%end%>
     </div>
   </div>

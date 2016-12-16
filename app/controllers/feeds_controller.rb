@@ -2,6 +2,7 @@ class FeedsController < ApplicationController
 	before_filter :authenticate_user!, except: [ :index, :public_profile ]
 
   def index
+    puts 'coming here'
     if user_signed_in? && (!current_user.interests.empty? || !current_user.knows_about.empty?)
       @questions = Question.all.order('created_at DESC')
       topics = current_user.interests.clone

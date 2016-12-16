@@ -1,58 +1,42 @@
 <%if user_signed_in?%>
 <div class="background-div">
-  <div class="container">
-    <div class="nav-tabs-custom cause-block" >
-      <ul class="nav nav-tabs" id="myTab">
-        <li class="active"><a href="#menu1" data-toggle="tab">Following</a></li>
-        <li><a href="#menu2" data-toggle="tab">Asked</a></li>
-        <li><a href="#menu3" data-toggle="tab">Answered</a></li>
-      </ul>
-    </div>
-      <div class="tab-content">
-        <div id="menu1" class="tab-pane fade in active">
+  <div class="r">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-xs-2 col-xs-offset-1">
+              <%= render 'layouts/side_menu'%>
+            </div>
+            <div class="col-xs-6 main-feed">
+              <% @question = Question.new %>
+              <%= form_for @question,:url =>{ :controller =>"questions", :action =>"create"}, :html =>{id: 'ask_question'}  do |f| %>
+                <div class="form-group">
+                  <div class="col-xs-12">
+                    <%= f.text_area :content, autofocus: true, class:'form-control',placeholder: 'What do you want to ask?',rows: "3"%> <br>
+                  </div>
+                  <div class="pull-right">
+                    <%= f.submit "Post",class:'btn btn-squared btn-ask1'%>
+                  </div>
+                </div>
+              <%end%>
+          <div class="row">
+            <!--<div class="col-md-12">-->
               <% @questions.each do |question| %>
                 <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
               <% end %>
       
                <!--/.box -->
             </div>
-          </div>
-          <%= paginate @questions, param_name: "question_followed"%>
-        </div>
-        <div id="menu2" class="tab-pane fade">
-          <!-- for the contests -->
-          <div class="row">
-            <div class="col-md-8">
-              <% if !@questionasked.nil?%>
-                <% @questionasked.each do |question| %>
-                  <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
-                <% end %>
-               <!--/.box -->
-            </div>
-          </div>
-          <%= paginate @questionasked,param_name: "question_asked"%>
+          <!--</div>-->
+          <%if @decider == 0 %>
+          <%else%>
+            <%= paginate @questions, param_name: "page"%>
           <%end%>
         </div>
-        <div id="menu3" class="tab-pane fade">
-          <!--for causes  -->
-          <!-- user block -->
-          <div class="row">
-            <div class="col-md-8">
-              <% if !@questionans.nil?%>
-                <%  @questionans.each do |question| %>
-                  <%= render 'question', :question=> question, :answers => question.answers.order('created_at DESC'), :full => false %>
-                <% end %>
-               <!--/.box -->
-            </div>
-          </div>
-          <%= paginate @questionans, param_name: "question_ans"%>
-          <%end%>
+        <div class="col-xs-3">
+         <%= render 'layouts/sidebar'%>
         </div>
       </div>
     </div>
-</div>
+  </div>
 <%else%>
   <div class="background-div">
     <div class="container">

@@ -1,0 +1,17 @@
+            <nav class="nav-sidebar">
+                <ul class="nav">
+                  <li><a href="<%= questions_path(:type => :following) %>">Questions</a></li>
+                  <li><a href="<%= contests_path(:type => :open) %>">Contests</a></li>
+                  <li><a href="<%= causes_path(:type => :followed) %>">Causes</a></li>
+                  <li><%= link_to 'Read Articles', articles_path %></li>
+                </ul>
+            </nav>
+            <script>
+            $(document).ready(function() {
+                $('.nav-sidebar').click(function(){
+                    console.log('i a, here')
+                     $(this).siblings().removeClass('active');
+                      $(this).addClass('active');               
+                })
+            })
+            </script>

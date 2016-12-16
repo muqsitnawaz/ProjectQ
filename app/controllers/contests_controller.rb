@@ -4,7 +4,6 @@ class ContestsController < ApplicationController
   def index
     if is_admin?                # Check for admin
       @is_admin = true
-
       if params[:type] == 'open'
         @contests = Contest.where(:user_id => current_user.id,:status => 'open').order('created_at DESC')
       elsif params[:type] == 'close'

@@ -2,73 +2,124 @@
     <div class="container">
       <div class="row" style="padding-top: 3em;">
         <div class="col-md-8  cause-block">
-            <div class="row">
-                <div class = "col-xs-offset-1 col-xs-10">
-                  <h2>Start your Cause</h2>
-                  <div class="cause-simple-text">
-                      Gather public support to influence someone critical to your campaign's success.
-                  </div>
-                </div>
-            </div>
             <% @cause = Cause.new %>
-            <%= form_for @cause,:url =>{:controller=>"causes",:action=>"create"} do |f| %>
-            
-            <div class="row" style="padding-top:1em;">
-                <div class="col-xs-offset-1 col-xs-10">
-                    <div class="field">
-                      <%= f.text_field :intro, autofocus: true,class: 'form-control',placeholder: 'What is your Cause Goal?'  %><br/>
-                    </div>        
-                </div>
-            </div>
-            <div class="row" style="padding-top:1em;">
-                <div class="col-xs-offset-1 col-xs-10">
-                    <div class="field">
-                      <%= f.text_area :whymatters, autofocus: true,class: 'form-control',placeholder: 'What your cause is important?'%><br/>
-                    </div>
-                </div>
-            </div>
-            <!--for the categories-->
-            <div class="row" style="padding-top:1em;">
-                <div class="col-xs-offset-1 col-xs-10">
-                    <div class="field">
-                      <%= f.select :cause_type, options_for_select(get_all_cause_types), autofocus: true, class: 'form-control' %><br/><br/>
-                    </div>        
-                </div>
-            </div>
-            
-            <div class="row" style="padding-top:1em;">
-                <div class="col-xs-offset-1 col-xs-10">
-                    <div class="field">
-                        <%= f.text_area :detail, autofocus: true,class: 'form-control',placeholder: 'Explain to the People'%><br/>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row" style="padding-top:1em;">
-                <div class="col-xs-offset-1 col-xs-4">
-                    <div class="field">
-                       <%= f.check_box :dont_pledge %>Ask People to Sign Petition
-                    </div>
-                </div>
-                <div class="col-xs-offset-1 col-xs-4">
-                    <div class="field">
-                       <%= f.check_box :pledge %>Pledge to Something
-                    </div>
-                </div>
-            </div>
-            <!--for the last button-->
-            <div class="row" style="padding-top:1em;margin-top:1em;">
-                <div class="col-xs-offset-1 col-xs-4">
-                    <%= f.submit "Proceed to People Help",class:'btn btn-cause'%>
-                </div>
-            </div>
-            <%end%>
+<div class="stepwizard">
+    <div class="stepwizard-row setup-panel">
+        <div class="stepwizard-step">
+            <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
+            <p>Step 1</p>
+        </div>
+        <div class="stepwizard-step">
+            <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+            <p>Step 2</p>
+        </div>
+        <div class="stepwizard-step">
+            <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+            <p>Step 3</p>
+        </div>
+        <div class="stepwizard-step">
+            <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+            <p>Step 3</p>
         </div>
     </div>
 </div>
+<%= form_for @cause,:url =>{:controller=>"causes",:action=>"create"} do |f| %>
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12">
+            <div class="col-md-12">
+                <h3> Step 1</h3>
+                <div class="form-group">
+                    <h3>Set your Goal</h3>
+                    <div class="field">
+                      <%= f.text_field :intro, autofocus: true,class: 'form-control',:required => true,placeholder: 'What is your Cause Goal?' %><br/>
+                    </div>
+                </div>
+                <button class="btn btn-ask1 nextBtn btn-lg pull-right" type="button" >Next</button>
+            </div>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-2">
+        <div class="col-xs-12">
+            <div class="col-md-12">
+                <h3> Step 2</h3>
+                <div class="field">
+                    <%= f.text_field :petitionTo, autofocus: true,class: 'form-control',:required => true,placeholder: 'Who are you petitioning to ?'%><br/>
+                </div>
+                <button class="btn btn-ask1 nextBtn btn-lg pull-right" type="button" >Next</button>
+            </div>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-3">
+        <div class="col-xs-12">
+            <div class="col-md-12">
+                <h3> Step 3</h3>
+                <div data-no-turbolink>
+                    <%= f.cktext_area :detail, cols: 20, rows: 3, class: 'question-detail form-control ckeditor',:required => true, placeholder: 'Please provide some detail' %>        
+                </div>
+                 
+               <button class="btn btn-ask1 nextBtn btn-lg pull-right" type="button" >Next</button>
+            </div>
+        </div>
+    </div>
+    <!--last sstep-->
+    <div class="row setup-content" id="step-4">
+        <div class="col-xs-12">
+            <div class="col-md-12">
+                <h3> Step 3</h3>
+                 <%= f.file_field :image,class: 'btn btn-ask1',id:'cause-image',accept: 'image/png,image/gif,image/jpeg' %>
+                 <%= f.submit "Post Cause",class:'btn btn-cause pull-right'%>
+            </div>
+        </div>
+    </div>
+    <%end%>
+</div>
+       </div>
+      </div>
+    </div>
 </div>
 <!--for javascript-->
 <script>
-    if ($('#cause_pledge').is('checked'))
-        $("#cause_petition").attr("disabled", true);
+$(document).ready(function () {
+
+    var navListItems = $('div.setup-panel div a'),
+            allWells = $('.setup-content'),
+            allNextBtn = $('.nextBtn');
+
+    allWells.hide();
+
+    navListItems.click(function (e) {
+        e.preventDefault();
+        var $target = $($(this).attr('href')),
+                $item = $(this);
+
+        if (!$item.hasClass('disabled')) {
+            navListItems.removeClass('btn-primary').addClass('btn-default');
+            $item.addClass('btn-primary');
+            allWells.hide();
+            $target.show();
+            $target.find('input:eq(0)').focus();
+        }
+    });
+
+    allNextBtn.click(function(){
+        var curStep = $(this).closest(".setup-content"),
+            curStepBtn = curStep.attr("id"),
+            nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+            curInputs = curStep.find("input[type='text'],input[type='url']"),
+            isValid = true;
+
+        $(".form-group").removeClass("has-error");
+        for(var i=0; i<curInputs.length; i++){
+            if (!curInputs[i].validity.valid){
+                isValid = false;
+                $(curInputs[i]).closest(".form-group").addClass("has-error");
+            }
+        }
+
+        if (isValid)
+            nextStepWizard.removeAttr('disabled').trigger('click');
+    });
+
+    $('div.setup-panel div a.btn-primary').trigger('click');
+});
 </script>

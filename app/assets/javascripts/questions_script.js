@@ -9,6 +9,7 @@ $("[id^=showReplies]").click(function() {
 // Editing a question
 $("[id^=edit_question]").click(function() {
   question_id = this.id.substring(13, this.id.length)
+  $('#modal_question_id').val(question_id)
   $('#editQuestionModal').modal('show')
   
   // Initiliasing ckeditor for the first time

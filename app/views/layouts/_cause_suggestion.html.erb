@@ -1,12 +1,15 @@
 <div>
 	<div class="grid grid_1_of_2" style="margin-top:1em;background-color:#f3f3f3">
 		<h4 style="background-color:#f3f3f3">Similar Questions</h4>
-		<div class="clear"></div>
-		<% @questions = Question.order('created_at DESC').limit(7).sort_by {|q| -q.answers.count} %>
-		<% @questions.each do |question| %>
+		
+		<div class="clear">
+		    <%= link_to 'Start a Cause', new_cause_path, class:'btn btn-ask1'%>
+		</div>
+		<% @causes = Cause.order('created_at DESC').limit(7).sort_by {|q| -q.num_agree} %>
+		<% @causes.each do |cause| %>
         	<div class="image group" style="background-color:#f3f3f3">
 			<div class="grid span_2_of_3" style="background-color:#f3f3f3">
-				<h3><a><%= link_to question.content, question_path(:id => question.id) %></a></h3>
+				<h3><a><%= link_to cause.intro, cause_path(:id => cause.id), data: { no_turbolink: true } %></a></h3>
 			 </div>
 			 <div class="clear"></div>
 		 </div>

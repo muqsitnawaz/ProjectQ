@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   post '/follow' => 'questions#follow'
   post '/update_question' => 'questions#update'
   get '/search' => 'questions#search'
+  get 'questions/:content' => 'questions#show', as: 'question_seo'
 
   # Answers paths
   resource :answers

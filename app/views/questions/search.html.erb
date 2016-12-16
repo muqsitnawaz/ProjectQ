@@ -4,8 +4,11 @@
         <div class="col-md-8">
     <!-- Questions area -->
       <div class="question-area">
+        
         <% @items.each do |item| %>
+          <%= item.class.name%><br>
           <% if item.class.name == "Question" %>
+            <%= @items.inspect%>
             <%= render 'questions/question', :question => item, :answers => item.answers.order('created_at DESC'), :full => false %>
           <% elsif item.class.name == "Contest" %>
             <%= render 'contests/contest', :contest => item, :contest_answers => item.contest_answers, :is_admin => is_admin?, :full => false %>

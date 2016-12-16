@@ -28,17 +28,19 @@
     
                   <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                      <b>Questions Asked</b> <a class="pull-right">1,322</a>
+                      <b>Questions Asked</b> <a class="pull-right"><%=Question.where(:user_id => current_user.id).count%></a>
                     </li>
                     <li class="list-group-item">
-                      <b>Answers Written</b> <a class="pull-right">543</a>
+                      <b>Answers Written</b> <a class="pull-right"><%=Answer.where(:user_id => current_user.id).count%></a>
                     </li>
                     <li class="list-group-item">
-                      <b>Causes Started</b> <a class="pull-right">13,287</a>
+                      <b>Causes Started</b> <a class="pull-right"><%=Cause.where(:user_id => current_user.id).count%></a>
                     </li>
                   </ul>
-    
-                  <a href="#" class="btn btn-cause btn-block" style="margin-left:-0.3em"><b>Follow</b></a>
+                  <% if current_user == @user%>
+                  <%else%>
+                    <a href="#" class="btn btn-cause btn-block" style="margin-left:-0.3em"><b>Follow</b></a>
+                  <%end%>
                 </div>
                 <!-- /.box-body -->
               </div>

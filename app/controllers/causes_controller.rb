@@ -11,13 +11,7 @@ class CausesController < ApplicationController
     
     if @cause.save
       flash[:notice] = 'cause created'
-      # redirect to the respective page on basis of pledge or dont
-     if params[:cause][:dont_pledge] == true || params[:cause][:dont_pledge] == "1"
-        redirect_to(controller: 'causes',action: 'petition', id: @cause.id)
-      else
-        redirect_to(controller: 'causes',action: 'pledge', id: @cause.id)
-      end
-      # redirect_to cause_path(:id => @cause.id)
+      redirect_to cause_path(:id => @cause.id)
     else
       flash[:notice] = 'cause creation failed'
       redirect_to questions_path
@@ -29,7 +23,8 @@ class CausesController < ApplicationController
       if params[:type] == 'followed' && user_signed_in?
         puts 'ca,e jere'
         @causecreated = Cause.where(:user_id => current_user.id)
-        @causes = Cause.where(:id => current_user.causes_followed)
+        @causes = Cause.all.order('created_at DESC')
+        # @causes = Cause.where(:id => current_user.causes_followed)
         @causesagreed = Cause.where(:id => current_user.causes_agreed)
         @causesdisagreed = Cause.where(:id => current_user.causes_disagreed)
       elsif params[:type] == 'followed' && !user_signed_in?
@@ -293,6 +288,6 @@ class CausesController < ApplicationController
   end
 private
   def cause_params
-    params.require(:cause).permit(:user_id, :cause_type, :intro, :detail, :whymatters, :anonymous, :image,:pledgeDate,:pledgeStep,:pledgeTo,:howhelp,:totalpeople,:pledge,:dont_pledge)
+    params.require(:cause).permit(:user_id, :cause_type, :intro, :detail, :whymatters, :anonymous, :image,:pledgeDate,:pledgeStep,:pledgeTo,:howhelp,:totalpeople,:pledge,:dont_pledge,:petitionTo)
   end
 end
