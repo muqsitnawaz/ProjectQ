@@ -1,52 +1,19 @@
-<div class="background-div">
-  <div class="container">
     <div class="row">
-        <div class="col-md-12 cause-block" style="height:250px;width:100%;background-color:#4c4c4c;">
-        <!--div fpr the image-->
-            <!--set an image by default-->
-        <%= form_for @cause,:url =>{:controller=>"causes",:action=>"image_upload",:id => @cause.id} do |f| %>
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <%= f.file_field :image,class: 'btn btn-image-upload',id:'cause-image',accept: 'image/png,image/gif,image/jpeg' %>
-                    <%= f.submit "Update Image", class:'btn-image-upload1'%></span>
-                    <h4 style="color:#fff;font-weight:bold;margin-left:40em;padding-top:1em;"><%="#{current_user.name}" + " wants to " + "#{@cause.intro}" %></h4>
-                </div>
-            </div>
-        <%end%>
+        <div class="col-md-12 cause-s-block" style="height:250px;width:100%;margin-bottom:2em">
+          <%= image_tag @cause.image.url(), class:'img-responsive cause-img'%>
     </div>
     <div class="row">
-        <!--for pledge-->
-        <div class = "col-xs-6" style="height:240px;border-right:1px solid #c6c6c6">
-            <%if !@cause.pledgeTo.nil?%>
-                <div class="panel panel-default apanel1">
-            	    <div class="panel-heading">
-                        <h3 class="panel-title"><%= "Pledge Details"%></h3></center>
-                        <span class="pull-right" style="margin-top:-1.4em;"><%= link_to causes_edit_petition_path(:cause_id => @cause.id),class:'btn btn-box-tool',title:"Edit Cause" do%>
-                            <i class="fa fa-pencil"></i>
-                            <%end%>
-                        </span>
-                    </div>
-                    <!--details of the cause pledge-->
-                    <div class="panel-body">
-                           <div class="text">Pledge To:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.pledgeTo%></strong></span></div><br/>
-                        <div class="text">Total Pledges:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.total_pledges%></strong></span></div><br/>
-                        <div class="text">Pledges Required:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.totalpeople%></strong></span></div><br/>
-                        <div class="text">Cause Ends:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.pledgeDate.strftime("%b %d, %Y")%></strong></span></div>
-                    </div>    
-                </div>
-            <%else%>
-                <%=link_to "Add Pledge",{:controller => 'causes', :action => 'pledge',:id => @cause.id}, class: 'btn btn-cause'%>
-        <%end%>
-        </div>
+        <!--for pledge code is in the extra.html-->
+        
         
         <!--for petition-->
         <div class = "col-xs-6">
             <%if !@cause.petitionTo.nil?%>
                 <div class="panel panel-default apanel1">
             	    <div class="panel-heading">
-                        <h3 class="panel-title"><%= "Petition Details"%></h3>
+                        <h3 class="panel-title"><%=@cause.intro.capitalize%></h3>
                         <span class="pull-right" style="margin-top:-1.4em;">
-                            <%= link_to causes_edit_pledge_path(:cause_id => @cause.id),class:'btn btn-box-tool',title:"Edit Cause" do%>
+                            <%= link_to causes_edit_petition_path(:cause_id => @cause.id),class:'btn btn-box-tool',title:"Edit Cause" do%>
                             <i class="fa fa-pencil"></i>
                             <%end%>
                         </span>
@@ -54,9 +21,8 @@
                     <!--details of the cause pledge-->
                     <div class="panel-body">
                         <div class="text">Petition To:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.petitionTo%></strong></span></div><br/>
-                        <div class="text">Total Signs:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.total_signs%></strong></span></div><br/>
+                        <div class="text">Total Signed:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.total_signs%></strong></span></div><br/>
                         <div class="text">Signs Required:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.petition_signs%></strong></span></div><br/>
-                        <div class="text">Cause Ends:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.petitiondate.strftime("%b %d, %Y")%></strong></span></div>
                     </div>    
                 </div>
             <%else%>
@@ -65,6 +31,4 @@
         <%end%>        
     </div>
     
-</div>
-</div>
 </div>

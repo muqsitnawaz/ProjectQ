@@ -39,26 +39,21 @@ class FeedsController < ApplicationController
   
   def public_profile
     @user = User.find_by_id(params[:id])
-    @option = params[:option]
-    
+    # @option = params[:option]
+   
+    puts 'this is the  option param'
+    # puts @option
     if @user.nil?
       flash[:notice] = 'user not found'
       redirect_to questions_path
     else
-      if @option.nil?
-        @items = Question.where(:id => Answer.where(:user_id => @user.id).map {|a| a.question_id})
-      elsif @option == 'questions'
-        @items = Question.where(:user_id => @user.id)
-      elsif @option == 'contests'
-        @items = Contest.where(:winner_id => @user.id)
-      elsif @option == 'causes'
-        @items = Cause.where(:user_id => @user.id)
-      elsif @option == 'articles'
-        @items = Article.where(:user_id => @user.id)
-      end
-      
-      @items = @items.order('created_at DESC')
-      
+      # if @option.nil?
+        @items = Question.where(:user_id => @user.id) 
+        puts @items
+        @itemsCo = Contest.where(:winner_id => @user.id)
+        @itemsCa = Cause.where(:user_id => @user.id)
+        @itemsA = Article.where(:user_id => @user.id)
+      # end
       @user.profile_views += 1
       @user.save
     end

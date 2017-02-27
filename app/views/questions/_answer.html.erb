@@ -1,79 +1,72 @@
-<div class="box-footer box-comments cause-block-1">
-  <div class="box-comment">
-    <!-- User image -->
-    <% if answer.user.profile_pic.length != 0 && answer.anonymous == false %>
-        <%= image_tag answer.user.profile_pic.thumb, class: 'img-circle img-sm', width: 128,height:128 %>
-      <% else %>
-        <%= image_tag 'thumb.jpg',class: 'img-circle img-sm', width: 128,height:128 %>
-    <% end %>
-    
-    <div class="comment-text">
-      <span class="username">
-        <% if answer.anonymous == false %>
-          <%= link_to answer.user.name, public_profile_path(:id => answer.user.id) %>
-        <% else %>
-          <p>Anonymous</p>
-        <% end %>
-        <span class="text-muted pull-right">
-          <% if answer.user == current_user %>
-            <div class="box-tools">
-              <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_answerQ<%= answer.id %>">
-                <i class="fa fa-pencil"></i>
-              </button>
-              <%= link_to answers_path(:id => answer.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
-                <i class="fa fa-times"></i>
-              <%end%>
-            </div> <!-- .box-tools -->
-          <%end%>
-        </span>
-      </span>
-      <p>
-        <div id="answer<%= answer.id %>">
-           <!---->
-        <% if answer.content.length > 120 %>
-        <%= truncate(answer.content, length: 120) %>
-        <%= link_to '...Read more', '', class: "read-more-#{answer.id}" %>
-        <script>
-          $('.read-more-<%= answer.id %>').on('click', function(e) {
-            e.preventDefault()
-            $(this).parent().html('<%= escape_javascript answer.content.html_safe %>')
-          })
-        </script>
-      <% else %>
-        <%= answer.content.html_safe %>
-        <br>
-      <% end %>
-        <!---->
-        </div>        
-      </p>
-      <% if user_signed_in? %>
-        <div class="row">
-          <div class="col-xs-12">
-            <!-- Upvote button -->
-            <% if current_user.answers_upvote.include? answer.id %>
-              <button class="btn btn-default btn-xs"><span style="color: blue;">Upvoted</span> | <%= answer.upvotes %></button>
-            <% else %>
-              <button id="upvote<%= answer.id %>" class="btn btn-default btn-xs">Upvote | <%= answer.upvotes %></button>
-            <% end %>
-    
-            <!-- Downvote button -->
-            <% if current_user.answers_downvote.include? answer.id %>
-              <button class="btn btn-default btn-xs"><span style="color: blue;">Downvote</span></button>
-            <% else %>
-              <button id="downvote<%= answer.id %>" class="btn btn-default btn-xs">Downvote</button>
-            <% end %>
-    
-            <!-- Reply buttons -->
-            <button id="replyA<%= answer.id %>" class="btn btn-default btn-xs">Reply</button>
-            <button id="showReplies<%= answer.id %>" class="btn btn-default btn-xs">Replies | <%= answer.replies.count %></button>
+<div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500" style="margin-top: 50px;">
+        <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+      <div class="active">   
+          <div class="container-fluid">
+              <div class="row">
+               <div class="col-md-2">
+                 <% if answer.user.profile_pic.length != 0 && answer.anonymous == false %>
+                    <%= image_tag answer.user.profile_pic.thumb, class: 'img-circle img-sm img1', width: 50,height:50 %>
+                  <% else %>
+                    <%= image_tag 'http://gracecosta.com/wp-content/uploads/2014/03/www.gracecosta.com-17.jpg',class: "img-responsive img-circle" %>
+                <% end %>
+                 
+               </div>
+              <div class="col-md-9 Answers">
+                <% if answer.anonymous == false %>
+                  <h3 class="marginzero"><%= link_to answer.user.name, public_profile_path(:id => answer.user.id) %></h3>
+                <% else %>
+                  <h3 class="marginzero">Anonymous</h3>
+                <% end %>
+                <!--answer content-->
+                <p>
+                  <div id="answer<%= answer.id %>">
+                     <!---->
+                  <% if answer.content.length > 120 %>
+                  <%= truncate(answer.content, length: 120) %>
+                  <%= link_to '...Read more', '', class: "read-more-#{answer.id}" %>
+                  <script>
+                    $('.read-more-<%= answer.id %>').on('click', function(e) {
+                      e.preventDefault()
+                      $(this).parent().html('<%= escape_javascript answer.content.html_safe %>')
+                    })
+                  </script>
+                <% else %>
+                  <%= answer.content.html_safe %>
+                <% end %>
+                  <!---->
+                  </div>        
+                </p>
+                <div style="float: right">
+                <% if user_signed_in? %>
+                  <% if current_user.answers_upvote.include? answer.id %>
+                    <button class="btn btn-default btn-xs"><span style="color: blue;">Upvoted</span> | <%= answer.upvotes %></button>
+                  <% else %>
+                    <button id="upvote<%= answer.id %>" class="btn btn-primary btn-sm" type="button">Upvote | <%= answer.upvotes %></button>
+                  <% end %>
+            
+                  <!-- Downvote button -->
+                  <% if current_user.answers_downvote.include? answer.id %>
+                    <button class="btn btn-primary btn-xs"><span style="">Downvoted</span></button>
+                  <% else %>
+                    <button id="downvote<%= answer.id %>" class="btn btn-primary btn-sm" type="button">Downvote</button>
+                  <% end %>
+                
+                  <!-- Reply buttons -->
+                  <button id="replyA<%= answer.id %>" class="btn btn-primary btn-sm" type="button">Reply</button>
+                  <button id="showReplies<%= answer.id %>" class="btn btn-primary btn-sm" type="button">Replies | <%= answer.replies.count %></button>
+                <%end%>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <div>
+      </div>
     </div>
-    <!-- comment-text -->
   </div>
-  <!-- .box-comment -->
-    <div id="replyContent<%= answer.id %>" class="row hidden">
+</div>
+<br/>
+  <div id="replyContent<%= answer.id %>" class="row hidden">
     <div class="col-xs-12">
       <% @reply = Reply.new %>
       <%= form_for @reply, :url => {:controller =>"replies", :action => "create"}  do |f| %>
@@ -83,7 +76,7 @@
     <div class="col-xs-4 col-xs-offset-8">
       <div>
         <strong>Anonymous</strong> <%= f.check_box :anonymous %>
-        <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
+        <%= f.submit "Post", class:'btn btn-primary custom-btnn'%>
       </div>
       <% end %>
     </div>
@@ -99,7 +92,7 @@
       </div>
     </div>
   </div>
-</div>
+<!--</div>-->
 
 
 <script>

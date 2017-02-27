@@ -1,23 +1,16 @@
+<%= render 'layouts/side_menu'%>
 <%if user_signed_in?%>
-<div class="background-div">
-  <div class="">
-   
+  <div class="col-sm-6" style="margin-left:">
     <div class="row">
-       <div class="col-xs-2 col-xs-offset-1">
-      <%= render 'layouts/side_menu'%>
-    </div>
-      <div class="col-md-8">
-        <% @causes.each do |cause| %>
-          <%= render 'cause', :cause => cause, :cause_comments => cause.cause_comments, :full => false %>
-        <% end %>
-         <!--/.box -->
-      </div>
-      <div class="col-md-4">
-        <%= render 'layouts/cause_suggestion'%>
-      </div>
+      <% @causes.each do |cause| %>
+        <%= render 'cause', :cause => cause, :cause_comments => cause.cause_comments, :full => false %>
+      <% end %>
+       <!--/.box -->
     </div>
   </div>
-</div>
+  <div class="col-md-3">
+    <%= render 'layouts/cause_suggestion'%>
+  </div>
 <%else%>
   <div class="background-div">
       <div class="container">
@@ -32,6 +25,7 @@
       </div>
     </div>
 <%end%>
+<%= javascript_include_tag "causes_script", "data-turbolinks-track" => true  %>
 
 
 

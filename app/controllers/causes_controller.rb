@@ -43,7 +43,7 @@ class CausesController < ApplicationController
   # Showing causes
   def show
     @cause = Cause.find_by_id(params[:id])
-    
+    @full = true
     if @cause.nil?
       flash[:notice] = 'cause not found'
       redirect_to questions_path

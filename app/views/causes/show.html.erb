@@ -1,34 +1,119 @@
-
-<%=  render 'signed_modal'%>
-<%= javascript_include_tag "causes_script", "data-turbolinks-track" => true  %>
-
-<div class="background-div">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 question-detail">
-        <%= render 'cause', :cause => @cause, :cause_comments => @cause.cause_comments, :full => true %>
+<div class="row">
+  <div class="col-md-8 question-detail" style="margin-top:3em;">
+    <div class="">
+      <div class="panel panel-default">
+      <div class="panel-heading">
+        <span class="text-right"> By <%= link_to @cause.user.name, public_profile_path(:id => @cause.user.id) %></span>
+        <span>    to <span class="label label-info"> <%= @cause.petitionTo%> </span></span>
+        <span class='pull-right' style="margin-top:-0.4em">
+          <% if user_signed_in? && @cause.user == current_user %>
+            <div class="box-tools">
+              <%= link_to  pledge_edit_path(:cause_id => @cause.id),class:'btn btn-box-tool',title:"Edit Cause" do %>
+                <i class="fa fa-pencil"></i>
+              <%end%>
+              <%= link_to delete_cause_path(:id => @cause.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+                <i class="fa fa-times"></i>
+              <%end%>
+            </div> <!-- /.box-tools -->
+          <%end%>
+        </span>
       </div>
-      <div class="col-md-3 col-xs-offset-1 side-bar cause-block" style="margin-top:2em;">
-        <h3>Sign this Cause</h3>
-        <hr>
-        <% @user = User.new%>
-        <%= form_for @user,:url => {:controller => 'causes', :action => 'sign_without_signin'},:html => {id: 'new_sign'}, remote: true do |f| %>
-          <%= f.text_field :name, class:'form-control', placeholder: 'Enter your Name'%><br>
-          <%= f.email_field :email, class:'form-control', placeholder: 'Enter your email'%>
-          <div class="row">
-            <%= f.submit "Sign Petition", class:'btn btn-cause sign'%>  
+      <div class="panel-body">
+        <div class="media">
+          <a class="pull-left" href="#">
+          <%= image_tag @cause.image.url(), class: 'media-object',height:"125", width:"150"%>
+        </a>
+        <div class="media-body">
+          <h3 class="media-heading"><%= link_to @cause.intro, cause_path(:id => @cause.id),data: {no_turbolink: true } %></h3>
+          <p>     
+            <!--read more code goes here-->
+              <%= @cause.detail.html_safe %>
+            <!--ended-->
+          </p>
+          <ul class="list-inline list-unstyled">
+            <% if user_signed_in? %>
+            <li><button id="commentC<%= @cause.id %>" class="btn btn-primary btn-ask2">Comment | <%= @cause.cause_comments.length %></button></li>
+            <% if current_user.causes_followed.include? @cause.id %>
+              <li><button class="btn btn-primary btn-ask2 disabled" style="color:blue;">Following</button></li>
+            <% else %>
+              <li><button id="follow_cause<%= @cause.id %>" class="btn btn-primary btn-ask2">Follow</button></li>
+            <% end %>
+            <li><button id="agree_<%= @cause.id %>" class="btn btn-primary btn-ask2"><i class="fa fa-thumbs-o-up"></i>Agree | <%= @cause.num_agree %></button></li>
+            <li><button id="disagree_<%= @cause.id %>" class="btn btn-primary btn-ask2"><i class="fa fa-thumbs-o-down"></i>Disagree | <%= @cause.num_disagree %></button></li>
+          <% else %>
+            <li><div class="btn btn-primary btn-ask2  btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-comment"></i>Comment | <%= @cause.cause_comments.length %></div></li>
+            <li><div class="btn btn-primary btn-ask2 btn-xs" data-toggle="modal" data-target="#signInModal">Follow</div></li>
+            <li><div class="btn btn-primary btn-ask2 btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-up"></i>Agree | <%= @cause.num_agree %></div></li>
+            <li><div class="btn btn-primary btn-ask2 btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-down"></i>Disagree | <%= @cause.num_disagree %></div></li>
+            <span class="pull-right">
+              <%= social_share_button_tag(@cause.detail) %>
+            </span>
+          <% end %>
+          </ul>
+          <div id="causeCommentContent<%= @cause.id %>" class="row hidden">
+            <div class="col-xs-12">
+              <% @cause_comment = CauseComment.new %>
+              <%= form_for @cause_comment, :url => { :controller =>"cause_comments", :action =>"create"}  do |f| %>
+                <%= f.cktext_area :content, class: 'form-control' %><br>
+                <%= f.hidden_field :cause_id, value: @cause.id %>
+            </div>
+            <div class="col-xs-4 col-xs-offset-8">
+              <div>
+                <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
+              </div>
+              <% end %>
+            </div>
           </div>
-          
-        <%end%>
-        <br><br>
+          <% if !@cause.cause_comments.empty? %>
+          <!-- Rendering comments -->
+            <hr>
+            <% @cause.cause_comments.each do |cause_comment| %>
+              <%= render 'causes/cause_comment', :cause_comment => cause_comment %>
+            <% end %>
+          <% end %>
+         </div>
+        </div>        
+        </div>
       </div>
     </div>
   </div>
+  <%if !user_signed_in?%>
+    <div class="col-md-3 col-xs-offset-1 side-bar cause-block" style="margin-top:2em;">
+      <h3>Sign this Cause</h3>
+      <hr>
+      <% @user = User.new%>
+      <%= form_for @user,:url => {:controller => 'causes', :action => 'sign_without_signin'},:html => {id: 'new_sign'}, remote: true do |f| %>
+        <%= f.text_field :name, class:'form-control', placeholder: 'Enter your Name'%><br>
+        <%= f.email_field :email, class:'form-control', placeholder: 'Enter your email'%>
+        <div class="row">
+          <span class="pull-right" style="margin-left:3em">
+            <%= f.submit "Sign Petition", class:'btn btn-cause sign'%>  
+          </span>
+            
+        </div>
+        
+      <%end%>
+      <br><br>
+    </div>
+  <%end%>
 </div>
+<input type="text" id="cause_intro<%= @cause.id %>" value="<%= @cause.intro %>" hidden>
+<%=  render 'signed_modal'%>
+<%= javascript_include_tag "causes_script", "data-turbolinks-track" => true  %>
 <script>
+
 $('#new_sign').on('ajax:success', function(){
   $('#signedModal').modal('show');
 })
+
+$("[id^=commentC]").click(function() {
+    cause_id = this.id.substring(8, this.id.length)
+    console.log('id: '+cause_id)
+
+    $("#causeCommentContent"+cause_id).toggleClass("hidden")
+})
+  
+  
 $.ajaxSetup({
   headers: {
     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')

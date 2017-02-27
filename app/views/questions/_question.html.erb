@@ -1,133 +1,112 @@
-<div class="box box-widget cause-block">
-  <div class="box-header with-border">
-    <% if full == true %>
-      <div class="user-block">
-        <% if user_signed_in?%>
-          <% if current_user.profile_pic.length != 0 %>
-            <%= image_tag current_user.profile_pic.thumb, class: 'img-circle',height: '128px', width:'128px' %>
-          <% else %>
-            <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
-          <% end %>
-          <%else%>
-            <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
-        <%end%>
-        <span class="username">
-          <% if question.anonymous == false %>
-            <%= link_to question.user.name, public_profile_path(:id => question.user.id) %>
-            <% question.topics[0..2].sort.each do |topic| %>
-              <span class=""><%= link_to topic.titleize, questions_path(:topic => topic),class:'label label-dark' %></span>
-            <% end %>
-            <% if question.topics.length > 3 %>
-              and <%= question.topics.length - 3 %> more
-            <% end %>
-          <% else %>
-            <p>Posted by Anonymous</p>
-          <% end %>
-        </span>
-        <span class="description">Shared publicly - <%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</span>
-      </div> <!-- /.user-block -->
-    <%end%>
-    <% if user_signed_in? && question.user == current_user %>
-      <div class="box-tools">
-        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_question<%= question.id %>">
-          <i class="fa fa-pencil"></i>
-        </button>
-        <%= link_to question_path(:id => question.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
-          <i class="fa fa-times"></i>
-        <%end%>
-      </div> <!-- /.box-tools -->
-    <%end%>
-  </div> 
-  <div class="box-body" style="margin-top:-1.4em">
-    <h3> <%= link_to question.content.gsub(/\-/, " "), question_seo_path(:content => question.content),data: {no_turbolink: true } %></h3>
-    <%= image_tag '', class: 'img-responsive pad'%>
-    <p>
-      <div id="question_detail<%= question.id %>">
-        <% if !question.detail.nil? %>
-        <!---->
-        <% if question.detail.length > 250 && full == false %>
-        <%= truncate(question.detail.html_safe, length: 250) %>
-        <%= link_to '...Read more', '', class: "read-more-#{question.id}" %>
-        <script>
-          $('.read-more-<%= question.id %>').on('click', function(e) {
-            e.preventDefault()
-            $(this).parent().html('<%= escape_javascript question.detail.html_safe %>')
-          })
-        </script>
-      <% else %>
-        <%= question.detail.html_safe %>
-        <br>
-      <% end %>
-        <!---->
-        <%end%>
+<div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500">
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+      <div class="item active">
+          <div class="container-fluid">
+                
+                <% if full == true %>
+                    <!--user image code goes here from extra.html-->
+                    <!--ended-->
+                <%end%>
+              <!--tool bar code goes here currently in the exta.html-->
+            <div class="row">
+              <div class="col-md-offset-0 col-md-12">
+                <div class="" style="margin-top:;">
+                  <h2> <%= link_to question.content.gsub(/\-/, " "), question_seo_path(:content => question.content),data: {no_turbolink: true } %></h2>
+                  <p class="font-size">
+                    <div id="question_detail<%= question.id %>">
+                      <% if !question.detail.nil? %>
+                      <!---->
+                        <% if question.detail.length > 250 && full == false %>
+                        
+                        <%= truncate(question.detail.html_safe, length: 100) %>
+                        <%= link_to '...Read more', '', class: "read-more-#{question.id}" %>
+                        <script>
+                          $('.read-more-<%= question.id %>').on('click', function(e) {
+                            e.preventDefault()
+                            $(this).parent().html('<%= escape_javascript question.detail.html_safe %>')
+                          })
+                        </script>
+                      
+                      <% else %>
+                      
+                        <%= question.detail.html_safe %>
+                        <br>
+                      
+                      <% end %>
+                      <!---->
+                    <%end%>
+                  </div>
+                  </p>
+                  
+                  <% if user_signed_in? %>
+                    
+                    <button id="answerQ<%= question.id %>" class="btn btn-primary custom-btnn" type="button">Answer <span class="badge"><%= question.answers.length %></span></button>
+                    <% if !current_user.following.include? question.id %>
+                      <button id="follow<%= question.id %>" class="btn btn-primary custom-btnn" type="button"><i class="fa fa-share"></i>Follow</button>
+                    <% else %>
+                      <button class="btn btn-primary custom-btnn" type="button"><i class="fa fa-share"></i>Following</button>
+                    <% end %>
+                  
+                  <% else %>
+                    <button class="btn btn-primary custom-btnn" data-toggle="modal" data-target="#signInModal" type="button">Answers <span class="badge"><%= question.answers.length %></span></button>
+                    <button class="btn btn-primary custom-btnn" type="button" data-toggle="modal" data-target="#signInModal"><i class="fa fa-share"></i>Follow</button>
+                  <% end %>
+                  
+                  <span class="pull-right"><%= social_share_button_tag(question.content) %></span>
+                </div>          
+              </div>  
+            </div>
+
+
+        <!-- /.box-body -->
+                
+        <div id="answerContent<%= question.id %>" class="row" style="display:none;padding:10px;">
+          <div class="box-footer">
+           <!--.img-push is used to add margin to elements next to floating images -->
+            <div>
+              <% @answer = Answer.new %>
+              <%= form_for @answer, :url => {:controller =>"answers", :action => "create"}  do |f| %>
+                <%= f.cktext_area :content, class: 'form-control input-sm',placeholder:'Type your Answer here' %><br>
+                <%= f.hidden_field :question_id, value: question.id %>
+            </div>
+              <div>
+                
+                <span class="pull-right">
+                  <%= f.check_box :anonymous %> Anonymous
+                  <%= f.submit "Post Answer", class:'btn btn-primary custom-btnn'%>  
+                </span>
+                
+              </div>
+              <% end %>
+          </div>  <!--img push ended-->
+        </div> <!--/.box-footer -->
+        </div>
       </div>
-    </p>
-    <% if user_signed_in? %>
-      <button id="answerQ<%= question.id %>" class="btn btn-default btn-xs">Answers | <%= question.answers.length %></button>
-      <% if !current_user.following.include? question.id %>
-        <button id="follow<%= question.id %>" class="btn btn-default btn-xs"><i class="fa fa-share"></i>Follow</button>
-      <% else %>
-        <button class="btn btn-default following" style="color: blue;">Following</button>
-      <% end %>
-    <% else %>
-      <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-share"></i>Answer | <%= question.answers.length %></button>
-      <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal">Follow</button>
-    <% end %>
-    <span class="pull-right text-muted"><%= social_share_button_tag(question.content) %></span>
-  </div>
-  <!-- /.box-body -->
-
-  <!-- /.box-footer -->
-  <div id="answerContent<%= question.id %>" class="row" style="display:none;">
-    <div class="box-footer">
-     <!--.img-push is used to add margin to elements next to floating images -->
-    <div class="img-push">
-      <% if user_signed_in?%>
-        <% if current_user.profile_pic.length != 0 %>
-          <%= image_tag current_user.profile_pic.thumb, class: 'img-circle img-sm',height: '128px', width:'128px' %>
-        <% else %>
-
-          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
-
-        <% end %>
-
-        <%else%>
-
-          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
-
-      <%end%>
-        <div>
-          <% @answer = Answer.new %>
-          <%= form_for @answer, :url => {:controller =>"answers", :action => "create"}  do |f| %>
-            <%= f.cktext_area :content, class: 'form-control input-sm',placeholder:'Type your Answer here' %><br>
-            <%= f.hidden_field :question_id, value: question.id %>
-        </div>
-          <div>
-            <strong>Anonymous</strong> <%= f.check_box :anonymous %>
-            <%= f.submit "Post Answer", class:'btn btn-default'%>
-          </div>
-          <% end %>
-        </div>
-      </div>  <!--img push ended-->
-
-    </div> <!--/.box-footer -->
-  </div>
+    </div>
+    
     <% if !answers.empty? %>
-      <div class="col-xs-12" style="margin-top: -20px; <%= full == true ? 'margin-top: 0em;' : '0em' %>">
-        <!-- Rendering answers -->
-        <% if full == true %>
-
-          <% answers.each do |answer| %>
-            <%= render 'questions/answer', :answer => answer %><br>
-          <% end %>
-        <% else %>
-          <%= render 'questions/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0] %>
-        <% end %>
+      <div style="margin-top: -20px; <%= full == true ? 'margin-top: 0em;' : '0em' %>">
+        <div class="carousel-inner">
+          <div class="active">   
+            <div class="container-fluid">
+          <!-- Rendering answers -->
+              <% if full == true %>
+                <% answers.each do |answer| %>
+                  <%= render 'questions/answer', :answer => answer %><br>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     <% else %>
-      <% if full == false %>
-      <% end %>
     <% end %>
+        <!--question-->
+        <!--ended-->
+</div>       
+          
+  <br><br>
   <script>
     $("[id^=answerQ]").click(function() {
       question_id = this.id.substring(7, this.id.length)

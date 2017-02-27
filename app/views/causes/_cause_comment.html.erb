@@ -1,76 +1,100 @@
-<div class="box-footer box-comments cause-block-1">
-  <div class="box-comment">
-    <!-- User image -->
-    <% if cause_comment.user.profile_pic.length != 0 && cause_comment.anonymous == false %>
-        <%= image_tag cause_comment.user.profile_pic.thumb, class: 'img-circle img-sm', width: 128,height:128 %>
-      <% else %>
-        <%= image_tag 'thumb.jpg',class: 'img-circle img-sm', width: 128,height:128 %>
-    <% end %>
-    
-    <div class="comment-text">
-      <span class="username">
-        <% if cause_comment.anonymous == false %>
-          <%= link_to cause_comment.user.name, public_profile_path(:id => cause_comment.user.id) %>
-        <% else %>
-          <p>Anonymous</p>
-        <% end %>
-        <span class="text-muted pull-right">
-          <% if cause_comment.user == current_user %>
-            <div class="box-tools">
-              <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_cause_commentC<%= cause_comment.id %>">
-                <i class="fa fa-pencil"></i>
-              </button>
-              <%= link_to cause_comments_path(:id => cause_comment.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do %>
-                <i class="fa fa-times"></i>
-              <%end%>
-            </div> <!-- .box-tools -->
-          <%end%>
-        </span>
-      </span>
-      <p>
-        <div id="cause_comment_comment<%= cause_comment.id %>">
-          <%= cause_comment.content.html_safe %>
-        </div>       
-      </p>
-      <% if user_signed_in? %>
-        <div class="row">
-          <div class="col-xs-12">
-            <button id="replyC<%= cause_comment.id %>" class="btn btn-default">Reply</button>
-            <button id="showCauseReplies<%= cause_comment.id %>" class="btn btn-default">Replies | <%= cause_comment.cause_replies.count %></button>
+<div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500" style="margin-top: 50px;">
+        <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+      <div class="active">   
+          <div class="container-fluid">
+              <div class="row">
+               <div class="col-md-2">
+                 <% if cause_comment.user.profile_pic.length != 0 && cause_comment.anonymous == false %>
+                    <%= image_tag cause_comment.user.profile_pic.thumb, class: 'img-circle img-sm img1', width: 50,height:50 %>
+                  <% else %>
+                    <%= image_tag 'http://gracecosta.com/wp-content/uploads/2014/03/www.gracecosta.com-17.jpg',class: "img-responsive img-circle" %>
+                <% end %>
+                 
+               </div>
+              <div class="col-md-7 Answers">
+                <% if cause_comment.anonymous == false %>
+                  <h3 class="marginzero"><%= link_to cause_comment.user.name, public_profile_path(:id => cause_comment.user.id) %></h3>
+                <% else %>
+                  <h3 class="marginzero">Anonymous</h3>
+                <% end %>
+              </div>
+              <div class="col-md-3">
+                <span class="text-muted pull-right">
+                  <% if cause_comment.user == current_user %>
+                    <div class="box-tools">
+                      <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_cause_commentC<%= cause_comment.id %>">
+                        <i class="fa fa-pencil"></i>
+                      </button>
+                      <%= link_to cause_comments_path(:id => cause_comment.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do %>
+                        <i class="fa fa-times"></i>
+                      <%end%>
+                    </div> <!-- .box-tools -->
+                  <%end%>
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-offset-2 col-md-9 Answers">              
+                <!--answer content-->
+                <p>
+                  <div id="cause_comment_comment<%= cause_comment.id %>">
+                     <!---->
+                    <% if cause_comment.content.length > 120 %>
+                      <%= truncate(cause_comment.content, length: 120) %>
+                      <%= link_to '...Read more', '', class: "read-more-#{cause_comment.id}" %>
+                      <script>
+                        $('.read-more-<%= cause_comment.id %>').on('click', function(e) {
+                          e.preventDefault()
+                          $(this).parent().html('<%= escape_javascript cause_comment.content.html_safe %>')
+                        })
+                      </script>
+                    <% else %>
+                      <%= cause_comment.content.html_safe %>
+                    <% end %>
+                  </div>        
+                </p>
+                <div style="float: right">
+                  <% if user_signed_in? %>
+                    <button id="replyC<%= cause_comment.id %>" class="btn btn-ask2 custom-btnn">Reply</button>
+                    <button id="showCauseReplies<%= cause_comment.id %>" class="btn btn-ask2 custom-btnn">Replies | <%= cause_comment.cause_replies.count %></button>
+                  <% end %>
+                </div>
+              </div>
+                <div id="causeReplyContent<%= cause_comment.id %>" class="row hidden">
+                  <div class="col-xs-12">
+                    <% @cause_reply = CauseReply.new %>
+                    <%= form_for @cause_reply, :url => { :controller =>"cause_replies", :action =>"create"}  do |f| %>
+                      <%= f.cktext_area :content, class: 'form-control',data: {no_turbolink: true } %><br>
+                      <%= f.hidden_field :cause_comment_id, value: cause_comment.id %>
+                  </div>
+                  
+                    <div class="col-xs-4 col-xs-offset-8">
+                      <div>
+                        <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
+                      </div>
+                    <% end %>
+                  </div>
+                
+                </div>
+                <!-- Hidden replies -->
+                <div class="row" style="">
+                  <div class="col-xs-11 col-xs-offset-1">
+                    <div id="causeReplies<%= cause_comment.id %>" class="hidden">
+                      <% cause_comment.cause_replies.each do |cause_reply| %>
+                        <%= render 'causes/cause_reply', :cause_reply => cause_reply %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+            </div>
           </div>
-        </div>
-      <% end %>
-    </div>
-    <!-- comment-text -->
-  </div>
-  <!-- .box-comment -->
-   <div id="causeReplyContent<%= cause_comment.id %>" class="row hidden">
-    <div class="col-xs-12">
-      <% @cause_reply = CauseReply.new %>
-      <%= form_for @cause_reply, :url => { :controller =>"cause_replies", :action =>"create"}  do |f| %>
-        <%= f.cktext_area :content, class: 'form-control',data: {no_turbolink: true } %><br>
-        <%= f.hidden_field :cause_comment_id, value: cause_comment.id %>
-    </div>
-    
-      <div class="col-xs-4 col-xs-offset-8">
         <div>
-          <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
-        </div>
-      <% end %>
-    </div>
-  
-  </div>
-  <!-- Hidden replies -->
-  <div class="row" style="">
-    <div class="col-xs-11 col-xs-offset-1">
-      <div id="causeReplies<%= cause_comment.id %>" class="hidden" style="margin-top: 1em; margin-bottom: -1em;">
-        <% cause_comment.cause_replies.each do |cause_reply| %>
-          <%= render 'causes/cause_reply', :cause_reply => cause_reply %>
-        <% end %>
       </div>
     </div>
   </div>
 </div>
+
 
 <script>
   $("[id^=replyC]").click(function() {

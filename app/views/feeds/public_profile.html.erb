@@ -3,7 +3,6 @@
     background-color:#fff;  
   }
 </style>
-<div class="container">
   <div class="row">
     <div class="content-wrapper">
         <!-- Main content -->
@@ -16,7 +15,7 @@
                   <% if @user.profile_pic.length != 0 %>
                     <%= image_tag @user.profile_pic.thumb, class: 'profile-user-img img-responsive img-circle', height: '150px' %>
                   <% else %>
-                    <%= image_tag 'thumb.jpg', class: 'profile-user-img img-responsive img-circle', height: '150px' %>
+                    <%= image_tag 'profile-pic.png', class: 'profile-user-img img-responsive img-circle', height: '150px' %>
                   <% end %>
                   <h3 class="profile-username text-center"><%= @user.name %></h3>
     
@@ -96,34 +95,45 @@
                 <div class="tab-content">
                   <div class="active tab-pane" id="questions">
                     <!-- Post -->
-                    <% if @option == 'questions' || @option.nil? %>
+                    <% if @items.length > 0 %>
                       <% @items.each do |item| %>
-                      <%= render 'questions/question', :question => item, :answers => item.answers.order('created_at DESC'), :full => false %>
-                    <% end %>
+                        <%= render 'questions/question', :question => item, :answers => item.answers.order('created_at DESC'), :full => false %>
+                      <% end %>
+                    <%else%>
+                      <h2>This user has asked no questions </h2>
+                    <%end%>
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="contests">
                     <!-- The timeline -->
-                    <% elsif @option == 'contests' %>
-                      <% @items.each do |item| %>
-                      <%= render 'contests/contest', :contest => item, :contest_answers => item.contest_answers, :is_admin => is_admin?, :full => false %>
-                    <% end %>
+                     <% if @itemsCo.length > 0 %>
+                      <% @itemsCo.each do |item| %>
+                        <%= render 'contests/contest', :contest => item, :contest_answers => item.contest_answers, :is_admin => is_admin?, :full => false %>
+                      <% end %>
+                    <%else%>
+                      <h2>This user has asked won no contests </h2>
+                    <%end%>
                   </div>
                   <!-- /.tab-pane -->
     
                   <div class="tab-pane" id="causes">
-                    <% elsif @option == 'causes' %>
-                      <% @items.each do |item| %>
-                      <%= render 'causes/cause', :cause => item, :cause_comments => item.cause_comments, :full => false %>
-                    <% end %>
+                    <% if @itemsCa.length > 0 %>  
+                      <% @itemsCa.each do |item| %>
+                        <%= render 'causes/cause', :cause => item, :cause_comments => item.cause_comments, :full => false %>
+                      <% end %>
+                    <%else%>
+                      <h2>This user has supported no cause</h2>
+                    <%end%>
                   </div>
                   
                   <div class="tab-pane" id="articles">
-                    <% elsif @option == 'articles' %>
-                      <% @items.each do |item| %>
+                    <% if @itemsCa.length > 0 %>    
+                      <% @itemsA.each do |item| %>
                         <%= render 'articles/article', :article => item, :full => false %>
                       <% end %>
-                    <% end %>
+                    <%else%>
+                      <h2>This user has written no articles</h2>
+                    <%end%>
                   </div>
                   <!-- /.tab-pane -->
                 </div>

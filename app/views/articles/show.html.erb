@@ -1,12 +1,24 @@
-<div class="background-div">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 question-detail">
-        <%= render 'article', :article => @article, :full => true %>
-      </div>
-      <div class="col-md-4 side-bar">
-        <%= render 'layouts/sidebar'%>
-      </div>
-    </div>
+<div class="row" style="margin-top:2.3em">
+  <div class="col-sm-8 align">
+    <div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500">
+    <div class="carousel-inner">
+      <div class="active">
+          <div class="">
+                  <h3> <%= link_to @article.heading, article_path(:id => @article.id) %></h3>
+                  <p class="font-size">
+                    <div id="question_detail<%= @article.id %>">
+                      <% if !@article.content.nil? %>
+                        <%= @article.content.html_safe %>
+                        <br>
+                      <% end %>
+                  </div>
+                  </p>
+                </div>          
+              </div>  
+            </div>
+          </div>
+        </div>
+  <div class="col-md-4 side-bar">
+    <%= render 'layouts/sidebar_articles'%>
   </div>
 </div>

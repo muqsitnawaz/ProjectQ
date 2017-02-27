@@ -1,33 +1,33 @@
-<%if user_signed_in?%>
-<div class="background-div">
-  <div class="container">
-          <div class="row">
-            <div class="col-md-8">
-              <% if !@contests.nil?%>
-                <% @contests.each do |contest| %>
-                  <%= render 'contest', :contest => contest, :contest_answers => contest.contest_answers, :is_admin => @is_admin, :full => false %>
-                <% end %>
-              <%end%>
-            </div>
-          </div>
-        </div>
-        </div>
-<%else%>
-<div class="background-div">
-    <div class="container">
+<%= render 'layouts/side_menu'%>
+  <div class="col-sm-6" style="margin-left:">
       <div class="row">
-        <div class="col-md-8">
-          <% if !@contests.nil?%>
-            <% @contests.each do |contest| %>
-              <%= render 'contest', :contest => contest, :contest_answers => contest.contest_answers, :is_admin => @is_admin, :full => false %>
-            <% end %>
+        <% if !@contests.nil?%>
+          <% @contests.each do |contest| %>
+            <%= render 'contest', :contest => contest, :contest_answers => contest.contest_answers, :is_admin => @is_admin, :full => false %>
+          <% end %>
         <%end%>
-       <!--/.box -->
-        </div>
       </div>
-    </div>
   </div>
-<%end%>
+  <div class="col-sm-3" style="">
+    <%= render 'layouts/sidebar'%>
+  </div>
+    <br>
+<%else%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- Rendering modals -->
 <%= render 'layouts/contest_modals' %>
 <%= javascript_include_tag "contests_script", "data-turbolinks-track" => true  %>

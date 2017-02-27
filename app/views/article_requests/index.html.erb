@@ -1,28 +1,15 @@
-<div class="background-div">
-  <div class="container">
-    <ul class="nav nav-tabs other-tabs" style="padding-top:-1.3em;padding-left:1.5em;">
-      <li ><%= link_to 'Read Articles', articles_path %></li>
-      <li><%= link_to 'Write an Article', new_article_path %></li>
-      <li><%= link_to 'Request Articles', new_article_request_path %></li>
-      <li class="active"><%= link_to 'Answer Requests', article_requests_path %></li>
-    </ul>
-    <!-- New article area -->
-    <div class="row">
-      <div class="col-md-8">
-        <% if @article_requests.length == 0 %>
-          <h3>No Articles were Requested</h3>
-        <%else%>
-          <% @article_requests.each do |article_request| %>
-            <%= render 'article_request', :article_request => article_request, :full => false %>
-            <hr>
-          <% end %>
-      </div>
-      <div class="col-md-4">
-        <%= render 'layouts/sidebar'%>
-      </div>
-        <%end%>
-      </div>
-      
-    </div>
+<%= render 'layouts/sidemenu_articles'%>
+  <div class="col-sm-6" style="margin-left:">
+    <% if @article_requests.length == 0 %>
+      <h3>No Articles were Requested</h3>
+    <%else%>
+      <% @article_requests.each do |article_request| %>
+        <%= render 'article_request', :article_request => article_request, :full => false %>
+        <hr>
+      <% end %>
   </div>
-</div>
+  <div class="col-sm-3" style="">
+    <%= render 'layouts/sidebar_articles'%>
+  </div>
+    <%end%>
+  </div>

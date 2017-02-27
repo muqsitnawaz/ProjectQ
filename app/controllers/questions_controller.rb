@@ -22,12 +22,12 @@ class QuestionsController < ApplicationController
     if params[:topic].nil?
       if user_signed_in?
         @decider = 1;
-        @questions = Question.all.order('created_at DESC').page(params[:page]).per(3) 
+        @questions = Question.all.order('created_at DESC').page(params[:page]).per(8) 
         # Question.where(:id => current_user.following).order('created_at DESC').page(params[:question_followed]).per(1)
         @questionasked = Question.where(:user_id => current_user.id).order('created_at DESC').page(params[:question_asked]).per(1)
         @questionans = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id}).order('created_at DESC').page(params[:question_ans]).per(1)
       else
-        @questions = Question.all.order('created_at DESC').page(params[:page]).per(3)
+        @questions = Question.all.order('created_at DESC').page(params[:page]).per(8)
       end
     else
       @decider = 0
@@ -38,6 +38,8 @@ class QuestionsController < ApplicationController
   def show
     puts params[:id]
     @question = Question.find_by_content(params[:id])  #change it later
+    @answers = @question.answers.order('created_at DESC')
+    @full = true
     if @question.nil?
       flash[:notice] = 'question not found'
       redirect_to questions_path
@@ -49,11 +51,13 @@ class QuestionsController < ApplicationController
     @query = params[:query]
     
     @items = []
-    questions = Question.search(@query)
+    questions = Question.where(" like ?", "%#{@query}%")
     contests = Contest.search(@query)
     causes = Cause.search(@query)
     articles = Article.search(@query)
     
+    puts contests.inspect
+    puts causes.inspect
     (@items << questions).flatten!
     (@items << contests).flatten!
     (@items << causes).flatten!
@@ -65,7 +69,7 @@ class QuestionsController < ApplicationController
     @question.content = @question.content.parameterize
     if @question.save
       flash[:notice] = 'question created'
-      redirect_to question_path(:id => @question.id)
+      redirect_to question_path(:id => @question.content)
     else
       flash[:notice] = 'question creation failed'
       redirect_to questions_path

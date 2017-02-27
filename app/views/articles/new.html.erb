@@ -1,19 +1,10 @@
-<div class="background-div">
-  <div class="container">
-    <ul class="nav nav-tabs cause-block" style="padding-top:-1.3em;padding-left:1.5em;">
-      <li ><%= link_to 'Read Articles', articles_path %></li>
-      <li class="active"><%= link_to 'Write an Article', new_article_path %></li>
-      <li><%= link_to 'Request Articles', new_article_request_path %></li>
-      <li><%= link_to 'Answer Requests', article_requests_path %></li>
-    </ul>
-    <!-- New article area -->
     <div class="row">
-      <div class="col-md-8 cause-block">
+      <div class="col-md-8">
         <h2>Write an Article for ProjectQ</h2><br>
         <%= form_for @article, :url => {:controller =>"articles", :action =>"create"} do |f| %>
         <p><strong>Topics</strong></p>
-          <%= f.select :topics, options_for_select(get_all_interests.sort!), {}, {:multiple => true, :size => 3 } %>
-  
+          <%= f.select :topics, options_for_select(get_all_interests.sort!), {}, {class: 'form-control drop',:multiple => true, :size => 3 } %>
+          <br/>
           <p><strong>Heading</strong></p>
           <%= f.text_field :heading, autofocus: true, class: 'form-control',placeholder: 'A heading for your article' %> <br>
   
@@ -23,11 +14,12 @@
           <p><strong>Content</strong></p>
           <%= f.cktext_area :content, class: 'form-control', placeholder: 'Start writing here...' %><br>
   
-          <%= f.submit "Create", class:'btn btn-default' %>
+          <%= f.submit "Create", class:'btn btn-ask2' %>
         <% end %>
+        <br/><br/>
       </div>
       <div class="col-md-4">
-        <%= render 'layouts/sidebar'%>
+        <%= render 'layouts/sidebar_articles'%>
       </div>
     </div>
   </div>

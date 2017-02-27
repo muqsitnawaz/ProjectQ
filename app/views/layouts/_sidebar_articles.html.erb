@@ -1,22 +1,20 @@
+
 <div class="panel panel-primary navbar-custom navbar-color" style="border:none">
   <!-- Default panel contents -->
   <div class="panel-heading">Trending Questions</div>
 
-  <!-- List group -->
-  <% @questions = Question.order('created_at DESC').limit(7).sort_by {|q| -q.answers.count} %>
-      
-      
-      
   <ul class="list-group">
-    <% @questions.each do |question| %>
-      <li class="list-group-item"><%= link_to question.content.gsub(/\-/, " "), question_path(:id => question.content), class: 'icon-text' %></a></li>
+      <% Article.order("RANDOM()").limit(7).each do |article| %>
+        <li class="list-group-item"><%= link_to article.heading, article_path(:id => article.id), class: 'icon-text' %></a></li>
     <% end %>
   </ul>
 </div>
- <% if user_signed_in? %>
-<div class="panel panel-primary navbar-custom" style="border:none">
+
+
+      <% if user_signed_in? %>
+        <div class="panel panel-primary navbar-custom" style="border:none">
   <!-- Default panel contents -->
-  <div class="panel-heading">Update Interests</div>
+          <div class="panel-heading">Update Interests</div>
         <br/>
         <p>
           <% current_user.interests[0..2].sort.each do |interest| %>

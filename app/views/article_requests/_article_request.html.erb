@@ -1,62 +1,60 @@
-<div style="margin: 2em 0em; padding: 5px;">
-  <!-- Article header -->
-  <div class="row">
-    <div class="col-xs-10">
-      <p>In
-        <% article_request.topics.each do |topic| %>
-          <%= link_to topic, articles_path(:topic => topic) %>
-        <% end %>
-      </p>
-    </div>
-
-    <div class="col-xs-2">
-      <% if article_request.user == current_user %>
-        <%= link_to '<i class="glyphicon glyphicon-edit" style="color: green;"></i>'.html_safe, edit_article_request_path(:id => article_request.id) %>
-        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, article_request_path(:id => article_request.id), method: :delete, data: { confirm: 'Are you sure?'} %>
-      <% end %>
-    </div>
-  </div>
-
-  <!-- Article body -->
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="question-content" style="margin-top:0px;">
-        <%= link_to article_request.heading, article_request_path(:id => article_request.id) %>
-      </div>
-      
-      <% if full == true %>
-        <p>By <i style="color:green;"><%= article_request.user.name %></i>, <%= article_request.created_at.strftime('%d-%m-%Y') %></p>
-  
-        <p><%= article_request.explanation %></p>
-      <% else %>
-        <br>
-      <% end %>
-    </div>
-  </div>
-
-  <% if user_signed_in? %>
-    <%= link_to '<div class="btn btn-default">Respond</div>'.html_safe, answer_article_request_path(:id => article_request.id) %>
-  <% else %>
-    <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Respond</div>
-  <% end %>
-
-  <!-- Checking if its an index path -->
-  <% if request.path == article_requests_path %>
-    <%= link_to '<div class="btn btn-default">View Response</div>'.html_safe, article_request_path(:id => article_request.id) %>
-  <% else %>
-    <% if @articles.empty? %>
-      <h4 style="color:red;">No responses yet</h4>
-    <% else %>
-      <hr>
-      <h4>Responses</h4>
-      <% @articles.each do |article| %>
-        <div style="margin-bottom: 0.8em;">
-          <div class="question-content">
-            <%= link_to article.heading, article_path(:id => article.id) %>
+<div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500">
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+      <div class="item active">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-offset-0 col-md-12">
+                <div class="" style="margin-top:;">
+                  <h3> <%= link_to article_request.heading, article_request_path(:id => article_request.id) %></h3>
+                  <p class="font-size">
+                    <div id="question_detail<%= article_request.id %>">
+                      <% if !article_request.explanation.nil? %>
+                      <!---->
+                        <% if article_request.explanation.length > 250 && full == false %>
+                        
+                        <%= truncate(article_request.explanation.html_safe, length: 100) %>
+                        <%= link_to '...Read more', '', class: "read-more-#{article_request.id}" %>
+                        <script>
+                          $('.read-more-<%= article_request.id %>').on('click', function(e) {
+                            e.preventDefault()
+                            $(this).parent().html('<%= escape_javascript article_request.explanation.html_safe %>')
+                          })
+                        </script>
+                      
+                      <% else %>
+                      
+                        <%= article_request.explanation.html_safe %>
+                        <br>
+                      
+                      <% end %>
+                      <!---->
+                    <%end%>
+                  </div>
+                  </p>
+                  
+                  <% if user_signed_in? %>
+                    <%= link_to '<div class="btn btn-default btn-ask2">Respond</div>'.html_safe, answer_article_request_path(:id => article_request.id) %>
+                  <% else %>
+                    <div class="btn btn-default btn-ask2" data-toggle="modal" data-target="#signInModal">Respond</div>
+                  <% end %>
+                  
+                  <% if request.path == article_requests_path %>
+                    <%= link_to '<div class="btn btn-default">View Response</div>'.html_safe, article_request_path(:id => article_request.id) %>
+                  <% else %>
+                  <%end%>
+                  
+                </div>          
+              </div>  
+            </div>
           </div>
-          <small class="text-muted">By <%= link_to article.user.name, public_profile_path(:id => article.user_id) %> on <%= article.created_at.strftime('%-d %B, %Y') %></small><br>
         </div>
-      <% end %>
-    <% end %>
-  <% end %>
-</div>
+      </div>
+    </div>
+
+
+
+<!--code is present in the extra.html-->
+
+
+

@@ -1,18 +1,32 @@
-<div>
-	<div class="grid grid_1_of_2" style="margin-top:1em;background-color:#f3f3f3">
-		<h4 style="background-color:#f3f3f3">Similar Questions</h4>
-		
-		<div class="clear">
-		    <%= link_to 'Start a Cause', new_cause_path, class:'btn btn-ask1'%>
-		</div>
-		<% @causes = Cause.order('created_at DESC').limit(7).sort_by {|q| -q.num_agree} %>
-		<% @causes.each do |cause| %>
-        	<div class="image group" style="background-color:#f3f3f3">
-			<div class="grid span_2_of_3" style="background-color:#f3f3f3">
-				<h3><a><%= link_to cause.intro, cause_path(:id => cause.id), data: { no_turbolink: true } %></a></h3>
-			 </div>
-			 <div class="clear"></div>
-		 </div>
-      	<% end %>
-	</div>
+
+<div class="panel panel-primary navbar-custom navbar-color" style="border:none">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Trending Causes</div>
+
+  <ul class="list-group">
+      <% Cause.order("RANDOM()").limit(7).each do |article| %>
+        <li class="list-group-item"><%= link_to article.intro, cause_path(:id => article.id), class: 'icon-text' %></a></li>
+    <% end %>
+  </ul>
 </div>
+
+
+      <% if user_signed_in? %>
+        <div class="panel panel-primary navbar-custom" style="border:none">
+  <!-- Default panel contents -->
+          <div class="panel-heading">Update Interests</div>
+        <br/>
+        <p>
+          <% current_user.interests[0..2].sort.each do |interest| %>
+            <%= link_to interest.titleize, questions_path(:topic => interest) %> .
+          <% end %>
+          <% if current_user.interests.length > 3 %>
+            and <%= current_user.interests.length - 3 %> more
+          <% end %>
+        </p>
+        
+        <center>
+          <button class="btn btn-ask2" data-toggle="modal" data-target="#addInterestsModal">Add More</button><br/>
+        </center>
+      </div>
+    <% end %>

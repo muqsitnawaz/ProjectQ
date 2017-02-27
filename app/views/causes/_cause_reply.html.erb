@@ -1,33 +1,47 @@
-<div style="padding: 5px;">
-  <div class="row">
-    <div class="col-xs-2">
-      <% if cause_reply.user.profile_pic.length != 0 && cause_reply.anonymous == false %>
-        <%= image_tag cause_reply.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
-      <% else %>
-        <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
-      <% end %>
-    </div>
-    <div class="col-xs-7" style="margin-left: -40px;">
-      <% if cause_reply.anonymous == false %>
-        <%= link_to cause_reply.user.name, public_profile_path(:id => cause_reply.user.id) %>
-      <% else %>
-        <p>Anonymous</p>
-      <% end %>
-    </div>
-    <div class="col-xs-3" style="margin-left: 40px;">
-      <% if cause_reply.user == current_user %>
-        <a id="edit_cause_reply<%= cause_reply.id %>" class="btn btn-default">edit</a>
-        <%= link_to 'delete', cause_replies_path(:id => cause_reply.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
-      <% end %>
-    </div>
-  </div>
-  
-  <div class="row" style="margin-top: 0.5em;">
-    <!-- Showing reply and username -->
-    <div class="col-xs-12">
-      <div id="cause_reply<%= cause_reply.id %>">
-        <%= cause_reply.content.html_safe %>
+<div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500" style="margin-top: 20px;">
+        <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+      <div class="active">   
+          <div class="container-fluid">
+              <div class="row">
+               <div class="col-md-2">
+                 <% if cause_reply.user.profile_pic.length != 0 && cause_reply.anonymous == false %>
+                    <%= image_tag cause_reply.user.profile_pic.thumb, class: 'img-circle img-sm img1', width: 50,height:50 %>
+                  <% else %>
+                    <%= image_tag 'http://gracecosta.com/wp-content/uploads/2014/03/www.gracecosta.com-17.jpg',class: "img-responsive img-circle" %>
+                <% end %>
+                 
+               </div>
+              <div class="col-md-7 Answers">
+                <% if cause_reply.anonymous == false %>
+                  <h3 class="marginzero"><%= link_to cause_reply.user.name, public_profile_path(:id => cause_reply.user.id) %></h3>
+                <% else %>
+                  <h3 class="marginzero">Anonymous</h3>
+                <% end %>
+              </div>
+              <div class="col-md-3">
+                <span class="text-muted pull-right">
+                  <% if cause_reply.user == current_user %>
+                    <div class="box-tools">
+                      <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_cause_replyC<%= cause_reply.id %>">
+                        <i class="fa fa-pencil"></i>
+                      </button>
+                      <%= link_to cause_replies_path(:id => cause_reply.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do %>
+                        <i class="fa fa-times"></i>
+                      <%end%>
+                    </div> <!-- .box-tools -->
+                  <%end%>
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-offset-2 col-md-9 Answers">  
+                <div id="cause_reply<%= cause_reply.id %>">
+                  <%= cause_reply.content.html_safe %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>

@@ -1,48 +1,42 @@
-<div class="background-div">
-  <div class="container">
     <div class="row">
-        <div class="col-md-8 cause-block">
+        <div class="col-md-8">
             <div class="row">
-                <div class = "col-xs-offset-1 col-xs-10">
-                  <h2>People can Help By</h2>
+                <div class = "col-xs-10">
+                  <h2>Edit Petition</h2>
                 </div>
             </div>
             <%= form_for @cause,:url =>{:controller=>"causes",:action=>"petition_update",:cause_id =>@cause.id} do |f| %>
             <!--fields-->
             <div class="row">
-                <div class = "col-xs-offset-1 col-xs-10">
+                <div class = "col-xs-10">
                     <div class="field">
+                        <label> Petition to</label>
                         <%= f.text_field :petitionTo, autofocus: true,class: 'form-control',placeholder: 'What are you petitioning ?'%><br/>
                     </div>
                 </div>
             </div>
             
             <div class="row">
-                <div class = "col-xs-offset-1 col-xs-10">
+                <div class = "col-xs-10">
                     <div class="field">
-                        <%= f.text_field :petition_help, autofocus: true,class: 'form-control',placeholder: 'What does this pledge help people?'%><br/>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class = "col-xs-offset-1 col-xs-10">
-                    <div class="field">
-                        <%= f.date_field :petitiondate, autofocus: true,class: 'form-control',placeholder: 'What does this end?'%><br/>
+                        <label> Petition Ends</label>
+                        <%= f.date_field :petitiondate, autofocus: true,class: 'form-control',placeholder: 'When does this end?'%><br/>
                     </div>
                 </div>
             </div>
         
             <div class="row">
-                <div class = "col-xs-offset-1 col-xs-10">
+                <div class = "col-xs-10">
                     <div class="field">
+                        <label>Signatures Required</label>
                         <%= f.text_field :petition_signs, autofocus: true,class: 'form-control',placeholder: 'How many signatures do you need?'%><br/>
                     </div>
                 </div>
             </div>
-            <%= f.submit "Update Petition",class:'btn btn-ask1'%>
+            
+            
+            <%= f.submit "Update Petition",class:'btn btn-ask2'%>
+            <%end%>
         </div>
-        <%end%>
+        
     </div>
-</div>
-</div>

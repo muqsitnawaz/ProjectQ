@@ -6,7 +6,7 @@
       <div class="question-area">
         
         <% @items.each do |item| %>
-          <%= item.class.name%><br>
+          <%= item.class.name%>
           <% if item.class.name == "Question" %>
             <%= @items.inspect%>
             <%= render 'questions/question', :question => item, :answers => item.answers.order('created_at DESC'), :full => false %>

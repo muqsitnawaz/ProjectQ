@@ -48,7 +48,7 @@ group :development do
 end
 
 group :development, :test do # <<<< :development, not devlopment
-  gem 'pg'
+  gem 'sqlite3'
 end
 
 group :production do
@@ -79,3 +79,5 @@ gem 'omniauth-twitter'
 gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'bootstrap-wysihtml5-rails', github: 'nerian/bootstrap-wysihtml5-rails'
 gem 'kaminari'
+gem 'faker'
+gem 'jquery-turbolinks'

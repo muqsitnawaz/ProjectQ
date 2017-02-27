@@ -1,64 +1,112 @@
-<div class="box box-widget cause-block">
-  <div class="box-header with-border">
-    <div class="user-block">
-    <% if user_signed_in? && contest.user == current_user %>
-      <div class="box-tools pull-right">
-        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Contest" id="edit_contest<%= contest.id %>">
-          <i class="fa fa-pencil"></i>
-        </button>
-        <%= link_to delete_contest_path(:id => contest.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do %>
-          <i class="fa fa-times"></i>
-        <%end%>
-      </div> <!-- /.box-tools -->
-    <%end%>
-    </div>
-  </div> <!-- /.box-header -->
-  <div class="box-body">
-    <div class="headingcause"><%= link_to contest.content.capitalize, contest_path(:id => contest.id) %>
-      <span class="pull-right">
-        <% if contest.status == 'open' %>
+<div class="">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <span class="text-right">
+          
+          <% if contest.status == 'open' %>
           <span class="label label-success"><%= contest.status.upcase! %></span> till <span class="label label-default"><%= contest.end_date %></span>
         <% else %>
           <span class="status-danger"><%= contest.status.upcase! %></span>
         <% end %>
+          
+        </span>
+        
         <% if contest.winner_chosen %>
-          <span class="label label-dark">WON BY <span style="color:green;"><%= User.find_by_id(contest.winner_id).name.upcase! %></span>
+          <span class="pull-right label label-dark">WON BY <span style="color:green;"><%= User.find_by_id(contest.winner_id).name.upcase! %></span>
         <% end %>
-      </span>
-    </div>
-    <% if contest.image.length !=0 %>
-      <%= image_tag contest.image.url(), class: 'img-responsive pad'%>
-    <%end%>
-    <p>
-      <div id="contest_detail<%= contest.id %>">
-        <%= contest.detail.html_safe %>
+        
+        <% if user_signed_in? && contest.user == current_user %>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Contest" id="edit_contest<%= contest.id %>">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <%= link_to delete_contest_path(:id => contest.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do %>
+              <i class="fa fa-times"></i>
+            <%end%>
+          </div> <!-- /.box-tools -->
+        <%end%>
       </div>
-    </p>
-    
-    <% if !contest.winner_chosen %>
-      <% if is_admin %>
-        <button class="btn btn-default"><%= link_to 'Participants', contest_path(:id => contest.id) %> | <%= contest.contest_answers.length %></button>
-        <button id="endC<%= contest.id %>" class="btn btn-default">End Now</button>
-      <% else %>
-        <% if user_signed_in? %>
-          <button id="answerC<%= contest.id %>" class="btn btn-default">Participate | <%= contest.contest_answers.length %></button>
-          <span class="pull-right text-muted"><%= social_share_button_tag(contest.content) %></span>
-        <% else %>
-          <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Participate | <%= contest.contest_answers.length %></div>
-        <% end %>
-      <% end %>
-    <%end%>
+      <div class="panel-body">
+        <div class="media">
+          <a class="pull-left" href="#">
+          <%= image_tag contest.image.url(), class: 'media-object',height:"125", width:"150"%>
+          <!--cause.image.url()-->
+        </a>
+        <div class="media-body">
+          <h3 class="media-heading"><%= link_to contest.content.capitalize, contest_path(:id => contest.id) %></h3>
+          <p class="text-right">
+          </p>
+          <p>     
+            <% if contest.detail.length > 250 && full == false %>
+              <%= truncate(contest.detail, length: 250) %>
+              <%= link_to '...Read more', '', class: "read-more-#{contest.id}" %>
+              <script>
+                $('.read-more-<%= contest.id %>').on('click', function(e) {
+                  e.preventDefault()
+                  $(this).parent().html('<%= escape_javascript contest.detail %>')
+                })
+              </script>
+            <% else %>
+              <%= contest.detail.html_safe %>
+              <br>
+            <% end %>
+          </p>
+          <ul class="list-inline list-unstyled">
+            <% if !contest.winner_chosen %>
+              
+              <% if is_admin %>
+                <button class="btn btn-default btn-ask2"><%= link_to 'Participants', contest_path(:id => contest.id) %> | <%= contest.contest_answers.length %></button>
+                <button id="endC<%= contest.id %>" class="btn btn-default btn-ask2">End Now</button>
+              <% else %>
+                
+                <% if user_signed_in? %>
+                  <button id="answerC<%= contest.id %>" class="btn btn-default btn-ask2">Participate | <%= contest.contest_answers.length %></button>
+                  <span class="pull-right text-muted"><%= social_share_button_tag(contest.content) %></span>
+                <% else %>
+                  <div class="btn btn-default btn-ask2" data-toggle="modal" data-target="#signInModal">Participate | <%= contest.contest_answers.length %></div>
+                <% end %>
+              
+            <%end%>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+     </div>
+    </div>
   </div>
-  <% if is_admin && full == true %>
-      <% if !contest_answers.empty? %>
-        <hr>
-        <% contest_answers.each do |contest_answer| %>
-          <%= render 'contest_answer', :contest_answer => contest_answer %>
-        <% end %>
-      <% end %>
-    <% end %>
-    <input type="text" id="contest_content<%= contest.id %>" value="<%= contest.content %>" hidden>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

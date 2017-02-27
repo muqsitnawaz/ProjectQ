@@ -13,7 +13,7 @@
         </div>
       </div>
       <section>
-        <div class="modal-body modal-spa">
+        <div class="modal-body">
           <% @question = Question.new %>
           
           <%= form_for @question,:url =>{ :controller =>"questions", :action =>"create"}  do |f| %>
@@ -31,7 +31,7 @@
               
               <div class="col-xs-6">
                 <p><strong>Category</strong></p>
-                <%= f.select :topics, options_for_select(get_all_interests.sort!), {}, {:multiple => true, :size => 3 } %>
+                <%= f.select :topics, options_for_select(get_all_interests.sort!), {}, {class:'form-control cat-form',:multiple => true, :size => 3 } %>
               </div>
             </div>
           </div>

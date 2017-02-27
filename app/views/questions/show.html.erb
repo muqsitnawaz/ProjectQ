@@ -1,13 +1,145 @@
-<div class="background-div">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 question-detail">
-        <%= render 'question', :question => @question, :answers => @question.answers.order('created_at DESC'), :full => true %>
-      </div>
-      <div class="col-md-4 side-bar">
-        <%= render 'layouts/sidebar'%>
+<div class="row" style="margin-top:1.3em">
+  <div class="col-sm-8 align">
+    <div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500">
+  <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="active">
+          <div class="container-fluid">
+              <div class="row">
+                
+                <% if @full == true %>
+                  <div class="col-md-12">
+                    <!--user image code goes here from extra.html-->
+                    
+                    <!--ended-->
+                    
+                  </div> <!-- /.user-block -->
+                <%end%>
+              </div>
+                
+            
+            <div class="row">
+              <div class="col-md-offset-0 col-md-10">
+                <div class="" style="margin-top:;">
+                  <h2><%= link_to @question.content.gsub(/\-/, " "), question_seo_path(:content => @question.content),data: {no_turbolink: true } %></h2>
+                  <%= image_tag '', class: 'img-responsive pad'%>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <% if user_signed_in? && @question.user == current_user %>
+                  <div class="pull-right">
+                    <div class="box-tools" style="margin-top:1.7em">
+                      <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_question<%= @question.id %>">
+                        <i class="fa fa-pencil"></i>
+                      </button>
+                      
+                      <%= link_to question_path(:id => @question.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+                        <i class="fa fa-times"></i>
+                      <%end%>
+                    </div> <!-- /.box-tools -->
+                  </div>
+                <%end%>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-offset-0 col-md-12">
+                <div class="" style="margin-top:;">
+                  <p class="font-size">
+                    <div id="question_detail<%= @question.id %>">
+                      <% if !@question.detail.nil? %>
+                      <!---->
+                        <% if @question.detail.length > 250 && @full == false %>
+                        
+                        <%= truncate(@question.detail.html_safe, length: 100) %>
+                        <%= link_to '...Read more', '', class: "read-more-#{@question.id}" %>
+                        <script>
+                          $('.read-more-<%= @question.id %>').on('click', function(e) {
+                            e.preventDefault()
+                            $(this).parent().html('<%= escape_javascript @question.detail.html_safe %>')
+                          })
+                        </script>
+                      
+                      <% else %>
+                      
+                        <%= @question.detail.html_safe %>
+                        <br>
+                      
+                      <% end %>
+                      <!---->
+                    <%end%>
+                  </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-offset-0 col-md-10">
+                <div class="" style="margin-top:;">
+                  <% if user_signed_in? %>
+                    <button id="answerQ<%= @question.id %>" class="btn btn-primary custom-btnn" type="button">Answer <span class="badge"><%= @question.answers.length %></span></button>
+                    <% if !current_user.following.include? @question.id %>
+                      <button id="follow<%= @question.id %>" class="btn btn-primary custom-btnn" type="button"><i class="fa fa-share"></i>Follow</button>
+                    <% else %>
+                      <button class="btn btn-primary custom-btnn" type="button"><i class="fa fa-share"></i>Following</button>
+                    <% end %>
+                  <% else %>
+                    <button class="btn btn-primary custom-btnn" data-toggle="modal" data-target="#signInModal" type="button">Answers <span class="badge"><%= @question.answers.length %></span></button>
+                    <button class="btn btn-primary custom-btnn" type="button" data-toggle="modal" data-target="#signInModal"><i class="fa fa-share"></i>Follow</button>
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-md-2">
+                  <span class="pull-right"><%= social_share_button_tag(@question.content) %></span>
+              </div>
+            </div>          
+
+
+        <!-- /.box-body -->
+                
+        <div id="answerContent<%= @question.id %>" class="row" style="display:none;">
+          <div class="box-footer">
+           <!--.img-push is used to add margin to elements next to floating images -->
+            <div>
+              <% @answer = Answer.new %>
+              <%= form_for @answer, :url => {:controller =>"answers", :action => "create"}  do |f| %>
+                <%= f.cktext_area :content, class: 'form-control input-sm',placeholder:'Type your Answer here' %><br>
+                <%= f.hidden_field :question_id, value: @question.id %>
+            </div>
+              <div>
+                
+                <span class="pull-right">
+                  <%= f.check_box :anonymous %> Anonymous
+                  <%= f.submit "Post Answer", class:'btn btn-primary custom-btnn'%>  
+                </span>
+                
+              </div>
+              <% end %>
+          </div>  <!--img push ended-->
+        </div> <!--/.box-footer -->
+        </div>
       </div>
     </div>
+    
+    <% if !@answers.empty? %>
+      <div style="margin-top: -20px; <%= @full == true ? 'margin-top: 0em;' : '0em' %>">
+          <!-- Rendering answers -->
+              <% if @full == true %>
+                <% @answers.each do |answer| %>
+                  <%= render 'questions/answer', :answer => answer %><br>
+                <% end %>
+              <% end %>
+      </div>
+    <% else %>
+    <% end %>
+        <!--question-->
+        <!--ended-->
+</div>       
+          
+  <br><br>
+  
+  </div>
+  <div class="col-md-4 side-bar">
+    <%= render 'layouts/sidebar'%>
   </div>
 </div>
 

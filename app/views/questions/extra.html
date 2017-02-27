@@ -1,0 +1,789 @@
+<%if user_signed_in?%>
+<div class="background-div">
+  <div class="r">
+          <div class="row">
+            <div class="col-xs-2 col-xs-offset-1">
+              <%= render 'layouts/side_menu'%>
+            </div>
+            <div class="col-xs-6 main-feed">
+              <% @question = Question.new %>
+              <%= form_for @question,:url =>{ :controller =>"questions", :action =>"create"}, :html =>{id: 'ask_question'}  do |f| %>
+                <div class="form-group">
+                  <div class="col-xs-12">
+                    <%= f.text_area :content, autofocus: true, class:'form-control',placeholder: 'What do you want to ask?',rows: "3"%> <br>
+                  </div>
+                  <div class="pull-right">
+                    <%= f.submit "Post",class:'btn btn-squared btn-ask1'%>
+                  </div>
+                </div>
+              <%end%>
+          <div class="row">
+            <!--<div class="col-md-12">-->
+              <% @questions.each do |question| %>
+                <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
+              <% end %>
+      
+               <!--/.box -->
+            </div>
+          <!--</div>-->
+          <%if @decider == 0 %>
+          <%else%>
+            <%= paginate @questions, param_name: "page"%>
+          <%end%>
+        </div>
+        <div class="col-xs-3">
+         <%= render 'layouts/sidebar'%>
+        </div>
+      </div>
+    </div>
+  </div>
+<%else%>
+  <div class="background-div">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <% @questions.each do |question| %>
+            <%= render 'question', :question => question, :answers => question.answers.order('created_at DESC'), :full => false %>
+          <% end %>
+       <!--/.box -->
+        </div>
+      </div>
+      <%= paginate @questions%>
+    </div>
+  </div>
+<%end%>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--must include for answers in _questions-->
+      
+        <div id="answerContent<%= question.id %>" class="row" style="display:none;">
+          <div class="box-footer">
+           <!--.img-push is used to add margin to elements next to floating images -->
+          <div class="img-push">
+            
+            <% if user_signed_in?%>
+              
+              
+              <% if current_user.profile_pic.length != 0 %>
+                <%= image_tag current_user.profile_pic.thumb, class: 'img-circle img-sm',height: '128px', width:'128px' %>
+              <% else %>
+                <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
+              <% end %>
+      
+              <%else%>
+      
+                <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
+      
+            <%end%>
+              <div>
+                <% @answer = Answer.new %>
+                <%= form_for @answer, :url => {:controller =>"answers", :action => "create"}  do |f| %>
+                  <%= f.cktext_area :content, class: 'form-control input-sm',placeholder:'Type your Answer here' %><br>
+                  <%= f.hidden_field :question_id, value: question.id %>
+              </div>
+                <div>
+                  <strong>Anonymous</strong> <%= f.check_box :anonymous %>
+                  <%= f.submit "Post Answer", class:'btn btn-default'%>
+                </div>
+                <% end %>
+              </div>
+            </div>  <!--img push ended-->
+      
+          </div> <!--/.box-footer -->
+          
+          
+          
+          
+          <% if !answers.empty? %>
+            <div class="col-xs-12" style="margin-top: -20px; <%= full == true ? 'margin-top: 0em;' : '0em' %>">
+              <!-- Rendering answers -->
+              <% if full == true %>
+      
+                <% answers.each do |answer| %>
+                  <%= render 'questions/answer', :answer => answer %><br>
+                <% end %>
+              <% else %>
+                <%= render 'questions/answer', :answer => answers.sort_by {|a| a.upvotes }.reverse[0] %>
+              <% end %>
+            </div>
+          <% else %>
+            <% if full == false %>
+            <% end %>
+          <% end %>
+        <!--question-->
+        
+        <!--removed from answers  beneath user image comment-->
+        <% if answer.user.profile_pic.length != 0 && answer.anonymous == false %>
+        <%= image_tag answer.user.profile_pic.thumb, class: 'img-circle img-sm', width: 128,height:128 %>
+      <% else %>
+        <%= image_tag 'thumb.jpg',class: 'img-circle img-sm', width: 128,height:128 %>
+    <% end %>
+    <!--ended-->
+    
+    <!--removed from _question.html.erb beneath useriamge goes here comment-->
+    <% if user_signed_in?%>
+                      <!--for user image if he is signed in-->
+                      <% if current_user.profile_pic.length != 0 %>
+                        <%= image_tag current_user.profile_pic.thumb, class: 'img-circle',height: '60px', width:'80px' %>
+                      <% else %>
+                        <%= image_tag 'thumb.jpg', class: 'img-circle', height: '40px', width:'50px' %>
+                      <% end %>
+                      
+                      <%else%>
+                        <%= image_tag 'thumb.jpg', class: 'img-circle', height: '40px', width:'50px' %>
+                    <%end%>
+                    <!---->
+                    <span class="">
+                      <!---->
+                      <% if question.anonymous == false %>
+                        
+                        <%= link_to question.user.name, public_profile_path(:id => question.user.id), class:'username' %>
+                        <% question.topics[0..2].sort.each do |topic| %>
+                          <span class=""><%= link_to topic.titleize, questions_path(:topic => topic),class:'label label-dark' %></span>
+                        <% end %>
+                        
+                        <% if question.topics.length > 3 %>
+                          and <%= question.topics.length - 3 %> more
+                        <% end %>
+                      
+                      <% else %>
+                        <p>Posted by Anonymous</p>
+                      <% end %>
+                      </span>
+                    <span class="text-muted"><%= (Time.now.to_date - question.created_at.to_date).to_i %> day(s) ago</span>
+    <!--ended-->
+    
+    
+    
+    <!--full answer-->
+    <div class="comment-text">
+      <span class="username">
+        
+        <span class="text-muted pull-right">
+          <% if answer.user == current_user %>
+            <div class="box-tools">
+              <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_answerQ<%= answer.id %>">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <%= link_to answers_path(:id => answer.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+                <i class="fa fa-times"></i>
+              <%end%>
+            </div> <!-- .box-tools -->
+          <%end%>
+        </span>
+      </span>
+      <p>
+        <div id="answer<%= answer.id %>">
+           <!---->
+        <% if answer.content.length > 120 %>
+        <%= truncate(answer.content, length: 120) %>
+        <%= link_to '...Read more', '', class: "read-more-#{answer.id}" %>
+        <script>
+          $('.read-more-<%= answer.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(this).parent().html('<%= escape_javascript answer.content.html_safe %>')
+          })
+        </script>
+      <% else %>
+        <%= answer.content.html_safe %>
+      <% end %>
+        <!---->
+        </div>        
+      </p>
+      <% if user_signed_in? %>
+        <div class="row">
+          <div class="col-xs-12">
+            <!-- Upvote button -->
+            <% if current_user.answers_upvote.include? answer.id %>
+              <button class="btn btn-default btn-xs"><span style="color: blue;">Upvoted</span> | <%= answer.upvotes %></button>
+            <% else %>
+              <button id="upvote<%= answer.id %>" class="btn btn-primary btn-sm" type="button">Upvote | <%= answer.upvotes %></button>
+            <% end %>
+    
+            <!-- Downvote button -->
+            <% if current_user.answers_downvote.include? answer.id %>
+              <button class="btn btn-default btn-xs"><span style="color: blue;">Downvote</span></button>
+            <% else %>
+              <button id="downvote<%= answer.id %>" class="btn btn-primary btn-sm" type="button">Downvote</button>
+            <% end %>
+    
+            <!-- Reply buttons -->
+            <button id="replyA<%= answer.id %>" class="btn btn-primary btn-sm" type="button">Reply</button>
+            <button id="showReplies<%= answer.id %>" class="btn btn-primary btn-sm" type="button">Replies | <%= answer.replies.count %></button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <!-- comment-text -->
+  <!--</div>-->
+  <!-- .box-comment -->
+    <div id="replyContent<%= answer.id %>" class="row hidden">
+    <div class="col-xs-12">
+      <% @reply = Reply.new %>
+      <%= form_for @reply, :url => {:controller =>"replies", :action => "create"}  do |f| %>
+        <%= f.cktext_area :content, class: 'form-control ckeditor' %><br>
+        <%= f.hidden_field :answer_id, value: answer.id %>
+    </div>
+    <div class="col-xs-4 col-xs-offset-8">
+      <div>
+        <strong>Anonymous</strong> <%= f.check_box :anonymous %>
+        <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
+      </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Hidden replies -->
+  <div class="row" style="">
+    <div class="col-xs-11 col-xs-offset-1">
+      <div id="replies<%= answer.id %>" class="hidden" style="margin-top: 1em; margin-bottom: -1em;">
+        <% answer.replies.each do |reply| %>
+          <%= render 'questions/reply', :reply => reply %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<!--</div>-->
+
+
+<script>
+$("[id^=replyA]").click(function() {
+  answer_id = this.id.substring(6, this.id.length)
+  console.log('id: '+answer_id)
+  
+  $("#replyContent"+answer_id).toggleClass("hidden")
+})
+// 
+
+</script>
+
+<!--toolbar code from _question.html.erb below toolbaar code goes here comment-->
+<% if user_signed_in? && question.user == current_user %>
+  <span>
+    <div class="pull-right">
+      <div class="box-tools">
+        <button type="button" class="btn btn-box-tool custom-btnn" data-toggle="tooltip" title="Edit Question" id="edit_question<%= question.id %>">
+          <i class="fa fa-pencil"></i>
+        </button>
+        
+        <%= link_to question_path(:id => question.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+          <i class="fa fa-times"></i>
+        <%end%>
+      
+      </div> <!-- /.box-tools -->
+    </div>
+  </span>
+<%end%>
+<!--ended-->
+
+<!--from  _causes user image-->
+<% if cause.user.profile_pic.length != 0 %>
+              <%= image_tag cause.user.profile_pic, class: 'img-circle',height: '128px', width:'128px' %>
+            <% else %>
+              <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
+            <% end %>
+<!--ended-->
+
+
+<!--entire _cause-->
+ <span class="username">
+          <%= link_to cause.user.name, public_profile_path(:id => cause.user.id) %>
+            <span class="label label-dark"><%= cause.cause_type %></span>
+      </span>
+      <span class="description">Started Cause - <%= (Time.now.to_date - cause.created_at.to_date).to_i %> day(s) ago</span>
+    <!-- /.user-block -->
+    <% if user_signed_in? && cause.user == current_user %>
+      <div class="box-tools">
+        <%= link_to  pledge_edit_path(:cause_id => cause.id),class:'btn btn-box-tool',title:"Edit Cause" do %>
+          <i class="fa fa-pencil"></i>
+        <%end%>
+        <%= link_to delete_cause_path(:id => cause.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+          <i class="fa fa-times"></i>
+        <%end%>
+      </div> <!-- /.box-tools -->
+    <%end%>
+  </div>
+   <div class="box-body">
+    <div class="headingcause"><%= link_to cause.intro, cause_path(:id => cause.id),data: {no_turbolink: true } %>
+      <span style="margin-left:2em">
+        <% if cause.pledgeTo.nil?%>
+        <%else%>
+          <span class="label label-danger"><%= cause.total_pledges%></span> 
+        <%end%>
+        <% if cause.petitionTo.nil?%>
+        <%else%>
+          <span class="label label-danger"><%= cause.total_signs%> signs</span><span class="description">required</span> 
+        <%end%>  
+      </span>
+    </div>
+    <%= image_tag cause.image.url(), class: 'img-responsive pad'%>
+    <p>
+     <% if cause.detail.length > 250 && full == false %>
+        <%= truncate(cause.detail, length: 250) %>
+        <%= link_to '...Read more', '', class: "read-more-#{cause.id}" %>
+        <script>
+          $('.read-more-<%= cause.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(this).parent().html('<%= escape_javascript cause.detail %>')
+          })
+        </script>
+      <% else %>
+        <%= cause.detail %>
+        <br>
+      <% end %>
+    </p> 
+    <% if user_signed_in? %>
+      <button id="commentC<%= cause.id %>" class="btn btn-default">Comment | <%= cause_comments.length %></button>
+      <% if current_user.causes_followed.include? cause.id %>
+        <button class="btn btn-default" style="color:blue;">Following</button>
+      <% else %>
+        <button id="follow_cause<%= cause.id %>" class="btn btn-default">Follow</button>
+      <% end %>
+      <button id="agree_<%= cause.id %>" class="btn btn-default"><i class="fa fa-thumbs-o-up"></i>Agree | <%= cause.num_agree %></button>
+      <button id="disagree_<%= cause.id %>" class="btn btn-default"><i class="fa fa-thumbs-o-down"></i>Disagree | <%= cause.num_disagree %></button>
+    <% else %>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-comment"></i>Comment | <%= cause_comments.length %></div>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal">Follow</div>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-up"></i>Agree | <%= cause.num_agree %></div>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-down"></i>Disagree | <%= cause.num_disagree %></div>
+      <span class="pull-right">
+        <%= social_share_button_tag(cause.detail) %>
+      </span>
+    <% end %>
+  </div>
+  <% if full == true%>
+<div id="causeCommentContent<%= cause.id %>" class="row hidden">
+      <div class="col-xs-12">
+        <% @cause_comment = CauseComment.new %>
+        <%= form_for @cause_comment, :url => { :controller =>"cause_comments", :action =>"create"}  do |f| %>
+          <%= f.cktext_area :content, class: 'form-control' %><br>
+          <%= f.hidden_field :cause_id, value: cause.id %>
+      </div>
+      <div class="col-xs-4 col-xs-offset-8">
+        <div>
+          <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
+        </div>
+        <% end %>
+      </div>
+    </div>
+<%end%>
+
+    <div class="col-xs-12" style="margin-top: 1em;">
+      <% if !cause_comments.empty? %>
+        <!-- Rendering comments -->
+        <% if full == true %>
+          <hr>
+
+          <% cause_comments.each do |cause_comment| %>
+            <%= render 'causes/cause_comment', :cause_comment => cause_comment %>
+          <% end %>
+        <% else %>
+          <%= render 'causes/cause_comment', :cause_comment => cause_comments.sort_by {|a| a.created_at }.last %>
+        <% end %>
+      <% end %>
+    </div>
+<% if full == true %>
+  <script>
+    $("[id^=commentC]").click(function() {
+      cause_id = this.id.substring(8, this.id.length)
+      console.log('id: '+cause_id)
+
+      $("#causeCommentContent"+cause_id).toggleClass("hidden")
+  })
+  </script>
+<% end %>
+<input type="text" id="cause_intro<%= cause.id %>" value="<%= cause.intro %>" hidden>
+</div>
+<%= javascript_include_tag "causes_script", "data-turbolinks-track" => true  %>
+<!--wnsws-->
+
+<!--_causes to be used in show-->
+      
+      
+      
+      
+      
+      
+      
+      
+    <% if user_signed_in? && cause.user == current_user %>
+      <div class="box-tools">
+        <%= link_to  pledge_edit_path(:cause_id => cause.id),class:'btn btn-box-tool',title:"Edit Cause" do %>
+          <i class="fa fa-pencil"></i>
+        <%end%>
+        <%= link_to delete_cause_path(:id => cause.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+          <i class="fa fa-times"></i>
+        <%end%>
+      </div> <!-- /.box-tools -->
+    <%end%>
+  </div>
+   <div class="box-body">
+    <div class="headingcause"><%= link_to cause.intro, cause_path(:id => cause.id),data: {no_turbolink: true } %>
+      <span style="margin-left:2em">
+        <% if cause.pledgeTo.nil?%>
+        <%else%>
+          <span class="label label-danger"><%= cause.total_pledges%></span> 
+        <%end%>
+        <% if cause.petitionTo.nil?%>
+        <%else%>
+          <span class="label label-danger"><%= cause.total_signs%> signs</span><span class="description">required</span> 
+        <%end%>  
+      </span>
+    </div>
+    
+    <p>
+     <% if cause.detail.length > 250 && full == false %>
+        <%= truncate(cause.detail, length: 250) %>
+        <%= link_to '...Read more', '', class: "read-more-#{cause.id}" %>
+        <script>
+          $('.read-more-<%= cause.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(this).parent().html('<%= escape_javascript cause.detail %>')
+          })
+        </script>
+      <% else %>
+        <%= cause.detail %>
+        <br>
+      <% end %>
+    </p> 
+    <% if user_signed_in? %>
+      <button id="commentC<%= cause.id %>" class="btn btn-default">Comment | <%= cause_comments.length %></button>
+      <% if current_user.causes_followed.include? cause.id %>
+        <button class="btn btn-default" style="color:blue;">Following</button>
+      <% else %>
+        <button id="follow_cause<%= cause.id %>" class="btn btn-default">Follow</button>
+      <% end %>
+      <button id="agree_<%= cause.id %>" class="btn btn-default"><i class="fa fa-thumbs-o-up"></i>Agree | <%= cause.num_agree %></button>
+      <button id="disagree_<%= cause.id %>" class="btn btn-default"><i class="fa fa-thumbs-o-down"></i>Disagree | <%= cause.num_disagree %></button>
+    <% else %>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-comment"></i>Comment | <%= cause_comments.length %></div>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal">Follow</div>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-up"></i>Agree | <%= cause.num_agree %></div>
+      <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal"><i class="fa fa-thumbs-o-down"></i>Disagree | <%= cause.num_disagree %></div>
+      <span class="pull-right">
+        <%= social_share_button_tag(cause.detail) %>
+      </span>
+    <% end %>
+  </div>
+  <% if full == true%>
+    <div id="causeCommentContent<%= cause.id %>" class="row hidden">
+      <div class="col-xs-12">
+        <% @cause_comment = CauseComment.new %>
+        <%= form_for @cause_comment, :url => { :controller =>"cause_comments", :action =>"create"}  do |f| %>
+          <%= f.cktext_area :content, class: 'form-control' %><br>
+          <%= f.hidden_field :cause_id, value: cause.id %>
+      </div>
+      <div class="col-xs-4 col-xs-offset-8">
+        <div>
+          <%= f.submit "Post", class:'btn btn-squared btn-ask1'%>
+        </div>
+        <% end %>
+      </div>
+    </div>
+<%end%>
+
+    <div class="col-xs-12" style="margin-top: 1em;">
+      <% if !cause_comments.empty? %>
+        <!-- Rendering comments -->
+        <% if full == true %>
+          <hr>
+
+          <% cause_comments.each do |cause_comment| %>
+            <%= render 'causes/cause_comment', :cause_comment => cause_comment %>
+          <% end %>
+        <% else %>
+          <%= render 'causes/cause_comment', :cause_comment => cause_comments.sort_by {|a| a.created_at }.last %>
+        <% end %>
+      <% end %>
+    </div>
+<% if full == true %>
+  <script>
+    $("[id^=commentC]").click(function() {
+      cause_id = this.id.substring(8, this.id.length)
+      console.log('id: '+cause_id)
+
+      $("#causeCommentContent"+cause_id).toggleClass("hidden")
+  })
+  </script>
+<% end %>
+<input type="text" id="cause_intro<%= cause.id %>" value="<%= cause.intro %>" hidden>
+</div>
+<%= javascript_include_tag "causes_script", "data-turbolinks-track" => true  %>
+<!--ended-->
+
+<!--read more code goes here-->
+<% if @cause.detail.length > 250 %>
+              <%= truncate(@cause.detail, length: 250) %>
+              <%= link_to '...Read more', '', class: "read-more-#{@cause.id}" %>
+              <script>
+                $('.read-more-<%= @cause.id %>').on('click', function(e) {
+                  e.preventDefault()
+                  $(this).parent().html('<%= escape_javascript @cause.detail %>')
+                })
+              </script>
+            <% else %>
+              <%= @cause.detail.html_safe %>
+              <br>
+            <% end %>
+<!--ended-->
+
+<!--in the pledge_view under for pledge-->
+<div class = "col-xs-6" style="height:240px;border-right:1px solid #c6c6c6">
+            <%if !@cause.pledgeTo.nil?%>
+                <div class="panel panel-default apanel1">
+            	    <div class="panel-heading">
+                        <h3 class="panel-title"><%= "Pledge Details"%></h3></center>
+                        <span class="pull-right" style="margin-top:-1.4em;"><%= link_to causes_edit_petition_path(:cause_id => @cause.id),class:'btn btn-box-tool',title:"Edit Cause" do%>
+                            <i class="fa fa-pencil"></i>
+                            <%end%>
+                        </span>
+                    </div>
+                    <!--details of the cause pledge-->
+                    <div class="panel-body">
+                           <div class="text">Pledge To:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.pledgeTo%></strong></span></div><br/>
+                        <div class="text">Total Pledges:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.total_pledges%></strong></span></div><br/>
+                        <div class="text">Pledges Required:<span><strong style="color:#4c4c4c;padding-left:3em;"><%=@cause.totalpeople%></strong></span></div><br/>
+                    </div>    
+                </div>
+            <%else%>
+                <%=link_to "Add Pledge",{:controller => 'causes', :action => 'pledge',:id => @cause.id}, class: 'btn btn-cause'%>
+        <%end%>
+        </div>
+<!--ended-->
+
+<!--in pledge view for the image update-->
+<%= form_for @cause,:url =>{:controller=>"causes",:action=>"image_upload",:id => @cause.id} do |f| %>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <%= f.file_field :image,class: 'btn btn-image-upload',id:'cause-image',accept: 'image/png,image/gif,image/jpeg' %>
+                    <%= f.submit "Update Image", class:'btn-image-upload1'%></span>
+                    <h4 style="color:#fff;font-weight:bold;margin-left:40em;padding-top:1em;"><%="#{current_user.name}" + " wants to " + "#{@cause.intro}" %></h4>
+                </div>
+            </div>
+        <%end%>
+<!--ended-->
+
+<!--in article requests all the code-->
+<div style="margin: 2em 0em; padding: 5px;">
+  <!-- Article header -->
+  <div class="row">
+    <div class="col-xs-10">
+      <p>In
+        <% article_request.topics.each do |topic| %>
+          <%= link_to topic, articles_path(:topic => topic) %>
+        <% end %>
+      </p>
+    </div>
+
+    <div class="col-xs-2">
+      <% if article_request.user == current_user %>
+        <%= link_to '<i class="glyphicon glyphicon-edit" style="color: green;"></i>'.html_safe, edit_article_request_path(:id => article_request.id) %>
+        <%= link_to '<i class="glyphicon glyphicon-remove" style="color: red;"></i>'.html_safe, article_request_path(:id => article_request.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Article body -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="question-content" style="margin-top:0px;">
+        <%= link_to article_request.heading, article_request_path(:id => article_request.id) %>
+      </div>
+      
+      <% if full == true %>
+        <p>By <i style="color:green;"><%= article_request.user.name %></i>, <%= article_request.created_at.strftime('%d-%m-%Y') %></p>
+  
+        <p><%= article_request.explanation %></p>
+      <% else %>
+        <br>
+      <% end %>
+    </div>
+  </div>
+
+  <% if user_signed_in? %>
+    <%= link_to '<div class="btn btn-default">Respond</div>'.html_safe, answer_article_request_path(:id => article_request.id) %>
+  <% else %>
+    <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Respond</div>
+  <% end %>
+
+  <!-- Checking if its an index path -->
+  <% if request.path == article_requests_path %>
+    <%= link_to '<div class="btn btn-default">View Response</div>'.html_safe, article_request_path(:id => article_request.id) %>
+  <% else %>
+    <% if @articles.empty? %>
+      <h4 style="color:red;">No responses yet</h4>
+    <% else %>
+      <hr>
+      <h4>Responses</h4>
+      <% @articles.each do |article| %>
+        <div style="margin-bottom: 0.8em;">
+          <div class="question-content">
+            <%= link_to article.heading, article_path(:id => article.id) %>
+          </div>
+          <small class="text-muted">By <%= link_to article.user.name, public_profile_path(:id => article.user_id) %> on <%= article.created_at.strftime('%-d %B, %Y') %></small><br>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+<!--ended-->
+<!--_Articles code -->
+<div class="box box-widget cause-block">
+  <div class="box-header with-border">
+    <div class="user-block">
+        <% if article.user.profile_pic.length != 0 %>
+          <%= image_tag atricle.user.profile_pic.thumb, class: 'img-circle',height: '128px', width:'128px' %>
+        <% else %>
+          <%= image_tag 'thumb.jpg', class: 'img-circle', height: '128px', width:'128px' %>
+        <% end %>
+      <span class="username">
+          <%= link_to article.user.name, public_profile_path(:id => article.user.id) %>
+          <% if !article.topics.nil?%>
+            <% article.topics[0..2].sort.each do |topic| %>
+              <span class=""><%= link_to topic.titleize, articles_path(:topic => topic),class:'label label-dark' %></span>
+            <% end %>
+          <% if article.topics.length > 3 %>
+            and <%= article.topics.length - 3 %> more
+          <% end %>
+          <%end%>
+          
+      </span>
+      <span class="description">Wrote - <%= (Time.now.to_date - article.created_at.to_date).to_i %> day(s) ago</span>
+    </div> <!-- /.user-block -->
+    <% if user_signed_in? && article.user == current_user %>
+      <div class="box-tools">
+        <%= link_to edit_article_path(:id => article.id), class: 'btn btn-box-tool', title:'Edit Article' do  %>
+          <i class="fa fa-pencil"></i>
+        <%end%>
+        <%= link_to article_path(:id => article.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do  %>
+          <i class="fa fa-times"></i>
+        <%end%>
+      </div> <!-- /.box-tools -->
+    <%end%>
+  </div> <!-- /.box-header -->
+  <div class="box-body">
+    <h3> <%= link_to article.heading, article_path(:id => article.id) %></h3>
+    <%= image_tag 'photo2.png', class: 'img-responsive pad'%>
+    <p>
+      <div id="question_detail">
+        <%= article.intro %>
+      </div>
+    </p>
+      <% if full == true %>
+        <p>
+          <div id="question_detail">
+            <%= article.content.html_safe %>
+          </div>  
+        </p>
+      <%end%>
+    </div>
+  </div>
+
+<!---->
+<!--from contests-->
+<div class="box box-widget cause-block">
+  <div class="box-header with-border">
+    <div class="user-block">
+    <% if user_signed_in? && contest.user == current_user %>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Contest" id="edit_contest<%= contest.id %>">
+          <i class="fa fa-pencil"></i>
+        </button>
+        <%= link_to delete_contest_path(:id => contest.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do %>
+          <i class="fa fa-times"></i>
+        <%end%>
+      </div> <!-- /.box-tools -->
+    <%end%>
+    </div>
+  </div> <!-- /.box-header -->
+  <div class="box-body">
+    <div class="headingcause"><%= link_to contest.content.capitalize, contest_path(:id => contest.id) %>
+      <span class="pull-right">
+        <% if contest.status == 'open' %>
+          <span class="label label-success"><%= contest.status.upcase! %></span> till <span class="label label-default"><%= contest.end_date %></span>
+        <% else %>
+          <span class="status-danger"><%= contest.status.upcase! %></span>
+        <% end %>
+        <% if contest.winner_chosen %>
+          <span class="label label-dark">WON BY <span style="color:green;"><%= User.find_by_id(contest.winner_id).name.upcase! %></span>
+        <% end %>
+      </span>
+    </div>
+    <% if contest.image.length !=0 %>
+      <%= image_tag contest.image.url(), class: 'img-responsive pad'%>
+    <%end%>
+    <p>
+      <div id="contest_detail<%= contest.id %>">
+        <%= contest.detail.html_safe %>
+      </div>
+    </p>
+    
+    <% if !contest.winner_chosen %>
+      <% if is_admin %>
+        <button class="btn btn-default"><%= link_to 'Participants', contest_path(:id => contest.id) %> | <%= contest.contest_answers.length %></button>
+        <button id="endC<%= contest.id %>" class="btn btn-default">End Now</button>
+      <% else %>
+        <% if user_signed_in? %>
+          <button id="answerC<%= contest.id %>" class="btn btn-default">Participate | <%= contest.contest_answers.length %></button>
+          <span class="pull-right text-muted"><%= social_share_button_tag(contest.content) %></span>
+        <% else %>
+          <div class="btn btn-default" data-toggle="modal" data-target="#signInModal">Participate | <%= contest.contest_answers.length %></div>
+        <% end %>
+      <% end %>
+    <%end%>
+  </div>
+  
+  <% if is_admin && full == true %>
+      <% if !contest_answers.empty? %>
+        <hr>
+        <% contest_answers.each do |contest_answer| %>
+          <%= render 'contest_answer', :contest_answer => contest_answer %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <input type="text" id="contest_content<%= contest.id %>" value="<%= contest.content %>" hidden>
+</div>
+
+<!---->
+<!--from index of contest-->
+<%if user_signed_in?%>
+<div class="background-div">
+  <div class="container">
+          <div class="row">
+            <div class="col-md-8">
+              <% if !@contests.nil?%>
+                <% @contests.each do |contest| %>
+                  <%= render 'contest', :contest => contest, :contest_answers => contest.contest_answers, :is_admin => @is_admin, :full => false %>
+                <% end %>
+              <%end%>
+            </div>
+          </div>
+        </div>
+        </div>
+<%else%>
+<div class="background-div">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <% if !@contests.nil?%>
+            <% @contests.each do |contest| %>
+              <%= render 'contest', :contest => contest, :contest_answers => contest.contest_answers, :is_admin => @is_admin, :full => false %>
+            <% end %>
+        <%end%>
+       <!--/.box -->
+        </div>
+      </div>
+    </div>
+  </div>
+<%end%>
+<!--ended-->

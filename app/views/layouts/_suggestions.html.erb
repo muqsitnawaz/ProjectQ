@@ -25,7 +25,7 @@
       <% @questions = Question.order('created_at DESC').limit(7).sort_by {|q| -q.answers.count} %>
       
       <% @questions.each do |question| %>
-        <p><a><%= link_to question.content, question_path(:id => question.id), class: 'icon-text' %></a></p>
+        <p><a><%= link_to question.content.gsub(/\-/, " "), question_path(:id => question.id), class: 'icon-text' %></a></p>
       <% end %>
     </div>
     
