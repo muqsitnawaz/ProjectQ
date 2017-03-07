@@ -1,9 +1,14 @@
 <div class="panel panel-primary navbar-custom navbar-color" style="border:none">
   <!-- Default panel contents -->
   <div class="panel-heading">Trending Questions</div>
+    <div class="file-form">
+    <%= form_tag import_questions_path, multipart: true do %>
+      <%= file_field_tag :file %>
+      <%= submit_tag "Import" %>
+    <% end %>
 
   <!-- List group -->
-  <% @questions = Question.order('created_at DESC').limit(7).sort_by {|q| -q.answers.count} %>
+  <% @questions = Question.order("RANDOM()").limit(7) %>
       
       
       

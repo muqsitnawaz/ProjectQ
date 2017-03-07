@@ -144,3 +144,11 @@
 </div>
 
 <%= javascript_include_tag "questions_script", "data-turbolinks-track" => true  %>
+<script>
+    $("[id^=answerQ]").click(function() {
+      question_id = this.id.substring(7, this.id.length)
+      console.log('id: '+question_id)
+
+      $("#answerContent"+question_id).css("display", "block");
+  })
+  </script>

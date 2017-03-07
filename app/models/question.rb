@@ -2,7 +2,7 @@ class Question < ActiveRecord::Base
   # Search engine stuff
   include SearchCop
 
-  search_scope :search do
+  search_scope :csearch do
     attributes :content, :detail, :topics
   end
   
@@ -17,25 +17,43 @@ class Question < ActiveRecord::Base
   #validates :content, presence: true, length: { minimum: 5, maximum: 50 }
   #validates :detail, presence: true, length: { minimum: 5 }
 #to delete
+
+Questions = [
+  'Which is the best cell phone network in ',
+  'Which phone sells most in ',
+  'What are the major concerns when moving to ',
+  'Things to keep in mind when getting settled in ',
+  'Who is most popular personality of ',
+]
+
+
  MAPPING = {
-    "content" => "content"
+    "content" => "content",
+    "user_id" => "user_id",
+    'anonymous' => 'anonymous',
+    'topics' => 'topics'
   }
 
   def self.import(file)
       spreadsheet = open_spreadsheet(file)
       header = spreadsheet.row(1)
-      (2..spreadsheet.last_row).each do |i|
-        row = Hash[[header, spreadsheet.row(i)].transpose]
-        # Convert the keys from the csv to match the database column names
-        row.keys.each { |k| row[ MAPPING[k] ] = row.delete(k) if MAPPING[k] }
-        # Remove company and phone number fields as these aren't in the database:
-        puts 'inspection'
-        puts row.inspect
-        if !row.values[0].nil?
-          row.update(row){|key,v1| "What are the best places to visit in "+v1}
-        puts row.values[0]
-          question = Question.create(row)
-          question.save
+      Questions.each do |q|
+        (2..spreadsheet.last_row).each do |i|
+          row = Hash[[header, spreadsheet.row(i)].transpose]
+          # Convert the keys from the csv to match the database column names
+          row.keys.each { |k| row[ MAPPING[k] ] = row.delete(k) if MAPPING[k] }
+          # Remove company and phone number fields as these aren't in the database:
+          puts row.inspect
+          if !row.nil?
+            # row.update(row){|key,v1| "What are the most profitable businesses in "+v1}
+            row[:topics] = ['General Knowledge','Visiting and Travel'];
+            row[:content] = (q + row.values[0])
+             puts 'inspection'
+              puts row.inspect
+            row[:content] = row[:content].parameterize  
+            question = Question.create(row)
+            question.save
+          end
         end
       end
   end

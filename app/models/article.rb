@@ -2,7 +2,7 @@ class Article < ActiveRecord::Base
   # Search engine stuff
   include SearchCop
 
-  search_scope :search do
+  search_scope :csearch do
     attributes :heading, :intro, :content, :topics
   end
   

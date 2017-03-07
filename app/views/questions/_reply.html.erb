@@ -1,32 +1,51 @@
-<div style="padding: 5px;">
-  <div class="row">
-    <div class="col-xs-2">
-      <% if reply.user.profile_pic.length != 0 && reply.anonymous == false %>
-        <%= image_tag reply.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
-      <% else %>
-        <%= image_tag 'thumb.jpg', class: 'img img-responsive img-smround', width: 45 %>
-      <% end %>
-    </div>
-    <div class="col-xs-7" style="margin-left: -40px;">
-      <% if reply.anonymous == false %>
-        <%= link_to reply.user.name, public_profile_path(:id => reply.user.id) %>
-      <% else %>
-        <p>Anonymous</p>
-      <% end %>
-    </div>
-    <div class="col-xs-3" style="margin-left: 40px;">
-      <% if reply.user == current_user %>
-        <a id="edit_reply<%= reply.id %>" class="btn btn-default">edit</a>
-        <%= link_to 'delete', replies_path(:id => reply.id), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?'} %>
-      <% end %>
-    </div>
-  </div>
-  
-  <div class="row" style="margin-top: 0.5em;">
-    <!-- Showing answer and username -->
-    <div class="col-xs-12">
-      <div id="reply<%= reply.id %>">
-        <%= reply.content.html_safe %>
+<div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="2500" style="margin-top: 20px;">
+        <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+      <div class="active">   
+          <div class="container-fluid">
+              <div class="row">
+               <div class="col-md-1">
+                <% if reply.user.profile_pic.length != 0 && reply.anonymous == false %>
+                  <%= image_tag reply.user.profile_pic.thumb, class: 'img img-responsive img-smround', width: 45 %>
+                <% else %>
+                  <%= image_tag 'profile-pic.png', class: 'img img-responsive img-smround', width: 45 %>
+                <% end %>
+              </div>
+              <div class="col-md-8 Answers">
+                <% if reply.anonymous == false %>
+                  <h3 class="marginzero"><%= link_to reply.user.name, public_profile_path(:id => reply.user.id) %></h3>
+                <% else %>
+                  <h3 class="marginzero"><p>Anonymous</p></h3>
+                <% end %>
+            <p>
+              <div id="reply">
+                <% if reply.content.length > 120 %>
+                  <%= truncate(reply.content, length: 120).html_safe %>
+                  <%= link_to '...Read more', '', class: "read-more-#{reply.id}" %>
+                  <script>
+                    $('.read-more-<%= reply.id %>').on('click', function(e) {
+                      e.preventDefault()
+                      $(this).parent().html('<%= escape_javascript reply.content.html_safe %>')
+                    })
+                  </script>
+                <% else %>
+                  <%= reply.content.html_safe %>
+                <% end %>
+              </div>
+            </div>
+            <div class='col-md-2'>
+              <div class="box-tools" style="margin-top:0">
+                <% if reply.user == current_user %>
+                  <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Edit Question" id="edit_reply<%= reply.id %>">
+                        <i class="fa fa-pencil"></i>
+                      </button>
+                  <%= link_to replies_path(:id => reply.id), class: 'btn btn-box-tool', method: :delete, data: { confirm: 'Are you sure?'} do %>
+                    <i class="fa fa-times"></i>
+                  <%end%>
+                <% end %>
+              </div>
+            </div>
+        </div>
       </div>
     </div>
   </div>

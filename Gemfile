@@ -48,7 +48,6 @@ group :development do
 end
 
 group :development, :test do # <<<< :development, not devlopment
-  gem 'sqlite3'
 end
 
 group :production do

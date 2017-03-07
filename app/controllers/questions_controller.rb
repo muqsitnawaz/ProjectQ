@@ -22,12 +22,12 @@ class QuestionsController < ApplicationController
     if params[:topic].nil?
       if user_signed_in?
         @decider = 1;
-        @questions = Question.all.order('created_at DESC').page(params[:page]).per(8) 
+        @questions = Question.order("RANDOM()").page(params[:page]).per(8) 
         # Question.where(:id => current_user.following).order('created_at DESC').page(params[:question_followed]).per(1)
         @questionasked = Question.where(:user_id => current_user.id).order('created_at DESC').page(params[:question_asked]).per(1)
         @questionans = Question.where(:id => Answer.where(:user_id => current_user.id).map {|a| a.question_id}).order('created_at DESC').page(params[:question_ans]).per(1)
       else
-        @questions = Question.all.order('created_at DESC').page(params[:page]).per(8)
+        @questions = Question.order("RANDOM()").page(params[:page]).per(8)
       end
     else
       @decider = 0
@@ -51,13 +51,11 @@ class QuestionsController < ApplicationController
     @query = params[:query]
     
     @items = []
-    questions = Question.where(" like ?", "%#{@query}%")
-    contests = Contest.search(@query)
-    causes = Cause.search(@query)
-    articles = Article.search(@query)
+    questions = Question.csearch(@query)
+    contests = Contest.csearch(@query)
+    causes = Cause.csearch(@query)
+    articles = Article.csearch(@query)
     
-    puts contests.inspect
-    puts causes.inspect
     (@items << questions).flatten!
     (@items << contests).flatten!
     (@items << causes).flatten!

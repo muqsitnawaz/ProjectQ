@@ -2,7 +2,7 @@ class Cause < ActiveRecord::Base
   # Search engine stuff
   include SearchCop
 
-  search_scope :search do
+  search_scope :csearch do
     attributes :cause_type, :intro, :detail, :whymatters
   end
   
