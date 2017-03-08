@@ -48,6 +48,7 @@ group :development do
 end
 
 group :development, :test do # <<<< :development, not devlopment
+  # gem 'sqlo'
 end
 
 group :production do
@@ -80,3 +81,4 @@ gem 'bootstrap-wysihtml5-rails', github: 'nerian/bootstrap-wysihtml5-rails'
 gem 'kaminari'
 gem 'faker'
 gem 'jquery-turbolinks'
+gem 'seed_dump'
