@@ -49,6 +49,7 @@ end
 
 group :development, :test do # <<<< :development, not devlopment
   # gem 'sqlite3'
+  gem 'pg'
 end
 
 group :production do
