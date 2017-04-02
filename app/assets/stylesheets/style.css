@@ -129,7 +129,7 @@ div[id^="answer"] {
   
 }
 .main-login {
-  background: url("login_page.jpg") no-repeat center center fixed;
+  background: image-url("login_page.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

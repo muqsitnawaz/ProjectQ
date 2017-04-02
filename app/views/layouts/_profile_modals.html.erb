@@ -15,17 +15,22 @@
       <section>
         <div class="modal-body modal-spa">
           <div class="row">
-              <div id="userInterests" class="col-xs-12">
+              
                 <% get_all_interests.sort.each do |interest| %>
-                  <% if current_user.interests.include? interest %>
-                    <input type="checkbox" value="<%= interest %>" checked> <%= interest.titleize %>
-                  <% else %>
-                    <input type="checkbox" value="<%= interest %>"> <%= interest.titleize %>
-                  <% end %>
+                  <div id="userInterests" class="col-sm-3 col-md-3" style=''>
+                    <div class='box' style='border:1px solid #f2f2f2;height:90px;margin-bottom:1em;color:white;background:#A9A9A9 !important'>
+                      <% if current_user.interests.include? interest %>
+                      <input type="checkbox" value="<%= interest %>" checked> <%= interest.titleize %>
+                      <% else %>
+                        <input type="checkbox" value="<%= interest %>"> <%= interest.titleize %>
+                      <% end %>  
+                    </div>
+                </div>
                 <% end %>
-                
-                <br><br>
-                <center><button id="submitInterests" class="btn btn-ask1">Update Interests</button></center>
+              </div>
+                <div class='clearfix'></div>
+                <br/>
+                <p><center><button id="submitInterests" class="btn btn-ask1">Update Interests</button></center></p>
               </div>
           </div>
         </div>
