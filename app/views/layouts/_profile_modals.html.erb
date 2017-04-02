@@ -17,7 +17,7 @@
           <div class="row">
               
                 <% get_all_interests.sort.each do |interest| %>
-                  <div id="userInterests" class="col-sm-3 col-md-3" style=''>
+                  <div id="userInterests" class="col-sm-3 col-md-3">
                     <div class='box' style='border:1px solid #f2f2f2; height:90px; margin-bottom:1em; color:white; background: #A9A9A9 !important;'>
                       <% if current_user.interests.include? interest %>
                       <input type="checkbox" value="<%= interest %>" checked> <%= interest.titleize %>
